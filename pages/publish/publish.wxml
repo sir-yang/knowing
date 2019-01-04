@@ -54,7 +54,7 @@
             <view class='tutor-left'>选择审核导师</view>
             <view class='flex1'>
                 <view class='right-box flex_start flex_items' bindtap='publishEvent' data-types='showTutor'>
-                    <input class='flex1 f24 c3' type='text' disabled placeholder='请选择分享导师' />
+                    <input class='flex1 f24 c3' type='text' disabled placeholder='请选择分享导师(可多选)' />
                     <image class='down-icon' src='/images/down_icon.png'></image>
                 </view>
                 <view class='mt20'>
@@ -64,8 +64,6 @@
                             <view class='close' bindtap='publishEvent' data-types='removeTutor' data-id='{{item.id}}'>X</view>
                         </view>
                     </block>
-                    <!-- <view class='tutor-item'>何茜阿</view>
-                    <view class='tutor-item'>何茜阿</view> -->
                 </view>
             </view>
         </view>

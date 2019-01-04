@@ -5,7 +5,6 @@ let common = require('utils/common.js');
 
 App({
     onLaunch(_options) {
-        // wx.setStorageSync("serverurl", "http://www.shuzhi.com/");
         wx.setStorageSync("serverurl", "http://192.168.0.104/");
     },
 
@@ -26,7 +25,18 @@ App({
         });
 
         common.getToken().then(() => {
-            console.log(111);
+            // wx.showModal({
+            //     title: '授权提示',
+            //     content: '小程序使用需微信授权',
+            //     showCancel: false,
+            //     confirmText: "前往授权",
+            //     confirmColor: '#278ae2',
+            //     success(res) {
+            //         wx.switchTab({
+            //             url: '/pages/my/my'
+            //         })
+            //     }
+            // })
         })
     },
 

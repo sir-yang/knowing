@@ -150,7 +150,7 @@ function refreshToken() {
     let values = {
         fresh_token: getInfo('refresh_token')
     };
-    let url = 'api/login/refresh';
+    let url = 'api/Oauth/refresh';
     return util.httpRequest(url, values, 'POST').then((data) => {
         if (data.err_code == 0) {
             setToken(data.token);
