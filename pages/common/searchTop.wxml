@@ -1,0 +1,14 @@
+<view class='top-search-box flex_start flex_items'>
+    <view class='switch-box flex_between'>
+        <view class='f26 c3 clamp1 mr30'>四川大学</view>
+        <view class='down-arrow'></view>
+    </view>
+    <view class='flex1 search-input flex_start flex_items'>
+        <input type='text' placeholder-class='cbc' placeholder='请输入' />
+        <image src='/images/home_search_icon.png'></image>
+    </view>
+    <view class='right-msg'>
+        <text></text>
+        <image src='/images/home_msg_icon.png'></image>
+    </view>
+</view>

@@ -1,0 +1,153 @@
+page {
+    background: #f0f3f8;
+}
+
+/* 搜索样式 */
+@import "/pages/common/searchTop.wxss";
+
+.types-item {
+    width: 290rpx;
+    height: 88rpx;
+    margin-right: 20rpx;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+    font-size: 28rpx;
+    color: #999;
+    font-weight: bold;
+    text-align: center;
+    line-height: 88rpx;
+}
+.types-item.on {
+    position: relative;
+    color: #278ae2;
+    background: #fff;
+}
+.types-item.on::after {
+    display: block;
+    content: '';
+    position: absolute;
+    bottom: -25rpx;
+    left: 50%;
+    margin-left: -18rpx;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 18rpx;
+    border-color: transparent transparent #fff transparent;
+    z-index: 1;
+}
+
+.publish-btn {
+    width: 88rpx;
+    height: 88rpx;
+    background: #278ae2;
+    border-radius: 50%;
+    font-size: 26rpx;
+    color: #fff;
+    text-align: center;
+    line-height: 88rpx;
+}
+
+/* 二级分类 */
+.secondary-class-box {
+    padding: 10rpx 20rpx;
+    margin-top: 25rpx;
+    background: #fff;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+    border-radius: 10rpx;
+}
+.secondary-class-box .class-item {
+    width: 152rpx;
+    height: 72rpx;
+    font-size: 24rpx;
+    color: #999;
+    text-align: center;
+    line-height: 72rpx;
+    border: 1px solid #e3e3e3;
+    border-radius: 5rpx;
+    margin: 10rpx 20rpx 10rpx 0;
+    box-sizing: border-box;
+}
+.secondary-class-box .class-item:nth-child(4n) {
+    margin-right: 0;
+}
+
+.top-more-box > image {
+    display: block;
+    width: 22rpx;
+    height: 19rpx;
+    margin-right: 10rpx;
+}
+
+
+/*  */
+.enjoy-item-box {
+    position: relative;
+    padding: 25rpx 20rpx 20rpx;
+    margin-top: 20rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+.head-img {
+    display: block;
+    width: 64rpx;
+    height: 64rpx;
+    border-radius: 50%;
+}
+
+.report {
+    position: absolute;
+    top: 25rpx;
+    right: 20rpx;
+    font-size: 20rpx;
+    color: #b6b7b7;
+}
+
+.audio-box {
+    margin-top: 25rpx;
+    padding: 20rpx;
+    border: 1px solid #e9e9e9;
+    border-radius: 10rpx;
+}
+.audio-img {
+    display: block;
+    width: 48rpx;
+    height: 48rpx;
+    margin-right: 10rpx;
+}
+.enjoy-item-box .content {
+    margin-top: 15rpx;
+    font-size: 24rpx;
+    color: #333;
+    line-height: 36rpx;
+}
+
+@import "/pages/common/comment.wxss";
+
+.img-box image{
+    display: block;
+    width: 155rpx;
+    height: 155rpx;
+    margin-right: 18rpx;
+    margin-bottom: 18rpx;
+}
+.img-box image:nth-child(4n) {
+    margin-right: 0;
+}
+
+.zan-icon {
+    display: block;
+    width: 24rpx;
+    height: 24rpx;
+    margin-left: 10rpx;
+}
+.com-box {
+    margin-left: 40rpx;
+}
+.com-icon {
+    display: block;
+    width: 27rpx;
+    height: 24rpx;
+    margin-left: 10rpx;
+}

@@ -1,0 +1,23 @@
+<view class='plr20 pb20'>
+    <view class='attention-item-box flex_between'>
+        <view class='flex1 flex_start'>
+            <image class='head-img flex_shrink' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            <view class='flex_column flex_between'>
+                <view class='f28 c3 bold'>卢林涛</view>
+                <view class='f24 c6'>浙江大学管理学院保研直博生</view>
+            </view>
+        </view>
+        <view class='attention-status'>√已关注</view>
+    </view>
+
+    <!-- 粉丝 -->
+    <view class='attention-item-box flex_between'>
+        <view class='flex1 flex_start'>
+            <image class='head-img flex_shrink' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            <view class='flex_column flex_between'>
+                <view class='f28 c3 bold'>卢林涛</view>
+                <view class='f24 c6'>浙江大学管理学院保研直博生</view>
+            </view>
+        </view>
+    </view>
+</view>

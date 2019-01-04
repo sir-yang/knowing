@@ -1,0 +1,67 @@
+page {
+    background: #f0f3f8;
+}
+
+.status-tab-box > view {
+    flex: 1;
+    height: 88rpx;
+    margin-right: 20rpx;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+    font-size: 28rpx;
+    color: #999;
+    font-weight: bold;
+    text-align: center;
+    line-height: 88rpx;
+}
+.status-tab-box > view.on {
+    color: #278ae2;
+    background: #fff;
+}
+.status-tab-box > view:last-child {
+    margin-right: 0;
+}
+
+
+.know-share-item {
+    padding: 25rpx 20rpx 20rpx;
+    margin-top: 20rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+.head-img {
+    display: block;
+    width: 64rpx;
+    height: 64rpx;
+    border-radius: 50%;
+}
+
+.audio-box {
+    margin-top: 25rpx;
+    padding: 20rpx;
+    border: 1px solid #e9e9e9;
+    border-radius: 10rpx;
+}
+.audio-img {
+    display: block;
+    width: 48rpx;
+    height: 48rpx;
+    margin-right: 10rpx;
+}
+.know-share-item .content {
+    margin-top: 15rpx;
+    font-size: 24rpx;
+    color: #333;
+    line-height: 36rpx;
+}
+.img-box image{
+    display: block;
+    width: 155rpx;
+    height: 155rpx;
+    margin-right: 18rpx;
+    margin-bottom: 18rpx;
+}
+.img-box image:nth-child(4n) {
+    margin-right: 0;
+}

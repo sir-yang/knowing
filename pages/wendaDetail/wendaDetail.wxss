@@ -1,0 +1,79 @@
+Page {
+    background: #f0f3f8;
+}
+
+.detail-pages {
+    padding: 25rpx 20rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+
+.detail-head {
+    display: block;
+    width: 65rpx;
+    height: 65rpx;
+    margin-right: 20rpx;
+    border-radius: 50%;
+}
+
+.img-box image {
+    display: block;
+    width: 155rpx;
+    height: 155rpx;
+    margin-right: 19rpx;
+    margin-top: 19rpx;
+}
+.img-box image:nth-child(4n) {
+    margin-right: 0;
+}
+
+.time-box {
+    width: 175rpx;
+    font-size: 24rpx;
+    color: #999;
+}
+.money-box {
+    font-size: 24rpx;
+    color: #ff6600;
+}
+.money-box > image {
+    display: block;
+    width: 28rpx;
+    height: 28rpx;
+    margin-right: 5rpx;
+}
+
+
+.audio-box {
+    padding: 20rpx;
+    border: 1px solid #e9e9e9;
+    border-radius: 10rpx;
+}
+.audio-img {
+    display: block;
+    width: 48rpx;
+    height: 48rpx;
+    margin-right: 10rpx;
+}
+
+.text-detail-box {
+    margin-top: 20rpx;
+    padding: 30rpx 20rpx;
+    background: #e3e3e3;
+    border-radius: 10rpx;
+    line-height: 36rpx;
+    font-size: 24rpx;
+    color: #666;
+}
+
+.detail-image {
+    margin-top: 20rpx;
+}
+
+.detail-image > image {
+    display: block;
+    width: 100%;
+    height: 450rpx;
+    border-radius: 10rpx;
+}

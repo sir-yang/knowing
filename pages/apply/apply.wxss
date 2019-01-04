@@ -1,0 +1,52 @@
+page {
+    background: #f0f3f8;
+}
+
+.info-item-box {
+    padding: 0 20rpx;
+    margin-top: 25rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+.info-item-box > view {
+    padding-left: 15rpx;
+    border-bottom: 1px solid #e3e3e3;
+    line-height: 88rpx;
+    font-size: 28rpx;
+    color: #040404;
+}
+.info-item-box > view:last-child {
+    border-bottom: none;
+}
+
+.info-item-box > view .pos::before {
+    display: block;
+    content: '*';
+    position: absolute;
+    left: -12rpx;
+    right: 0;
+    font-size: 28rpx;
+    color: #040404;
+    font-weight: bold;
+}
+
+.info-item-box input {
+    flex: 1;
+    height: 88rpx;
+    line-height: 88rpx;
+    text-align: right;
+}
+
+.save-info-btn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #278ae2;
+    height: 88rpx;
+    line-height: 88rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #fff;
+}

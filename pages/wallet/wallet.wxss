@@ -1,0 +1,68 @@
+page {
+    background: #f0f3f8;
+}
+
+.account-balance-box {
+    position: relative;
+    width: 100%;
+    height: 186rpx;
+    margin-top: 20rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+.account-balance-box .balance {
+    margin-top: 10rpx;
+    font-size: 48rpx;
+    color: #ff3300;
+}
+
+.account-balance-box .withdraw-btn {
+    position: absolute;
+    top: 64rpx;
+    right: 25rpx;
+    z-index: 1;
+    width: 118rpx;
+    height: 48rpx;
+    text-align: center;
+    line-height: 48rpx;
+    background: #278ae2;
+    border-radius: 24rpx;
+    font-size: 24rpx;
+    color: #fff;
+}
+
+.card-box {
+    margin-top: 20rpx;
+    padding: 25rpx 20rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+    font-size: 26rpx;
+    color: #666;
+}
+
+.recording-box {
+    margin-top: 20rpx;
+    padding: 0 20rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+.recording-item-box {
+    padding: 20rpx 0;
+    line-height: 44rpx;
+    border-bottom: 1px solid #e3e3e3;
+    font-size: 24rpx;
+    color: #666;
+}
+.recording-item-box:last-child {
+    border-bottom: none;
+}
+.recording-item-box .label {
+    width: 120rpx;
+}
+.recording-item-box .money {
+    font-size: 36rpx;
+    color: #333;
+}

@@ -1,0 +1,27 @@
+.comment-box {
+    position: relative;
+    width: 100%;
+    margin-top: 20rpx;
+    padding: 20rpx 10rpx;
+    background: #e3e3e3;
+    border-radius: 10rpx;
+    font-size: 24rpx;
+    color: #333;
+    line-height: 36rpx;
+    box-sizing: border-box;
+}
+.comment-box::before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: -28rpx;
+    left: 30rpx;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15rpx;
+    border-color: transparent transparent #e3e3e3 transparent;
+}
+.comment-box .name {
+    color: #336699;
+}

@@ -1,0 +1,88 @@
+page {
+    background: #f0f3f8;
+}
+.top-bg-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 160rpx;
+    background: #278ae2;
+    z-index: -1;
+}
+
+.base-info-box {
+    padding: 25rpx 20rpx; 
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+.base-info-box .head-img {
+    display: block;
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    margin-right: 20rpx;
+}
+.share-icon {
+    display: block;
+    width: 28rpx;
+    height: 28rpx;
+    margin-right: 10rpx;
+}
+.reply-icon {
+    display: block;
+    width: 31rpx;
+    height: 32rpx;
+    margin-right: 10rpx;
+}
+.fan-icon {
+    display: block;
+    width: 27rpx;
+    height: 28rpx;
+    margin-right: 10rpx;
+}
+.attention-icon {
+    display: block;
+    width: 33rpx;
+    height: 28rpx;
+    margin-right: 10rpx;
+}
+
+/* 九宫格 */
+.features-item-box {
+    width: 223rpx;
+    height: 220rpx;
+    margin-top: 20rpx;
+    margin-right: 20rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+.features-item-box:nth-child(3n) {
+    margin-right: 0;
+}
+.features-item-box > image {
+    display: block;
+    width: 64rpx;
+    height: 64rpx;
+}
+.features-item-box .text {
+    position: relative;
+    margin-top: 20rpx;
+    font-size: 26rpx;
+    color: #333;
+}
+
+.features-item-box .msg::after {
+    display: block;
+    content: '';
+    position: absolute;
+    right: -10rpx;
+    top: 15rpx;
+    width: 6rpx;
+    height: 6rpx;
+    background: #fc2502;
+    border-radius: 50%;
+}
+

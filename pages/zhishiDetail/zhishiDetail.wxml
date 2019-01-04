@@ -1,0 +1,153 @@
+<view class='plr20'>
+    <view class='top-bg-box'></view>
+    <view class='zhishiInfo'>
+        <view class='flex_between'>
+            <view class='flex_start flex1'>
+                <image class='head-icon' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <view>
+                    <view class='flex_start flex_items mb10'>
+                        <view class='f28 c3'>何茜</view>
+                        <view class='attention-btn'>+关注</view>
+                    </view>
+                    <view class='flex_start flex_items'>
+                        <view class='f24 c6'>知士评分</view>
+                        <image class='score-icon' src='/images/score_icon.png'></image>
+                        <view class='f24 color-red'>5.0</view>
+                    </view>
+                </view>
+            </view>
+            <view class='flex_start flex_items self_start'>
+                <image class='message-icon' src='/images/message_icon.png'></image>
+                <view class='f24 cmain'>私信</view>
+            </view>
+        </view>
+        <view class='bte9s mt20 pt20'>
+            <view class='flex_center'>
+                <view>
+                    <view class='f24 c6 txt_center'>3</view>
+                    <view class='flex_start flex_items'>
+                        <image class='fan-icon' src='/images/icon_1.png'></image>
+                        <view class='f24 c6'>粉丝</view>
+                    </view>
+                </view>
+                <view class='attention-box'>
+                    <view class='f24 c6 txt_center'>16</view>
+                    <view class='flex_start flex_items'>
+                        <image class='attention-icon' src='/images/icon_2.png'></image>
+                        <view class='f24 c6'>关注</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 知士介绍 -->
+    <view class='introduction-box'>
+        <view class='title'>知士简介</view>
+        <view class='row'>知士简介内容内容内容内容，知士简介内容内容内容内容。知士简介内容内容内容内容，内容内容内容，内容内容内容内。</view>
+    </view>
+
+    <!-- 分享 课程 回答 -->
+    <view class='share-course-reply-box'>
+        <view class='types-tab-box flex_start flex_items'>
+            <view class='{{tabIndex == 0 ? "on" : ""}}' bindtap='detailEvent' data-types='tab' data-index='0'>TA的分享</view>
+            <view class='{{tabIndex == 1 ? "on" : ""}}' bindtap='detailEvent' data-types='tab' data-index='1'>TA的课程</view>
+            <view class='{{tabIndex == 2 ? "on" : ""}}' bindtap='detailEvent' data-types='tab' data-index='2'>TA的回答</view>
+        </view>
+
+        <view class='share-course-reply-row'>
+
+            <!-- ta的分享 -->
+            <view wx:if="{{tabIndex == 0}}" class='share-item-box}'>
+                <view class='f24 c3'>请问一下浙大管理学院的保研复试要求？</view>
+                <view class='img-box mt20 mb10 flex_warp'>
+                    <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                    <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                    <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                    <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                </view>
+                <view class='flex_between flex_items'>
+                    <view class='f24 c9'>1分钟前</view>
+                    <view class='flex_end'>
+                        <view class='flex_start flex_items'>
+                            <view class='f24 c9'>128</view>
+                            <image class='zan-icon' src='/images/icon_3.png'></image>
+                        </view>
+                        <view class='flex_start flex_items com-box'>
+                            <view class='f24 c9'>2</view>
+                            <image class='com-icon' src='/images/icon_4.png'></image>
+                        </view>
+                    </view>
+                </view>
+                <!-- 评论 -->
+                <view class='comment-box'>
+                    <view class='flex_start'>
+                        <view class='name flex_shrink'>锦觅：</view>
+                        <view class='reply-box flex1'>
+                            <view>挖哟，老师您在哪里呀？</view>
+                            <view class='flex_start'>
+                                <view class='flex_shrink'>
+                                    <text class='name'>李思荷</text>
+                                    <text> 回复 </text>
+                                    <text class='name'>锦觅：</text>
+                                </view>
+                                <view class='flex1'>不拉不拉不阿里不啊</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class='flex_start'>
+                        <view class='name flex_shrink'>十六：</view>
+                        <view class='reply-box flex1'>
+                            <view>挺喜欢的~嘿嘿~~~</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+            <!-- ta的课程 -->
+            <block wx:elif="{{tabIndex == 1}}">
+                <view class='course-item-box flex_start'>
+                    <image class='flex_shrink' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                    <view class='flex1 flex_between flex_column'>
+                        <view class='f28 c3'>【线下指导课】留学个人定位及咨询 </view>
+                        <view class='f24 c6 clamp2'>南瓜灯源于古代爱尔兰。传说一个叫Jack的人， 是个醉汉且爱恶作剧。在万圣节当日，他设圈…</view>
+                    </view>
+                </view>
+                <!-- 无内容 -->
+                <view class='null-row hide'>正在准备中~敬请期待</view>
+            </block>
+
+            <!-- ta的回答 -->
+            <block wx:elif="{{tabIndex == 2}}">
+                <view class='reply-item-box'>
+                    <view class='flex_start flex_items'>
+                        <view class='flex1 flex_start flex_items'>
+                            <image class='head-icon' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                            <view class='f28 c3'>李思涵</view>
+                        </view>
+                        <view class='f26 cmain'>查看我的回答</view>
+                    </view>
+                    <view class='mt20 f24 c3'>请问一下浙大管理学院的保研复试要求？</view>
+                    <view class='img-box mt20 flex_warp'>
+                        <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                        <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                        <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                        <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                    </view>
+                    <view class='flex_start flex_items mt20 pb10'>
+                        <view class='time-box'>1分钟前</view>
+                        <view class='f24 c9'>99人已围观</view>
+                        <view class='money-box flex1 flex_end flex_items'>
+                            <image src='/images/money_icon.png'></image>
+                            <view>问题价值 5元</view>
+                        </view>
+                    </view>
+                </view>
+                <view class='no-reply-box'>
+                    <view class='f28 c9 txt_center'>导师思考中~ 你也有 新的疑问？快来提问吧！</view>
+                    <view class='ask-question-btn'>+我要提问</view>
+                </view>
+            </block>
+        </view>
+    </view>
+</view>

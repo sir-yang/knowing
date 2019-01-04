@@ -1,0 +1,119 @@
+<view class='p20'>
+    <view class='first-tab-box flex_start'>
+        <view class='flex1 mr20 {{typeIndex == 0 ? "on" : ""}}' bindtap='wendaEvent' data-types='tabType' data-index='0'>我的提问</view>
+        <view class='flex1 {{typeIndex == 1 ? "on" : ""}}' bindtap='wendaEvent' data-types='tabType' data-index='1'>我的围观</view>
+    </view>
+
+    <view wx:if="{{typeIndex == 0}}" class='answer-status-box flex_start'>
+        <view class='status-item {{tabIndex == 0 ? "on" : ""}}' bindtap='wendaEvent' data-types='tabStatus' data-index='0'>待回答</view>
+        <view class='status-item {{tabIndex == 1 ? "on" : ""}}' bindtap='wendaEvent' data-types='tabStatus' data-index='1'>未回答</view>
+        <view class='status-item {{tabIndex == 2 ? "on" : ""}}' bindtap='wendaEvent' data-types='tabStatus' data-index='2'>已回答</view>
+    </view>
+
+    <!-- 我的提问 -->
+    <block wx:if="{{typeIndex == 0}}">
+        <!-- 待回答 -->
+        <view wx:if="{{tabIndex == 0}}" class='wenda-item-box'>
+            <view class='mt20 f24 c3'>请问一下浙大管理学院的保研复试要求？</view>
+            <view class='img-box flex_warp'>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            </view>
+            <view class='flex_start flex_items mt30'>
+                <view class='time-box'>1分钟前</view>
+                <view class='money-box flex1 flex_end flex_items'>
+                    <image src='/images/money_icon.png'></image>
+                    <view>提问金额 5元</view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 未回答 -->
+        <view wx:elif="{{tabIndex == 1}}" class='wenda-item-box'>
+            <view class='mt20 f24 c3'>请问一下浙大管理学院的保研复试要求？</view>
+            <view class='img-box flex_warp'>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            </view>
+            <view class='flex_start flex_items mt30'>
+                <view class='time-box'>1分钟前</view>
+                <view class='money-box flex1 flex_end flex_items'>
+                    <image src='/images/money_icon.png'></image>
+                    <view>提问金额 5元</view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 已回答 -->
+        <view wx:elif="{{tabIndex == 2}}" class='wenda-item-box'>
+            <view class='mt20 f24 c3'>请问一下浙大管理学院的保研复试要求？</view>
+            <view class='img-box flex_warp'>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            </view>
+            <view class='flex_start flex_items mt30 pb20 bbe9s'>
+                <view class='time-box'>1分钟前</view>
+                <view class='f24 c9'>99人已围观</view>
+                <view class='money-box flex1 flex_end flex_items'>
+                    <image src='/images/money_icon.png'></image>
+                    <view>提问金额 5元</view>
+                </view>
+            </view>
+            <view class='flex_start flex_items pt20'>
+                <image class='head-img flex_shrink' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <view class='flex1'>
+                    <view class='f26 c3'>何思思</view>
+                    <view class='flex_between flex_items mt5'>
+                        <view class='f24 c6'>浙江大学管理学院保研直博生</view>
+                        <view class='f24 cmain'>查看回答详情</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </block>
+
+    <!-- 我的围观 -->
+    <block wx:else>
+        <view class='wenda-item-box'>
+            <view class='flex_between flex_items mt10'>
+                <view class='flex1 flex_start flex_items'>
+                    <image class='head-img flex_shrink' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                    <view class='f28 c3'>李思涵</view>
+                </view>
+                <view class='f26 c9'>已围观</view>
+            </view>
+            <view class='mt20 f24 c3'>请问一下浙大管理学院的保研复试要求？</view>
+            <view class='img-box flex_warp'>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            </view>
+            <view class='flex_start flex_items mt30 pb20 bbe9s'>
+                <view class='time-box'>1分钟前</view>
+                <view class='f24 c9'>99人已围观</view>
+                <view class='money-box flex1 flex_end flex_items'>
+                    <image src='/images/money_icon.png'></image>
+                    <view>围观金额 5元</view>
+                </view>
+            </view>
+            <view class='flex_start flex_items pt20'>
+                <image class='head-img flex_shrink' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <view class='flex1'>
+                    <view class='f26 c3'>何思思</view>
+                    <view class='flex_between flex_items mt5'>
+                        <view class='f24 c6'>浙江大学管理学院保研直博生</view>
+                        <view class='f24 cmain'>查看回答详情</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </block>
+
+</view>

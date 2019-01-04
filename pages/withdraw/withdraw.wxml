@@ -1,0 +1,30 @@
+<view class='plr20'>
+    <view class='withdraw-box'>
+        <view class='flex_start flex_items'>
+            <view class='f30 c0 bold'>￥</view>
+            <view class='money'>6.00</view>
+        </view>
+        <view class='flex_between flex_items ptb30 bte9s'>
+            <view class='f26 c3'>账户余额：￥0.00</view>
+            <view class='f26 cmain' bindtap='withdrawEvent' data-types='withdrawAll'>全部提现</view>
+        </view>
+    </view>
+
+    <view class='withdraw-type-box'>
+        <view class='flex_start flex_items mb30' bindtap='withdrawEvent' data-types='wattleType' data-index="0">
+            <view class='circle {{wattleType == 0 ? "on" : ""}}'></view>
+            <view class='f26 c3'>提现到微信零钱包</view>
+        </view>
+        <view class='flex_start flex_items' bindtap='withdrawEvent' data-types='wattleType' data-index="1">
+            <view class='circle {{wattleType == 1 ? "on" : ""}}'></view>
+            <view class='f26 c3'>线下提现</view>
+            <view class='upload' catchtap='withdrawEvent' data-types='upload'>点击上传微信收款二维码</view>
+        </view>
+        <view wx:if="{{wattleType == 1}}" class='collection-code'>
+            <view class='delete-icon'>X</view>
+            <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+        </view>
+    </view>
+
+    <view class='immediate-withdrawal-btn'>立即提现</view>
+</view>

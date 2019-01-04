@@ -1,0 +1,27 @@
+
+@import "../reply/reply.wxss";
+
+.top-tab-item {
+    width: 150rpx;
+    height: 72rpx;
+    margin-bottom: 20rpx;
+    margin-right: 20rpx;
+    text-align: center;
+    line-height: 72rpx;
+    box-sizing: border-box;
+    font-size:  24rpx;
+    color: #999;
+    border-radius: 5rpx;
+    border: 1px solid #e3e3e3;
+}
+.top-tab-item:nth-child(4n) {
+    margin-right: 0;
+}
+.top-tab-item.on {
+    color: #278ae2;
+    border: 1px solid #278ae2;
+}
+
+.reply-ipt {
+    margin-top: 20rpx;
+}

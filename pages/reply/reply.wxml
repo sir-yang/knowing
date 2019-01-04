@@ -1,0 +1,88 @@
+<view class='plr20'>
+    <view class='reply-info-box'>
+        <!-- 音频 -->
+        <view class='flex_start flex_items'>
+            <image class='recording-icon flex_shrink' src='/images/recording_icon.png'></image>
+            <view class='right-audio-box flex1 flex_start flex_items'>
+                <image class='flex_shrink' src='/images/audio_icon.png'></image>
+                <view class='flex1'>
+                    <view class='flex_between flex_items mb10'>
+                        <view class='f20 c3'>知士回答.mp3</view>
+                        <view class='f20 color-red'>删除</view>
+                    </view>
+                    <view class='flex_start flex_items'>
+                        <view class='f18 c9 mr20'>00:00</view>
+                        <progress class='flex1' percent='20' stroke-width="2" activeColor="#2889e2" backgroundColor="#edeaff"></progress>
+                        <view class='f18 c9 ml20'>02:38</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- 文字 -->
+        <textarea class='reply-ipt' placeholder-class='f9' placeholder='我要回答'></textarea>
+
+        <!-- 图片 -->
+        <view class='flex_start mt20'>
+            <view class='add-pic-btn'>添加图片</view>
+            <view class='flex1 flex_warp'>
+                <view class='pic-box'>
+                    <view class='remove-img'>X</view>
+                    <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                </view>
+                <view class='pic-box'>
+                    <view class='remove-img'>X</view>
+                    <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                </view>
+                <view class='pic-box'>
+                    <view class='remove-img'>X</view>
+                    <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                </view>
+                <view class='pic-box'>
+                    <view class='remove-img'>X</view>
+                    <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view class='onlookers-money-box'>
+        <view class='tit'>设置围观金额</view>
+        <view class='flex_warp'>
+            <view class='onlookers-money-item'>
+                <view>0元</view>
+                <image src='/images/reply_selected_icon.png'></image>
+            </view>
+            <view class='onlookers-money-item'>
+                <view>0元</view>
+                <image src='/images/reply_selected_icon.png'></image>
+            </view>
+            <view class='onlookers-money-item on'>
+                <view>0元</view>
+                <image src='/images/reply_selected_icon.png'></image>
+            </view>
+            <view class='onlookers-money-item'>
+                <view>0元</view>
+                <image src='/images/reply_selected_icon.png'></image>
+            </view>
+            <view class='onlookers-money-item'>
+                <view>0元</view>
+                <image src='/images/reply_selected_icon.png'></image>
+            </view>
+            <view class='onlookers-money-item'>
+                <view>其他金额</view>
+                <image src='/images/reply_selected_icon.png'></image>
+            </view>
+        </view>
+    </view>
+
+
+    <!-- 底部悬浮 -->
+    <view class='footer-tab-box'>
+        <form report-submit='true' bindsubmit=''>
+            <view class='flex_start'>
+                <view class='footer-left-btn'>暂存</view>
+                <button form-type='submit' class='submit-btn'>提交</button>
+            </view>
+        </form>
+    </view>
+</view>

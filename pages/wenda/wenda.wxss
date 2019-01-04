@@ -1,0 +1,100 @@
+page {
+    background: #f0f3f8;
+}
+
+.first-tab-box > view {
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+    border-radius: 10rpx;
+    font-size: 28rpx;
+    color: #999;
+    font-weight: bold;
+    text-align: center;
+    line-height: 88rpx;
+}
+.first-tab-box > view.on {
+    background: #fff;
+    color: #278ae2;
+}
+
+.answer-status-box {
+    position: relative;
+    padding: 20rpx 25rpx;
+    background: #fff;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+    border-radius: 10rpx;
+    margin-top: 30rpx;
+}
+.answer-status-box::before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: -36rpx;
+    left: 100rpx;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 18rpx;
+    border-color: transparent transparent #fff transparent;
+}
+
+.answer-status-box .status-item {
+    width: 150rpx;
+    height: 72rpx;
+    border: 1px solid #e3e3e3;
+    border-radius: 5rpx;
+    margin-right: 20rpx;
+    box-sizing: border-box;
+    line-height: 72rpx;
+    text-align: center;
+    font-size: 24rpx;
+    color: #999;
+}
+.answer-status-box .status-item:last-child {
+    margin-right: 0;
+}
+.answer-status-box .status-item.on {
+    color: #278ae2;
+    border: 1px solid #278ae2;
+}
+
+.wenda-item-box {
+    margin-top: 25rpx;
+    padding: 10rpx 20rpx 25rpx;
+    background: #fff;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+    border-radius: 10rpx;
+}
+.img-box image {
+    display: block;
+    width: 155rpx;
+    height: 155rpx;
+    margin-right: 19rpx;
+    margin-top: 19rpx;
+}
+.img-box image:nth-child(4n) {
+    margin-right: 0;
+}
+
+.time-box {
+    width: 175rpx;
+    font-size: 24rpx;
+    color: #999;
+}
+.money-box {
+    font-size: 24rpx;
+    color: #ff6600;
+}
+.money-box > image {
+    display: block;
+    width: 28rpx;
+    height: 28rpx;
+    margin-right: 5rpx;
+}
+
+.head-img {
+    display: block;
+    width: 64rpx;
+    height: 64rpx;
+    margin-right: 20rpx;
+    border-radius: 50%;
+}

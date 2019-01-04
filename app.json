@@ -1,0 +1,69 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/wendaDetail/wendaDetail",
+        "pages/reply/reply",
+        "pages/askQuestion/askQuestion",
+        "pages/zhishiCircle/zhishiCircle",
+        "pages/zhishiDetail/zhishiDetail",
+        "pages/enjoyCircle/enjoyCircle",
+        "pages/publish/publish",
+        "pages/my/my",
+        "pages/shareList/shareList",
+        "pages/attentionList/attentionList",
+        "pages/wenda/wenda",
+        "pages/wallet/wallet",
+        "pages/withdraw/withdraw",
+        "pages/invite/invite",
+        "pages/apply/apply",
+        "pages/setting/setting",
+        "pages/personalInfo/personalIfon",
+        "pages/customer/customer ",
+        "pages/useCoupons/useCoupons",
+        "pages/errorInfo/errorInfo",
+        "pages/refundIssue/refundIssue",
+        "pages/about/about",
+        "pages/message/message",
+        "pages/myReply/myReply",
+        "pages/knowShare/knowShare"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#278ae2",
+        "navigationBarTitleText": "孰知",
+        "navigationBarTextStyle": "white",
+        "backgroundColor": "#f0f3f8"
+    },
+    "tabBar": {
+        "color": "#4a4e57",
+        "selectedColor": "#278ae2",
+        "backgroundColor": "#ffffff",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "问答",
+                "iconPath": "images/tabbar/tabbar_answer_default.png",
+                "selectedIconPath": "images/tabbar/tabbar_answer_selected.png"
+            },
+            {
+                "pagePath": "pages/zhishiCircle/zhishiCircle",
+                "text": "知士圈",
+                "iconPath": "images/tabbar/tabbar_zhishi_default.png",
+                "selectedIconPath": "images/tabbar/tabbar_zhishi_selected.png"
+            },
+            {
+                "pagePath": "pages/enjoyCircle/enjoyCircle",
+                "text": "知享圈",
+                "iconPath": "images/tabbar/tabbar_enjoy_default.png",
+                "selectedIconPath": "images/tabbar/tabbar_enjoy_selected.png"
+            },
+            {
+                "pagePath": "pages/my/my",
+                "text": "我的",
+                "iconPath": "images/tabbar/tabbar_mine_default.png",
+                "selectedIconPath": "images/tabbar/tabbar_mine_selected.png"
+            }
+        ]
+    },
+    "debug": true
+}

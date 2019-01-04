@@ -1,0 +1,20 @@
+<view class='p20'>
+    <view class='setting-box'>
+        <view class='flex_between flex_items'>
+            <view>个人资料</view>
+            <image class='more-right-icon' src='/images/more_right_icon.png'></image>
+        </view>
+        <view class='flex_between flex_items'>
+            <view>客服中心</view>
+            <image class='more-right-icon' src='/images/more_right_icon.png'></image>
+        </view>
+        <view class='flex_between flex_items'>
+            <view>关于孰知</view>
+            <image class='more-right-icon' src='/images/more_right_icon.png'></image>
+        </view>
+        <view class='flex_between flex_items'>
+            <view>退出登录</view>
+            <image class='more-right-icon' src='/images/more_right_icon.png'></image>
+        </view>
+    </view>
+</view>

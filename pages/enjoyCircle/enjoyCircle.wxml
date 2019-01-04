@@ -1,0 +1,72 @@
+<view class='plr20 mb20'>
+    <!-- 搜索栏 -->
+    <include src="/pages/common/searchTop.wxml" />
+
+    <view class='types-tab-box flex_start flex_items mt20'>
+        <view class='types-item {{tabIndex == 0 ? "on" : ""}}' bindtap='enjoyEvent' data-types='types' data-index='0'>知士话题</view>
+        <view class='types-item {{tabIndex == 1 ? "on" : ""}}' bindtap='enjoyEvent' data-types='types' data-index='1'>分享论坛</view>
+        <view class='publish-btn'>+发布</view>
+    </view>
+
+    <view class='secondary-class-box'>
+        <view class='flex_warp'>
+            <view class='class-item'>全部</view>
+            <view class='class-item'>学习科研</view>
+            <view class='class-item'>留学出国</view>
+            <view class='class-item'>求职创业</view>
+        </view>
+        <!-- 更多 -->
+        <view class='top-more-box mt5 flex_center flex_items'>
+            <image src='/images/top_more_icon.png'></image>
+            <view class='f20 c9'>更多</view>
+        </view>
+    </view>
+
+    <view class='enjoy-item-box'>
+        <view class='flex_start flex_items'>
+            <image class='head-img' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            <view class='f28 c3 ml20 mr30'>李思涵</view>
+            <view class='f24 c6'>浙江大学管理学院保研直博生</view>
+            <!-- 分享论坛 -->
+            <view wx:if="{{tabIndex == 1}}" class='report'>举报</view>
+        </view>
+
+        <view class='audio-box flex_start flex_items'>
+            <image class='audio-img' src='/images/audio_icon.png'></image>
+            <view class='flex1'>
+                <view class='f20 c3'>知士回答.mp3</view>
+                <view class='flex_start flex_items mt5'>
+                    <view class='f18 c9 mr10'>00:00</view>
+                    <progress class='flex1' percent='20' stroke-width="2" activeColor="#2889e2" backgroundColor="#edeaff"></progress>
+                    <view class='f18 c9 ml10'>02:38</view>
+                </view>
+            </view>
+        </view>
+
+        <view class='content'><text>分享经济包括不同人或组织之间对生产资料、产品、分销渠道、处于交易或消费过程中的商品和服务的分享。这个</text><text class='cmain'>[查看详情]</text></view>
+        
+        <view class='img-box mt20 mb10 flex_warp'>
+            <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+        </view>
+        <view class='flex_between flex_items'>
+            <view class='f24 c9'>1分钟前</view>
+            <view class='flex_end'>
+                <view class='flex_start flex_items'>
+                    <view class='f24 c9'>128</view>
+                    <image class='zan-icon' src='/images/icon_3.png'></image>
+                </view>
+                <view class='flex_start flex_items com-box'>
+                    <view class='f24 c9'>2</view>
+                    <image class='com-icon' src='/images/icon_4.png'></image>
+                </view>
+            </view>
+        </view>
+
+        <!-- 评论 -->
+        <include src="/pages/common/comment.wxml" /> 
+    </view>
+
+</view>

@@ -1,0 +1,252 @@
+page {
+    background: #f0f3f8;
+}
+.top-bg-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 165rpx;
+    background: #2889e2;
+    z-index: -1;
+}
+.zhishiInfo {
+    padding: 25rpx 20rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+.zhishiInfo .head-icon {
+    display: block;
+    width: 100rpx;
+    height: 100rpx;
+    margin-right: 15rpx;
+    border-radius: 50%;
+}
+.zhishiInfo .attention-btn {
+    width: 110rpx;
+    height: 42rpx;
+    margin-left: 50rpx;
+    border-radius: 21rpx;
+    border: 1px solid #e3e3e3;
+    font-size: 24rpx;
+    color: #278ae2;
+    text-align: center;
+    line-height: 38rpx;
+    box-sizing: border-box;
+}
+.zhishiInfo .score-icon {
+    display: block;
+    width: 32rpx;
+    height: 32rpx;
+    margin-left: 15rpx;
+    margin-right: 10rpx;
+}
+.zhishiInfo .message-icon {
+    display: block;
+    width: 39rpx;
+    height: 32rpx;
+    margin-right: 10rpx;
+}
+
+.attention-box {
+    margin-left: 190rpx;
+}
+
+.fan-icon {
+    display: block;
+    width: 27rpx;
+    height: 28rpx;
+    margin-right: 5rpx;
+}
+.attention-icon {
+    display: block;
+    width: 33rpx;
+    height: 28rpx;
+    margin-right: 5rpx;
+}
+
+/* 知士简介 */
+.introduction-box {
+    margin-top: 25rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+.introduction-box .title {
+    font-size: 28rpx;
+    color: #333;
+    padding: 30rpx 20rpx;
+    border-bottom: 1px solid #e9e9e9;
+}
+.introduction-box .row {
+    padding: 20rpx;
+    font-size: 24rpx;
+    color: #666;
+    line-height: 36rpx;
+}
+
+/* 分享 课程 回答 */
+.share-course-reply-box {
+    margin-top: 25rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+.types-tab-box {
+    padding: 30rpx 20rpx;
+    border-bottom: 1px solid #e9e9e9;
+    font-size: 28rpx;
+    color: #666;
+}
+.types-tab-box > view {
+    margin-right: 60rpx;
+}
+.types-tab-box > view:last-child {
+    margin-right: 0;
+}
+.types-tab-box view.on {
+    color: #333;
+}
+
+/* 列表 */
+.share-course-reply-row {
+    padding: 0 20rpx;
+    margin-bottom: 30rpx;
+}
+.share-item-box {
+    border-top: 1px solid #e9e9e9;
+    padding-top: 30rpx;
+    padding-bottom: 30rpx;
+}
+.share-item-box:first-child {
+    border-top: 0;
+}
+
+.share-item-box .img-box image,
+.reply-item-box .img-box image {
+    display: block;
+    width: 155rpx;
+    height: 155rpx;
+    margin-right: 18rpx;
+    margin-bottom: 18rpx;
+}
+.share-item-box .img-box image:nth-child(4n),
+.reply-item-box .img-box image:nth-child(4n) {
+    margin-right: 0;
+}
+
+.share-item-box .zan-icon {
+    display: block;
+    width: 24rpx;
+    height: 24rpx;
+    margin-left: 10rpx;
+}
+.share-item-box .com-box {
+    margin-left: 40rpx;
+}
+.share-item-box .com-icon {
+    display: block;
+    width: 27rpx;
+    height: 24rpx;
+    margin-left: 10rpx;
+}
+.share-item-box .comment-box {
+    position: relative;
+    width: 100%;
+    margin-top: 30rpx;
+    padding: 20rpx 10rpx;
+    background: #e3e3e3;
+    border-radius: 10rpx;
+    font-size: 24rpx;
+    color: #333;
+    line-height: 36rpx;
+    box-sizing: border-box;
+}
+.share-item-box .comment-box::before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: -28rpx;
+    left: 30rpx;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15rpx;
+    border-color: transparent transparent #e3e3e3 transparent;
+}
+.share-item-box .name {
+    color: #336699;
+}
+
+/* 课程 */
+.course-item-box {
+    padding: 25rpx 0 30rpx;
+    border-bottom: 1px solid #e9e9e9;
+}
+.course-item-box:last-child {
+    border-bottom: none;
+}
+.course-item-box > image {
+    display: block;
+    width: 140rpx;
+    height: 140rpx;
+    border-radius: 10rpx;
+    margin-right: 20rpx;
+}
+
+.null-row {
+    min-height: 500rpx;
+    margin-top: 130rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #999;
+}
+
+/* 回答 */
+.reply-item-box {
+    padding: 30rpx 0;
+    border-bottom: 1px solid #e9e9e9;
+}
+.reply-item-box:last-child {
+    border-bottom: none;
+}
+.reply-item-box .head-icon {
+    display: block;
+    width: 64rpx;
+    height: 64rpx;
+    margin-right: 20rpx;
+    border-radius: 50%;
+}
+
+.time-box {
+    width: 175rpx;
+    font-size: 24rpx;
+    color: #999;
+}
+.money-box {
+    font-size: 24rpx;
+    color: #ff6600;
+}
+.money-box > image {
+    display: block;
+    width: 28rpx;
+    height: 28rpx;
+    margin-right: 5rpx;
+}
+
+.no-reply-box {
+    min-height: 500rpx;
+    margin-top: 130rpx;
+}
+.ask-question-btn {
+    width: 264rpx;
+    height: 64rpx;
+    margin: 50rpx auto 0;
+    background: #278ae2;
+    border-radius: 10rpx;
+    line-height: 64rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #fff;
+}

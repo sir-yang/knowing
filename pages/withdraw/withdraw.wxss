@@ -1,0 +1,95 @@
+page {
+    background: #f0f3f8;
+}
+
+.withdraw-box {
+    margin-top: 20rpx;
+    padding: 0 20rpx 15rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+.withdraw-box > view:first-child {
+    height: 250rpx;
+    padding-left: 50rpx;
+}
+.withdraw-box .money {
+    margin-left: 40rpx;
+    font-size: 80rpx;
+    color: #030303;
+}
+
+.withdraw-type-box {
+    margin-top: 50rpx;
+}
+.withdraw-type-box .circle {
+    position: relative;
+    width: 24rpx;
+    height: 24rpx;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid #9b9b9b;
+    margin-right: 30rpx;
+}
+.withdraw-type-box .circle.on {
+    background: #278ae2;
+    border: 1px solid #278ae2;
+}
+.withdraw-type-box .circle.on::after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 6rpx;
+    left: 6rpx;
+    width: 12rpx;
+    height: 12rpx;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.withdraw-type-box .upload {
+    margin-left: 35rpx;
+    font-size: 26rpx;
+    color: #278ae2;
+    text-decoration: underline;
+}
+
+.immediate-withdrawal-btn {
+    margin-top: 200rpx;
+    width: 100%;
+    height: 88rpx;
+    background: #278ae2;
+    border-radius: 10rpx;
+    text-align: center;
+    line-height: 88rpx;
+    font-size: 28rpx;
+    color: #fff;
+}
+
+.collection-code {
+    position: relative;
+    width: 150rpx;
+    height: 150rpx;
+    margin-top: 30rpx;
+    margin-left: 58rpx;
+}
+
+.collection-code .delete-icon {
+    position: absolute;
+    top: -15rpx;
+    right: -17rpx;
+    width: 30rpx;
+    height: 30rpx;
+    font-size: 24rpx;
+    background: #fff;
+    text-align: center;
+    line-height: 30rpx;
+    color: red;
+    border-radius: 50%;
+    border: 1px solid #e3e3e3;
+}
+.collection-code image {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

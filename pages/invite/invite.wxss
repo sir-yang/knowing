@@ -1,0 +1,57 @@
+page {
+    background: #f0f3f8;
+}
+
+.invite-top {
+    position: relative;
+    width: 680rpx;
+    height: 400rpx;
+    padding-top: 90rpx;
+    margin: 30rpx auto 85rpx;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+    text-align: center;
+    box-sizing: border-box;
+}
+.invite-top image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    border-radius: 10rpx;
+}
+.invite-top .tit {
+    font-size: 72rpx;
+    color: #030303;
+    font-weight: bold;
+}
+.invite-top .text {
+    margin-top: 10rpx;
+    font-size: 30rpx;
+    color: #030303;
+    font-weight: bold;
+}
+
+.invite-share-btn {
+    display: block;
+    width: 280rpx;
+    height: 64rpx;
+    margin: 70rpx auto 0;
+    border-radius: 32rpx;
+    text-align: center;
+    line-height: 64rpx;
+    background: #278ae2;
+    font-size: 30rpx;
+    color: #fff;
+}
+
+.bottom-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 660rpx;
+    z-index: -1;
+}

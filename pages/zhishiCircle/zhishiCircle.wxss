@@ -1,0 +1,118 @@
+Page {
+    background: #f0f3f8;
+}
+
+.top-search-box {
+    margin-top: 15rpx;
+}
+.switch-box {
+    position: relative;
+    max-width: 200rpx;
+}
+.down-arrow {
+    position: absolute;
+    top: 15rpx;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-width: 10rpx;
+    border-style: solid;
+    border-color: #4a4e57 transparent transparent transparent;
+}
+.search-input {
+    margin: 0 30rpx;
+    height: 66rpx;
+    line-height: 66rpx;
+    background: #e8e8e8;
+    -webkit-border-radius: 5rpx;
+    -moz-border-radius: 5rpx;
+    -o-border-radius: 5rpx;
+    border-radius: 5rpx;
+}
+.search-input > input {
+    flex: 1;
+    padding: 0 20rpx;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 24rpx;
+    color: #333;
+}
+.search-input > image {
+    display: block;
+    width: 32rpx;
+    height: 32rpx;
+    margin-right: 30rpx;
+}
+.right-msg {
+    width: 32rpx;
+    height: 32rpx;
+}
+.right-msg > image {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* banner */
+.banner-box {
+    width: 100%;
+    height: 375rpx;
+    margin-top: 15rpx;
+    border-radius: 10rpx;
+}
+
+.banner-box image {
+    height: 375rpx;
+    border-radius: 10rpx;
+}
+
+.tab-box {
+    margin-top: 20rpx;
+    padding: 20rpx 25rpx 0;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+
+.tab-item {
+    width: 150rpx;
+    height: 72rpx;
+    margin-right: 20rpx;
+    margin-bottom: 20rpx;
+    border-radius: 5rpx;
+    border: 1px solid #e3e3e3;
+    box-sizing: border-box;
+    line-height: 72rpx;
+    text-align: center;
+    font-size: 24rpx;
+    color: #999;
+}
+.tab-item:nth-child(4n) {
+    margin-right: 0;
+}
+.tab-item.on {
+    color: #278ae2;
+    border: 1px solid #278ae2;
+}
+
+
+.zhishi-list-box {
+    padding-bottom: 20rpx;
+}
+.list-item {
+    margin-top: 25rpx;
+    padding: 20rpx 25rpx;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+    background: #fff;
+}
+
+.list-item > image {
+    display: block;
+    width: 140rpx;
+    height: 140rpx;
+    margin-right: 20rpx;
+    border-radius: 10rpx;
+}

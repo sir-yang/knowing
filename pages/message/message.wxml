@@ -1,0 +1,20 @@
+<view class='p20'>
+    <view class='setting-box'>
+        <view class='flex_between flex_items'>
+            <view>我的消息</view>
+            <image class='more-right-icon' src='/images/more_right_icon.png'></image>
+        </view>
+        <view class='flex_between flex_items'>
+            <view>系统消息</view>
+            <image class='more-right-icon' src='/images/more_right_icon.png'></image>
+        </view>
+        <view class='flex_between flex_items'>
+            <view>私信</view>
+            <image class='more-right-icon' src='/images/more_right_icon.png'></image>
+        </view>
+        <view class='flex_between flex_items'>
+            <view>知了分享</view>
+            <image class='more-right-icon' src='/images/more_right_icon.png'></image>
+        </view>
+    </view>
+</view>

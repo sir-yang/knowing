@@ -1,0 +1,35 @@
+<view class='plr20'>
+    <form report-submit='true' bindsubmit=''>
+        <view class='info-item-box'>
+            <view class='flex_between flex_items'>
+                <view class='pos'>姓名</view>
+                <input type='text' value='工一琳' maxlength='10' placeholder='请输入姓名' />
+            </view>
+            <view class='flex_between flex_items'>
+                <view class='pos'>单位</view>
+                <input type='text' value='成都顶呱呱计算机有限公司' placeholder='请输入公司名称' />
+            </view>
+            <view class='flex_between flex_items'>
+                <view class='pos'>手机号</view>
+                <input type='number' value='18225351224' maxlength='15' placeholder='请输入手机号' />
+            </view>
+        </view>
+
+        <view class='info-item-box'>
+            <view class='flex_between flex_items'>
+                <view class='pos'>请选择申请知士类别</view>
+                <view>分享知士</view>
+            </view>
+            <view class='flex_between flex_items'>
+                <view class='label'>推荐人姓名</view>
+                <input type='text' value='柯小小' maxlength='10' placeholder='请输入推荐人姓名' />
+            </view>
+            <view class='flex_between flex_items'>
+                <view class='label'>推荐人手机号</view>
+                <input type='number' value='18225352623' maxlength='15' placeholder='请输入推荐人手机号' />
+            </view>
+        </view>
+
+        <button form-type='submit' class='save-info-btn'>保存</button>
+    </form>
+</view>
