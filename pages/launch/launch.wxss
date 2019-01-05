@@ -1,20 +1,13 @@
-.container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 200rpx 0;
-    box-sizing: border-box;
-}
 
 .userinfo {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 200rpx;
 }
 
 .userinfo-avatar {
+    display: block;
     width: 128rpx;
     height: 128rpx;
     margin: 20rpx;
@@ -22,5 +15,21 @@
 }
 
 .userinfo-nickname {
+    font-size: 32rpx;
     color: #aaa;
+}
+
+.get-userinfo-btn,
+.enter-use-btn {
+    position: absolute;
+    left: 50%;
+    bottom: 200rpx;
+    transform: translateX(-50%);
+    width: 260rpx;
+    line-height: 88rpx;
+    text-align: center;
+    font-size: 30rpx;
+    color: #666;
+    border: 1px solid #e3e3e3;
+    border-radius: 10rpx;
 }

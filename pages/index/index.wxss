@@ -103,6 +103,9 @@ Page {
 .sort-box .sort-item {
     position: relative
 }
+.sort-box .sort-item.on {
+    color: #333;
+}
 .sort-box .sort-item::before {
     position: absolute;
     top: 30rpx;
@@ -129,6 +132,9 @@ Page {
 }
 .sort-box .sort-item.on::before {
     border-color: transparent transparent #4a4e57 transparent;
+}
+.sort-box .sort-item.on::after {
+    border-color: #4a4e57 transparent transparent transparent;
 }
 
 .list-item {

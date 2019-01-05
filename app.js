@@ -5,6 +5,7 @@ let common = require('utils/common.js');
 
 App({
     onLaunch(_options) {
+        checkToken: false,
         wx.setStorageSync("serverurl", "http://192.168.0.104/");
     },
 
@@ -24,24 +25,57 @@ App({
             }
         });
 
-        common.getToken().then(() => {
-            // wx.showModal({
-            //     title: '授权提示',
-            //     content: '小程序使用需微信授权',
-            //     showCancel: false,
-            //     confirmText: "前往授权",
-            //     confirmColor: '#278ae2',
-            //     success(res) {
-            //         wx.switchTab({
-            //             url: '/pages/my/my'
-            //         })
-            //     }
-            // })
-        })
+        //更新
+        if (wx.canIUse('getUpdateManager')) {
+            const updateManager = wx.getUpdateManager()
+            updateManager.onCheckForUpdate(function (res) {
+                // 请求完新版本信息的回调
+                console.log(res);
+            })
+            updateManager.onUpdateReady(function () {
+                console.log("新的版本已经下载好");
+                // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                updateManager.applyUpdate()
+            })
+        }
+
+        wx.pro.checkSession().then(() => {
+            let token = common.getAccessToken();
+            if (!token) {
+                console.log('no token');
+            } else if (that.checkToken) {
+                that.checkToken = false;
+                let myInfo = common.getStorage('userInfo');
+                if (!myInfo.avatarUrl && !myInfo.nickName) {
+                    wx.reLaunch({
+                        url: '/pages/launch/launch'
+                    })
+                    return common.getPersonInfo().then(() => {});
+                } else {
+                    wx.switchTab({
+                        url: '/pages/index/index'
+                    })
+                }
+            }
+            that.refresh(options);
+        }).catch((_e) => {
+            that.refresh(options);
+        });
+    },
+
+    // 刷新token
+    refresh(_options) {
+        common.getToken().then((_res) => {
+            common.getPersonInfo().then((_re) => {
+                getApp().globalData.tokenUpdated();
+            });
+        });
     },
 
     globalData: {
         commonFun: common,
-        utilFun: util
+        utilFun: util,
+        isLaunch: 0,
+        tokenUpdated: null
     }
 });

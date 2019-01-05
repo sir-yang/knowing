@@ -1,9 +1,11 @@
-<view class="container">
-    <view class="userinfo">
-        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-        <block wx:else>
-            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-            <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-        </block>
-    </view>
+<view wx:if="{{loadStatus}}" class="userinfo">
+    <block wx:if="{{!hasUserInfo && canIUse}}">
+        <image class='userinfo-avatar' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+        <button wx:if="{{!hasUserInfo && canIUse}}" class='get-userinfo-btn' open-type='getUserInfo' bindgetuserinfo='getUserInfo'>获取头像昵称</button>
+    </block>
+    <block wx:else>
+        <image class='userinfo-avatar' src='{{userInfo.avatarUrl}}'></image>
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        <navigator open-type='switchTab' class='enter-use-btn' url='/pages/index/index' hover-class='none'>进入使用</navigator>
+    </block>
 </view>

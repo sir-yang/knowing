@@ -117,6 +117,15 @@ page {
     display: block;
 }
 
+.onlookers-money-item .money-ipt {
+    width: 100%;
+    height: 52rpx;
+    line-height: 52rpx;
+    font-size: 24rpx;
+    color: #333;
+    text-align: center;
+}
+
 
 /* 底部悬浮 */
 .footer-tab-box-spacing {
@@ -129,6 +138,7 @@ page {
     right: 0;
     bottom: 0;
     height: 87rpx;
+    z-index: 10;
 }
 .footer-left-btn {
     width: 270rpx;

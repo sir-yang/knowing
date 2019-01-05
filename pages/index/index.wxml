@@ -6,8 +6,8 @@
             <view class='down-arrow'></view>
         </view>
         <view class='flex1 search-input flex_start flex_items'>
-            <input type='text' placeholder-class='cbc' placeholder='请输入' />
-            <image src='/images/home_search_icon.png'></image>
+            <input type='text' bindinput='questionAnswerEvent' data-types='ipt' value='{{searchVal}}' placeholder-class='cbc' placeholder='请输入' />
+            <image catchtap='questionAnswerEvent' data-types='search' src='/images/home_search_icon.png'></image>
         </view>
         <view class='right-msg'>
             <text></text>
@@ -17,12 +17,10 @@
 
     <!-- 筛选 -->
     <view class='filter-type-box flex_start flex_items'>
-        <view class='type-item {{typeTab == 0 ? "on" : ""}}' bindtap='questionAnswerEvent' data-types='typeTab' data-index='0'>读研</view>
-        <view class='type-item {{typeTab == 1 ? "on" : ""}}' bindtap='questionAnswerEvent' data-types='typeTab' data-index='1'>留学</view>
-        <view class='type-item {{typeTab == 2 ? "on" : ""}}' bindtap='questionAnswerEvent' data-types='typeTab' data-index='2'>求职</view>
-        <view class='type-item {{typeTab == 3 ? "on" : ""}}' bindtap='questionAnswerEvent' data-types='typeTab' data-index='3'>竞赛</view>
-        <view class='type-item {{typeTab == 4 ? "on" : ""}}' bindtap='questionAnswerEvent' data-types='typeTab' data-index='4'>其他</view>
-        <view class='ask-question'>+提问</view>
+        <view class='flex1 flex_start flex_items'>
+            <view wx:for="{{typeTabArr}}" wx:key="" class='type-item {{typeTab == index ? "on" : ""}}' bindtap='questionAnswerEvent' data-types='typeTab' data-index='{{index}}'>{{item.name}}</view>
+        </view>
+        <view class='ask-question' bindtap='questionAnswerEvent' data-types='ask'>+提问</view>
     </view>
 
     <!-- 普通用户 -->
@@ -47,7 +45,7 @@
             </view>
             <view class='mt20 f24 c3'>请问一下浙大管理学院的保研复试要求？</view>
             <view class='img-box flex_warp'>
-                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image catchtap='questionAnswerEvent' data-types='seeImg' data-index='{{index}}' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
                 <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
                 <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
                 <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>

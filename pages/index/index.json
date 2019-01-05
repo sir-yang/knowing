@@ -1,3 +1,4 @@
 {
-    "navigationBarTitleText": "问答社区"
+    "navigationBarTitleText": "问答社区",
+    "enablePullDownRefresh": true
 }

@@ -3,21 +3,17 @@
     <view class='reply-info-box'>
         <!-- 类型 -->
         <view class='flex_warp'>
-            <view class='top-tab-item'>读研</view>
-            <view class='top-tab-item on'>留学</view>
-            <view class='top-tab-item'>求职</view>
-            <view class='top-tab-item'>竞赛</view>
-            <view class='top-tab-item'>其他</view>
+            <view class='top-tab-item {{typeTab == index ? "on" : ""}}' wx:for="{{typeTabArr}}" wx:key="" bindtap='askQuestionEvent' data-types='typeTab' data-index='{{index}}'>{{item.name}}</view>
         </view>
         <!-- 文字 -->
-        <textarea class='reply-ipt' placeholder-class='f9' placeholder='我要回答'></textarea>
+        <textarea class='reply-ipt' value='{{contentVal}}' maxlength='200' bindinput='askQuestionEvent' data-types='content' placeholder-class='f9' placeholder='我要提问'></textarea>
 
         <!-- 图片 -->
         <view class='flex_start mt20'>
-            <view class='add-pic-btn'>添加图片</view>
+            <view class='add-pic-btn' bindtap='askQuestionEvent' data-types='upload'>添加图片</view>
             <view class='flex1 flex_warp'>
-                <view class='pic-box'>
-                    <view class='remove-img'>X</view>
+                <view wx:for="{{imgList}}" wx:key="" class='pic-box'>
+                    <view class='remove-img' catchtap='askQuestionEvent' data-types='removeImg' data-index='{{index}}'>X</view>
                     <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
                 </view>
                 <view class='pic-box'>
@@ -39,7 +35,7 @@
     <view class='onlookers-money-box'>
         <view class='tit'>设置围观金额</view>
         <view class='flex_warp'>
-            <view class='onlookers-money-item'>
+            <view class='onlookers-money-item {{moneyIndex == 0 ? "on" : ""}}' bindtap='askQuestionEvent' data-types='money' data-index='0'>
                 <view>0元</view>
                 <image src='/images/reply_selected_icon.png'></image>
             </view>
@@ -60,8 +56,9 @@
                 <image src='/images/reply_selected_icon.png'></image>
             </view>
             <view class='onlookers-money-item'>
-                <view>其他金额</view>
-                <image src='/images/reply_selected_icon.png'></image>
+                <input type='number' value='{{moneyVal}}' bindinput='askQuestionEvent' data-types='moneyIpt' class='money-ipt' placeholder='其他金额' />
+                <!-- <view>其他金额</view>
+                <image src='/images/reply_selected_icon.png'></image> -->
             </view>
         </view>
     </view>
@@ -70,9 +67,9 @@
     <!-- 底部悬浮 -->
     <view class='footer-tab-box-spacing'></view>
     <view class='footer-tab-box'>
-        <form report-submit='true' bindsubmit=''>
+        <form report-submit='true' bindsubmit='askQuestionEvent' data-types='submit'>
             <view class='flex_start'>
-                <view class='footer-left-btn'>暂存</view>
+                <view class='footer-left-btn' catchtap='askQuestionEvent' data-types='temporary'>暂存</view>
                 <button form-type='submit' class='submit-btn'>提交</button>
             </view>
         </form>

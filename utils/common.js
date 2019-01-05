@@ -21,39 +21,6 @@ function showTimeToast(title) {
     });
 }
 
-
-//滚动到顶部
-function isscrollToPage(that) {
-    if (wx.pageScrollTo) {
-        wx.pageScrollTo({
-            scrollTop: 0
-        });
-    } else {
-        showClickModal('您当前微信版本过低');
-    }
-}
-
-//滚动到顶部按钮的显示和隐藏
-function goTopEvent(that, scrollTop) {
-    let isPageScrollTo = false;
-    if (wx.pageScrollTo) {
-        isPageScrollTo = true;
-    } else {
-        isPageScrollTo = false;
-    }
-    if (scrollTop > 300 && !that.data.showGoTop) {
-        that.setData({
-            showGoTop: true,
-            isPageScrollTo
-        });
-    } else if (scrollTop < 300 && that.data.showGoTop) {
-        that.setData({
-            showGoTop: false,
-            isPageScrollTo
-        });
-    }
-}
-
 // 保存数据事件
 function setInfo(key, data) {
     try {
@@ -231,11 +198,52 @@ function dataListHandle(that, data, list, offset) {
     };
 }
 
+// 查看大图
+function seeBigImg(imgUrl, imgList) {
+    let urls = imgList;
+    // for (let i = 0; i < imgList.length; i += 1) {
+    //     urls[i] = imgList[i].original_url;
+    // }
+
+    wx.previewImage({
+        current: imgUrl, // 当前显示图片的http链接
+        urls // 需要预览的图片http链接列表
+    });
+}
+
+// 上传图片
+function uploadImg(num, func) {
+    let tempFilePaths = '';
+    wx.pro.chooseImage({
+        count: num, //最多可以选择的图片张数，默认9
+        sizeType: ['compressed'], // 指定是压缩图
+        sourceType: ['album', 'camera'] // 可以指定来源是相册还是相机，默认二者都有
+    }).then((res) => {
+        // console.log(JSON.stringify(res));
+        tempFilePaths = res.tempFilePaths;
+        let url = '/album/0/photo_upload_url/?scenario=' + scenario;
+        return util.httpRequest(url);
+    }).then((res) => {
+        //console.log(JSON.stringify(res));
+        wx.showLoading({
+            title: '上传中，请稍等...'
+        });
+        let pros = [];
+        tempFilePaths.forEach((path) => {
+            pros.push(singleUpload(res, path));
+        });
+        return wx.pro.all(pros);
+    }).then((_res) => {
+        wx.hideLoading();
+        func(_res, tempFilePaths);
+    });
+}
+
 /**
  * 获取用户信息
  */
 function getPersonInfo() {
-    let url = "api/user/getUser";
+    let url = "api/User/getUser";
     return util.httpRequest(url).then((res) => {
         if (res.result == "success") {
             setInfo('userInfo', res.results);
@@ -272,40 +280,12 @@ function userInfoBind(that, event) {
                 that.setData({
                     authALter: false
                 });
-                // showClickModal('绑定成功');
                 //重新获取信息
                 getPersonInfo().then(() => {});
             } else {
                 showClickModal('绑定失败');
             }
         });
-    }
-}
-
-// 客服信息
-function getServiceInfo() {
-    let url = 'api/user/getService';
-    return util.httpRequest(url).then((res) => {
-        if (res.result == 'success') {
-            return res.results.img
-        } else {
-            showClickModal(res.msg);
-        }
-    });
-}
-
-// 授权判断
-function authInfo(that, func) {
-    let myInfo = getInfo('userInfo');
-    if (myInfo.hasOwnProperty("id")) {
-        if (!myInfo.face && !myInfo.nickName) {
-            that.setData({
-                authALter: true
-            });
-            func(false);
-            return;
-        }
-        func(true);
     }
 }
 
@@ -344,12 +324,26 @@ function timeCountDown(that, timestamp) {
     };
 }
 
+
+
+
+// =================  公共接口 ============== //
+
+
+// 问答分类
+function requestCate(func) {
+    let url = "api/Cate/getPage";
+    return util.httpRequest(url, { type: 1 }).then((res) => {
+        return func(res);
+    })
+}
+
+
+
+
 module.exports = {
-    isscrollToPage,
-    goTopEvent,
     setStorage: setInfo,
     getStorage: getInfo,
-    isscrollToPage,
     getAccessToken,
     getToken,
     refreshToken,
@@ -360,7 +354,9 @@ module.exports = {
     isNull,
     getPersonInfo,
     userInfoBind,
-    getServiceInfo,
-    authInfo,
-    timeCountDown
+    timeCountDown,
+    seeBigImg,
+    uploadImg,
+
+    requestCate
 };
