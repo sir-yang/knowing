@@ -8,11 +8,38 @@ page {
     border-radius: 10rpx;
     box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
 }
-.recording-icon {
-    display: block;
+
+.record-audio-box {
+    position: relative;
+    min-height: 43rpx;
+}
+.recording-box {
+    position: absolute;
+    top: -20rpx;
+    left: -20rpx;
     width: 31rpx;
     height: 43rpx;
-    margin-right: 120rpx;
+    padding: 20rpx;
+    z-index: 1;
+}
+.recording-icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.record-audio-box .open-set {
+    position: absolute;
+    top: -20rpx;
+    left: -20rpx;
+    width: 71rpx;
+    height: 83rpx;
+    padding: 20rpx;
+    z-index: 5;
+}
+
+.right-audio-box {
+    margin-left: 120rpx;
 }
 .right-audio-box > image {
     display: block;

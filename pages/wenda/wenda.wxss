@@ -76,7 +76,7 @@ page {
 }
 
 .time-box {
-    width: 175rpx;
+    width: 240rpx;
     font-size: 24rpx;
     color: #999;
 }

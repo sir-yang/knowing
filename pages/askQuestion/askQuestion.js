@@ -10,6 +10,7 @@ Page({
         typeTab: 0,
         imgList: [],
         contentVal: '',
+        moneyData: [],
         moneyVal: '',
         moneyIndex: -1
     },
@@ -21,35 +22,35 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
         this.requestGetCate();
     },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function () {
+    onReady: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
+    onShow: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function () {
+    onHide: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload: function () {
+    onUnload: function() {
 
     },
 
@@ -58,11 +59,11 @@ Page({
         let that = this;
         let dataset = event.currentTarget.dataset;
         if (dataset.types === 'typeTab') {
-            if (dataset.index == that.data.typeTab) return; 
+            if (dataset.index == that.data.typeTab) return;
             that.setData({
                 typeTab: dataset.index
             })
-        } else if(dataset.types === 'upload') {
+        } else if (dataset.types === 'upload') {
             let imgList = [];
             let imgListArr = [];
             common.uploadImg(9, (photoUrl, tempFilePaths) => {
@@ -118,6 +119,13 @@ Page({
         }
     },
 
+    // 其他金额获取焦点
+    focusIpt() {
+        this.setData({
+            moneyIndex: -1
+        })
+    },
+
     // 获取数据
     getSubmitVal() {
         let that = this;
@@ -128,16 +136,23 @@ Page({
         }
 
         if (that.state.imgArr.length > 0) {
-            data.img = that.state.imgArr;
+            data.qImg = that.state.imgArr;
         }
-        if (that.data.contentVal != "") {
-            data.content = that.data.contentVal;
-        }
-        if (that.data.moneyIndex == -1 && that.data.moneyVal == '') {
-            common.showTimeToast('请选择围观金额');
+        if (that.data.contentVal == '') {
+            common.showTimeToast('请填写提问内容');
             return;
+        }
+        data.question = that.data.contentVal;
+
+        if (that.data.moneyIndex != -1) {
+            let moneyData = that.data.moneyData;
+            data.askMoney = moneyData[that.data.moneyIndex];
         } else {
-            data.money = 1;
+            if (that.data.moneyVal == '') {
+                common.showTimeToast('请选择围观金额');
+                return;
+            }
+            data.askMoney = that.data.moneyVal;
         }
         return data;
     },
@@ -146,11 +161,12 @@ Page({
     requestGetCate() {
         let that = this;
         common.requestCate((res) => {
+            // 获取提问金额
+            common.requestGetMoney(that);
             if (res.result === 'success') {
                 that.setData({
                     typeTabArr: res.results
                 })
-                that.requestList(0);
             } else {
                 common.showClickModal(res.msg);
             }
@@ -160,6 +176,20 @@ Page({
     // 提交
     requestSubmit(vals) {
         let that = this;
-
+        let url = 'api/Answer/save';
+        util.httpRequest(url, vals, 'POST').then((res) => {
+            if (res.result === 'success') {
+                wx.showModal({
+                    title: '提示',
+                    content: res.msg,
+                    showCancel: false,
+                    success() {
+                        wx.navigateBack({});
+                    }
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
     }
 })

@@ -24,53 +24,54 @@
     </view>
 
     <!-- 普通用户 -->
-    <view class='sort-box flex_between flex_items'>
-        <view class='sort-item {{sortTab == 0 ? "on" : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='0'>提问时间</view>
-        <view class='sort-item {{sortTab == 1 ? "on" : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='1'>问题金额</view>
-        <view class='sort-item {{sortTab == 2 ? "on" : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='2'>围观人数</view>
+    <view wx:if="{{role == 1}}" class='sort-box flex_between flex_items'>
+        <view class='sort-item {{sortTab == 3 ? (order == 1 ? "on" : "down") : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='3'>提问时间</view>
+        <view class='sort-item {{sortTab == 2 ? (order == 1 ? "on" : "down") : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='2'>问题金额</view>
+        <view class='sort-item {{sortTab == 1 ? (order == 1 ? "on" : "down") : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='1'>围观人数</view>
     </view>
 
     <!-- 知士 -->
-    <view class='sort-box flex_around flex_items hide'>
-        <view class='sort-item {{sortTab == 0 ? "on" : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='0'>提问时间</view>
-        <view class='sort-item {{sortTab == 1 ? "on" : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='1'>问题金额</view>
+    <view wx:else class='sort-box flex_around flex_items'>
+        <view class='sort-item {{sortTab == 3 ? (order == 1 ? "on" : "down") : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='3'>提问时间</view>
+        <view class='sort-item {{sortTab == 2 ? (order == 1 ? "on" : "down") : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='2'>问题金额</view>
     </view>
 
     <view class='list-box pb20'>
         <!-- 普通用户 -->
-        <view class='list-item' bindtap='questionAnswerEvent' data-types='onlookers' data-index='2'>
+        <view wx:for="{{list}}" wx:key="" class='list-item' bindtap='questionAnswerEvent' data-types='onlookers' data-index='{{index}}'>
             <view class='flex_start flex_items'>
-                <image class='list-item-head' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                <view class='f28 c3'>李思涵</view>
+                <view class='flex1 flex_start flex_items'>
+                    <image class='list-item-head' src='{{item.user.avatarUrl}}'></image>
+                    <view class='f28 c3'>{{item.user.name}}</view>
+                </view>
+                <view wx:if="{{role == 2}}" class='answer-text' catchtap='questionAnswerEvent' data-types='reply' data-index='{{index}}'>去回答</view>
             </view>
-            <view class='mt20 f24 c3'>请问一下浙大管理学院的保研复试要求？</view>
-            <view class='img-box flex_warp'>
-                <image catchtap='questionAnswerEvent' data-types='seeImg' data-index='{{index}}' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            <view class='mt20 f24 c3'>{{item.question}}</view>
+            <view wx:if="{{item.qImg.length > 0}}" class='img-box flex_warp'>
+                <image wx:for="{{item.qImg}}" wx:key="" wx:for-index="idx" wx:for-item="imgItem" catchtap='questionAnswerEvent' data-types='seeImg' data-index='{{index}}' data-idx='{{idx}}' src='{{imgItem.thumb_small_url}}'></image>
             </view>
             <view class='flex_start flex_items mt30 pb20'>
-                <view class='time-box'>1分钟前</view>
-                <view class='f24 c9'>99人已围观</view>
+                <view class='time-box'>{{item.times}}</view>
+                <view wx:if="{{role == 1}}" class='f24 c9'>{{item.aroundNum}}人已围观</view>
                 <view class='money-box flex1 flex_end flex_items'>
                     <image src='/images/money_icon.png'></image>
-                    <view>围观金额 5元</view>
+                    <view wx:if="{{role == 1}}">围观金额 {{item.aroundMoney}}元</view>
+                    <view wx:else>提问金额 {{item.askMoney}}元</view>
                 </view>
             </view>
 
-            <view class='flex_start flex_items bte9s pt20 pb10'>
-                <image class='list-item-head' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            <view wx:if="{{role == 1}}" class='flex_start flex_items bte9s pt20 pb10'>
+                <image class='list-item-head' src='{{item.answers.avatarUrl}}'></image>
                 <view class='flex1 flex_between flex_column'>
-                    <view class='f26 c3'>何思思</view>
-                    <view class='f24 c6'>浙江大学管理学院保研直博生</view>
+                    <view class='f26 c3'>{{item.answers.name}}</view>
+                    <view class='f24 c6'>{{item.answers.keyWords}}</view>
                 </view>
-                <view class='f24 cmain self_end'>查看回答详情</view>
+                <view class='f24 cmain self_end' catchtap='questionAnswerEvent' data-types='detail' data-index='{{index}}'>查看回答详情</view>
             </view>
         </view>
 
         <!-- 知士 -->
-        <view class='list-item' bindtap='questionAnswerEvent' data-types='onlookers' data-index='2'>
+        <view hidden class='list-item' bindtap='questionAnswerEvent' data-types='onlookers' data-index='2'>
             <view class='flex_start flex_items'>
                 <view class='flex1 flex_start flex_items'>
                     <image class='list-item-head' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
@@ -99,9 +100,9 @@
 <!-- 围观弹框 -->
 <view class='tankuang {{onlookersTk}}' bindtap='questionAnswerEvent' data-types='closeTk'></view>
 <view class='onlookers-modal-content {{onlookersTk}}'>
-    <!-- <view>分享围观</view> -->
-    <button class='look-btn' open-type='share'>分享围观</button>
-    <view class='look-btn bte9s'>一元围观</view>
+    <!-- <button class='look-btn' open-type='share'>分享围观</button> -->
+    <view class='look-btn' bindtap='questionAnswerEvent' data-types='share'>分享围观</view>
+    <view class='look-btn bte9s' bindtap='questionAnswerEvent' data-types='pay'>付费围观</view>
 </view>
 
 <!-- 海报 -->
@@ -110,5 +111,6 @@
     <view class='poster-img'>
         <image src='http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg'></image>
     </view>
-    <view class='save-photo-btn'>保存图片</view>
+    <button wx:if="{{needAuth}}" class='save-photo-btn' open-type='openSetting' bindopensetting="openSetBack">保存图片</button>
+    <view wx:else class='save-photo-btn' bindtap='questionAnswerEvent' data-types='savaImg'>保存图片</view>
 </view>

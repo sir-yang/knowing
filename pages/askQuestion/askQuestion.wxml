@@ -35,28 +35,12 @@
     <view class='onlookers-money-box'>
         <view class='tit'>设置围观金额</view>
         <view class='flex_warp'>
-            <view class='onlookers-money-item {{moneyIndex == 0 ? "on" : ""}}' bindtap='askQuestionEvent' data-types='money' data-index='0'>
-                <view>0元</view>
+            <view wx:for="{{moneyData}}" wx:key="" class='onlookers-money-item {{moneyIndex == index ? "on" : ""}}' bindtap='askQuestionEvent' data-types='money' data-index='{{index}}'>
+                <view>{{item}}元</view>
                 <image src='/images/reply_selected_icon.png'></image>
             </view>
             <view class='onlookers-money-item'>
-                <view>0元</view>
-                <image src='/images/reply_selected_icon.png'></image>
-            </view>
-            <view class='onlookers-money-item on'>
-                <view>0元</view>
-                <image src='/images/reply_selected_icon.png'></image>
-            </view>
-            <view class='onlookers-money-item'>
-                <view>0元</view>
-                <image src='/images/reply_selected_icon.png'></image>
-            </view>
-            <view class='onlookers-money-item'>
-                <view>0元</view>
-                <image src='/images/reply_selected_icon.png'></image>
-            </view>
-            <view class='onlookers-money-item'>
-                <input type='number' value='{{moneyVal}}' bindinput='askQuestionEvent' data-types='moneyIpt' class='money-ipt' placeholder='其他金额' />
+                <input type='number' value='{{moneyVal}}' bindfocus='focusIpt' bindinput='askQuestionEvent' data-types='moneyIpt' class='money-ipt' placeholder='其他金额' />
                 <!-- <view>其他金额</view>
                 <image src='/images/reply_selected_icon.png'></image> -->
             </view>

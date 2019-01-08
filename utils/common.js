@@ -173,7 +173,6 @@ function dataListHandle(that, data, list, offset) {
     } else if (offset === 0) {
         list = [];
     }
-
     let hasNext = true;
     if (data.hasOwnProperty('next')) {
         console.log('count:' + data.count + ';next:' + data.next);
@@ -187,6 +186,7 @@ function dataListHandle(that, data, list, offset) {
     } else {
         that.state.hasmore = false;
     }
+
     that.state.pageOnShow = true;
     that.state.isOnReachBottom = true;
     that.state.isonPullDownRefresh = false;
@@ -199,11 +199,15 @@ function dataListHandle(that, data, list, offset) {
 }
 
 // 查看大图
-function seeBigImg(imgUrl, imgList) {
-    let urls = imgList;
-    // for (let i = 0; i < imgList.length; i += 1) {
-    //     urls[i] = imgList[i].original_url;
-    // }
+function seeBigImg(imgUrl, imgList, types) {
+    let urls = [];
+    if (types == 2) {
+        for (let i = 0; i < imgList.length; i += 1) {
+            urls[i] = imgList[i].original_url;
+        }
+    } else {
+        urls = imgList;
+    }
 
     wx.previewImage({
         current: imgUrl, // 当前显示图片的http链接
@@ -338,6 +342,45 @@ function requestCate(func) {
     })
 }
 
+// 获取提问金额
+function requestGetMoney(that) {
+    let url = 'api/Answer/getMoney';
+    util.httpRequest(url).then((res) => {
+        if (res.result === 'success') {
+            that.setData({
+                moneyData: res.results
+            })
+        } else {
+            showClickModal(res.msg);
+        }
+    });
+}
+
+// 七牛上传文件token
+function requestQiniuToken(func) {
+    let url = 'api/Index/getToken';
+    util.httpRequest(url).then((res) => {
+        if (res.result === 'success') {
+            return func(res);
+        } else {
+            showClickModal(res.msg);
+        }
+    });
+}
+
+// 获取验证码
+function requestGetSend(phone) {
+    let url = 'api/Login/send';
+    util.httpRequest(url, { phone: phone }).then((res) => {
+        wx.hideLoading();
+        if (res.result === 'success') {
+            
+        } else {
+            showClickModal(res.msg);
+        }
+    });
+}
+
 
 
 
@@ -358,5 +401,7 @@ module.exports = {
     seeBigImg,
     uploadImg,
 
-    requestCate
+    requestCate,
+    requestGetMoney,
+    requestQiniuToken
 };

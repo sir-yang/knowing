@@ -133,7 +133,7 @@ Page {
 .sort-box .sort-item.on::before {
     border-color: transparent transparent #4a4e57 transparent;
 }
-.sort-box .sort-item.on::after {
+.sort-box .sort-item.down::after {
     border-color: #4a4e57 transparent transparent transparent;
 }
 
@@ -170,7 +170,7 @@ Page {
 }
 
 .time-box {
-    width: 175rpx;
+    width: 240rpx;
     font-size: 24rpx;
     color: #999;
 }
