@@ -7,7 +7,6 @@ function showClickModal(title) {
         title: '提示',
         content: title,
         showCancel: false,
-        confirmColor: '#FEA2C5',
         success(_res) { }
     });
 }
@@ -333,6 +332,17 @@ function timeCountDown(that, timestamp) {
 
 // =================  公共接口 ============== //
 
+// 登录
+function requestLogin(vals) {
+    let url = 'api/Login/login';
+    util.httpRequest(url, vals, 'POST').then((res) => {
+        if (res.result === 'success') {
+
+        } else {
+            showClickModal(res.msg);
+        }
+    });
+}
 
 // 问答分类
 function requestCate(func) {
@@ -368,13 +378,26 @@ function requestQiniuToken(func) {
     });
 }
 
-// 获取验证码
+// 获取短信验证码
 function requestGetSend(phone) {
     let url = 'api/Login/send';
     util.httpRequest(url, { phone: phone }).then((res) => {
         wx.hideLoading();
         if (res.result === 'success') {
             
+        } else {
+            showClickModal(res.msg);
+        }
+    });
+}
+
+// 获取图片验证码
+function requestGetImgSend() {
+    let url = 'api/Login/imgCode';
+    util.httpRequest(url).then((res) => {
+        wx.hideLoading();
+        if (res.result === 'success') {
+
         } else {
             showClickModal(res.msg);
         }
@@ -401,7 +424,10 @@ module.exports = {
     seeBigImg,
     uploadImg,
 
+    requestLogin,
     requestCate,
     requestGetMoney,
-    requestQiniuToken
+    requestQiniuToken,
+    requestGetSend,
+    requestGetImgSend
 };

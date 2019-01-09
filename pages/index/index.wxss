@@ -231,3 +231,8 @@ Page {
     font-size: 28rpx;
     color: #fff;
 }
+
+@import "/pages/common/login.wxss";
+@import "/pages/common/forgetPw.wxss";
+@import "/pages/common/regist.wxss";
+@import "/pages/common/perfectInfo.wxss";

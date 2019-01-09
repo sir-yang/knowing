@@ -129,17 +129,13 @@ Page({
         let that = this;
         let url = 'api/Answer/getPage';
         let data = {
+            offset,
+            limit: that.state.limit,
             aid: 0,
             type: that.data.typeIndex
         }
         if (that.data.typeIndex == 1) {
             data.status = that.data.tabIndex;
-        }
-        if (that.state.pageOnShow) {
-            wx.showLoading({
-                title: '加载中...',
-                mask: true
-            });
         }
 
         util.httpRequest(url, data).then((res) => {

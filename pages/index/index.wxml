@@ -114,3 +114,12 @@
     <button wx:if="{{needAuth}}" class='save-photo-btn' open-type='openSetting' bindopensetting="openSetBack">保存图片</button>
     <view wx:else class='save-photo-btn' bindtap='questionAnswerEvent' data-types='savaImg'>保存图片</view>
 </view>
+
+<!-- 登录 -->
+<include src="/pages/common/login.wxml" />
+<!-- 忘记密码 -->
+<!-- <include src="/pages/common/forgetPw.wxml" /> -->
+<!-- 注册 -->
+<!-- <include src="/pages/common/regist.wxml" /> -->
+<!-- 完善信息 -->
+<!-- <include src="/pages/common/perfectInfo.wxml" /> -->

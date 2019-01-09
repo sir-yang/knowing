@@ -1,0 +1,27 @@
+<view class='tankuang'></view>
+<view class='login-modal-content'>
+    <form report-submit='true' bindsubmit=''>
+        <view class='modal-title'>忘记密码</view>
+        <view class='input-box flex_start flex_items'>
+            <label>手机号码</label>
+            <input class='rt-ipt' type='number' placeholder-class='c9' placeholder='请输入手机号码' />
+        </view>
+        <view class='input-box flex_start flex_items'>
+            <label>新密码</label>
+            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请输入密码' />
+        </view>
+        <view class='input-box flex_start flex_items'>
+            <label>确认密码</label>
+            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请确认密码' />
+        </view>
+        <view class='input-box flex_start flex_items'>
+            <label>短信验证码</label>
+            <view class='flex1 flex_start bbe9s pos'>
+                <input class='verification-ipt' type='text' placeholder-class='c9' placeholder='请输入短信验证码' />
+                <view class='send-code-btn'>发送验证码</view>
+            </view>
+        </view>
+
+        <button form-type='submit' class='modal-btn'>确认</button>
+    </form>
+</view>

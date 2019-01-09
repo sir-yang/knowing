@@ -1,4 +1,3 @@
-    
 <view class='plr20'>
     <!-- 搜索栏 -->
     <view class='top-search-box flex_start flex_items'>
@@ -17,10 +16,7 @@
     </view>
 
     <!-- banner -->
-    <swiper class='banner-box' indicator-dots='true' indicator-color='#ffffff' indicator-active-color='#fff'
-        autoplay="true"
-        circular="true"
-    >
+    <swiper class='banner-box' indicator-dots='true' indicator-color='#ffffff' indicator-active-color='#fff' autoplay="true" circular="true">
         <swiper-item>
             <image src='http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg'></image>
         </swiper-item>
@@ -42,19 +38,12 @@
         <view class='tab-item {{tabIndex == 5 ? "on" : ""}}' bindtap='zhishiEvent' data-types='tab' data-index='5'>其他</view>
     </view>
 
-    <view class='zhishi-list-box'>
-        <view class='list-item flex_start'>
-            <image class='flex_shrink' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+    <view wx:if="{{list.length > 0}}" class='zhishi-list-box'>
+        <view wx:for="{{list}}" wx:key="" bindtap='zhishiEvent' data-types='detail' data-index='{{index}}' class='list-item flex_start'>
+            <image class='flex_shrink' src='{{item.avatarUrl}}'></image>
             <view class='flex_column flex_between'>
-                <view class='f28 c3 mt10'>卢林涛</view>
-                <view class='f24 c6 mb10'>浙江大学管理学院保研直博生</view>
-            </view>
-        </view>
-        <view class='list-item flex_start'>
-            <image class='flex_shrink' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-            <view class='flex_column flex_between'>
-                <view class='f28 c3 mt10'>卢林涛</view>
-                <view class='f24 c6 mb10'>浙江大学管理学院保研直博生</view>
+                <view class='f28 c3 mt10'>{{item.name}}</view>
+                <view class='f24 c6 mb10'>{{item.keyWords}}</view>
             </view>
         </view>
     </view>

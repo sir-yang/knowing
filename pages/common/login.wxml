@@ -1,0 +1,27 @@
+<view class='tankuang'></view>
+<view class='login-modal-content'>
+    <form report-submit='true' bindsubmit='loginEvent'>
+        <view class='modal-title'>登录</view>
+        <view class='input-box flex_start flex_items'>
+            <label>手机号码</label>
+            <input class='rt-ipt' type='number' name="phone" placeholder-class='c9' placeholder='请输入手机号码' />
+        </view>
+        <view class='input-box flex_start flex_items'>
+            <label>密码</label>
+            <input class='rt-ipt' type='text' name="password" placeholder-class='c9' placeholder='请输入密码' />
+        </view>
+        <view class='input-box flex_start flex_items'>
+            <label>验证码</label>
+            <view class='flex1 flex_start bbe9s pos'>
+                <input class='verification-ipt' type='text' name="code" placeholder-class='c9' placeholder='请输入验证码' />
+                <image class='verification-img' src='http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg'></image>
+            </view>
+        </view>
+
+        <button form-type='submit' class='modal-btn'>登录</button>
+        <view class='flex_between flex_items f24'>
+            <view class='cmain'>忘记密码？</view>
+            <view class='c6'>没有账号？去<text class='cmain'>注册</text></view>
+        </view>
+    </form>
+</view>

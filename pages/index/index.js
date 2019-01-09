@@ -17,7 +17,9 @@ Page({
         typeTabArr: [],
         list: [],
         role: 1, //权限 默认普通用户
-        needAuth: true
+        needAuth: true,
+
+        identity: 1 //注册角色
     },
 
     state: {
@@ -253,6 +255,35 @@ Page({
                 needAuth: true
             })
         }
+    },
+
+
+    // ==============  登录 注册  ============ //
+    loginEvent(event) {
+        let vals = event.detail.value;
+        console.log(vals);
+        if (common.isNull(vals.phone)) {
+            common.showTimeToast('请输入手机号');
+            return false;
+        }
+        if (common.isNull(vals.password)) {
+            common.showTimeToast('请输入密码');
+            return false;
+        }
+        if (common.isNull(vals.code)) {
+            common.showTimeToast('请输入验证码');
+            return false;
+        }
+        common.requestLogin(vals);
+    },
+
+
+    registIdentity(event) {
+        let index = event.currentTarget.dataset.index;
+        if (index == this.data.identity) return;
+        this.setData({
+            identity: index
+        })
     },
 
 

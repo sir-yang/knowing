@@ -250,3 +250,41 @@ page {
     font-size: 28rpx;
     color: #fff;
 }
+
+
+/* 弹框 */
+.evaluation-modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 500;
+    background: #fff;
+    border-radius: 10rpx;
+    width: 600rpx;
+    padding: 40rpx 30rpx 60rpx;
+    box-sizing: border-box;
+}
+.star-box {
+    margin-top: 35rpx;
+    margin-bottom: 50rpx;
+}
+.star-box > image {
+    display: block;
+    width: 32rpx;
+    height: 32rpx;
+    margin-right: 15rpx;
+}
+.star-box > image:last-child {
+    margin-right: 0;
+}
+.evaluation-btn {
+    width: 100%;
+    height: 88rpx;
+    background: #278ae2;
+    border-radius: 10rpx;
+    line-height: 88rpx;
+    text-align: center;
+    font-size: 30rpx;
+    color: #fff;
+}

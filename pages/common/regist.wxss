@@ -1,0 +1,24 @@
+
+.circle {
+    position: relative;
+    width: 28rpx;
+    height: 28rpx;
+    border-radius: 50%;
+    border: 1px solid #e3e3e3;
+}
+.circle.on {
+    background: #278ae2;
+    border: 1px solid #278ae2;
+}
+.circle.on::after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14rpx;
+    height: 14rpx;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 50%;
+}

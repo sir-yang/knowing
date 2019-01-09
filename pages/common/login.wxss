@@ -1,0 +1,69 @@
+
+.login-modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 500;
+    width: 600rpx;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 10rpx;
+    padding: 45rpx 30rpx;
+    box-sizing: border-box;
+}
+
+.modal-title {
+    font-size: 30rpx;
+    color: #278ae2;
+    text-align: center;
+}
+
+.input-box {
+    position: relative;
+    padding-top: 15rpx;
+}
+.input-box label {
+    width: 160rpx;
+    font-size: 28rpx;
+    color: #333;
+    line-height: 42rpx;
+}
+.rt-ipt {
+    flex: 1;
+    border-bottom: 1px solid #e3e3e3;
+    padding: 0 15rpx;
+    box-sizing: border-box;
+    font-size: 24rpx;
+    color: #333;
+    line-height: 42rpx;
+}
+.verification-ipt {
+    flex: 1;
+    padding: 0 15rpx;
+    margin-right: 130rpx;
+    box-sizing: border-box;
+    font-size: 24rpx;
+    color: #333;
+    line-height: 42rpx;
+}
+.verification-img {
+    position: absolute;
+    right: 0;
+    bottom: 5rpx;
+    width: 130rpx;
+    height: 54rpx;
+    z-index: 1;
+}
+
+.modal-btn {
+    width: 100%;
+    height: 88rpx;
+    margin-top: 35rpx;
+    margin-bottom: 15rpx;
+    background: #278ae2;
+    border-radius: 10rpx;
+    font-size: 30rpx;
+    color: #fff;
+    line-height: 88rpx;
+    text-align: center;
+}
