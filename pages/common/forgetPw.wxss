@@ -3,10 +3,9 @@
     position: absolute;
     right: 0;
     bottom: 5rpx;
-    width: 130rpx;
+    width: 150rpx;
     height: 54rpx;
     font-size: 24rpx;
-    color: #666;
     background: #e5e5e5;
     line-height: 54rpx;
     text-align: center;

@@ -19,10 +19,15 @@ Page({
         ]
     },
 
+    state: {
+        options: {}
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+        this.state.options = options;
         this.requestGetDetail(options);
     },
 
@@ -133,6 +138,25 @@ Page({
                 that.setData({
                     requestStatus: true,
                     details: res.results
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
+    },
+
+    // 关注
+    requestAttention() {
+        let that = this;
+        let url = 'api/SelfCenter/attention';
+        util.httpRequest(url, {
+            id: that.state.options.id
+        }).then((res) => {
+            console.log(res);
+            if (res.result === 'success') {
+                let details = that.data.details;
+                that.setData({
+
                 })
             } else {
                 common.showClickModal(res.msg);

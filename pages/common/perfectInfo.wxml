@@ -1,112 +1,111 @@
-<view class='tankuang'></view>
-<view class='login-modal-content'>
+<view class='login-modal-content {{showPerfect[0]}}'>
     <!-- 学生 -->
-    <!-- <form report-submit='true' bindsubmit=''>
+    <form report-submit='true' bindsubmit='loginRegistEvent' data-types="perfect" class='{{showPerfect[1]}}'>
         <view class='modal-title'>注册-学生</view>
         <view class='input-box flex_start flex_items'>
             <label>真实姓名</label>
-            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请输入真实姓名' />
+            <input class='rt-ipt' type='text' name="name" placeholder-class='c9' placeholder='请输入真实姓名' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>性别</label>
             <view class='flex1 flex_start flex_items'>
-                <view class='flex_start flex_items' bindtap='registIdentity' data-index='1'>
-                    <view class='circle on'></view>
+                <view class='flex_start flex_items' bindtap='loginRegistEvent' data-types='genderId' data-index='1'>
+                    <view class='circle {{genderId == 1 ? "on" : ""}}'></view>
                     <view class='f28 c3 ml10'>男</view>
                 </view>
-                <view class='flex_start flex_items ml30' bindtap='registIdentity' data-index='2'>
-                    <view class='circle'></view>
+                <view class='flex_start flex_items ml30' bindtap='loginRegistEvent' data-types='genderId' data-index='2'>
+                    <view class='circle {{genderId == 2 ? "on" : ""}}'></view>
                     <view class='f28 c3 ml10'>女</view>
                 </view>
             </view>
         </view>
         <view class='input-box flex_start flex_items'>
             <label>学校</label>
-            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请选择学校' />
+            <input class='rt-ipt' type='text' name="university" placeholder-class='c9' placeholder='请选择学校' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>学院</label>
-            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请选择学院' />
+            <input class='rt-ipt' type='text' name="academy" placeholder-class='c9' placeholder='请选择学院' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>专业</label>
-            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请选择专业' />
+            <input class='rt-ipt' type='text' name="major" placeholder-class='c9' placeholder='请选择专业' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>年级</label>
-            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请选择年级' />
+            <input class='rt-ipt' type='text' name="session" placeholder-class='c9' placeholder='请选择年级' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>在读学位</label>
-            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请选择在读学位' />
+            <input class='rt-ipt' type='text' name="education" placeholder-class='c9' placeholder='请选择在读学位' />
         </view>
 
         <button form-type='submit' class='modal-btn'>提交注册</button>
-    </form> -->
+    </form>
 
     <!-- 教师 -->
-    <!-- <form report-submit='true' bindsubmit=''>
+    <form report-submit='true' bindsubmit='loginRegistEvent' data-types="perfect" class='{{showPerfect[2]}}'>
         <view class='modal-title'>注册-教师</view>
         <view class='input-box flex_start flex_items'>
             <label>真实姓名</label>
-            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请输入真实姓名' />
+            <input class='rt-ipt' type='text' name="name" placeholder-class='c9' placeholder='请输入真实姓名' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>性别</label>
             <view class='flex1 flex_start flex_items'>
-                <view class='flex_start flex_items' bindtap='registIdentity' data-index='1'>
-                    <view class='circle on'></view>
+                <view class='flex_start flex_items' bindtap='loginRegistEvent' data-types='genderId' data-index='1'>
+                    <view class='circle {{genderId == 1 ? "on" : ""}}'></view>
                     <view class='f28 c3 ml10'>男</view>
                 </view>
-                <view class='flex_start flex_items ml30' bindtap='registIdentity' data-index='2'>
-                    <view class='circle'></view>
+                <view class='flex_start flex_items ml30' bindtap='loginRegistEvent' data-types='genderId' data-index='2'>
+                    <view class='circle {{genderId == 2 ? "on" : ""}}'></view>
                     <view class='f28 c3 ml10'>女</view>
                 </view>
             </view>
         </view>
         <view class='input-box flex_start flex_items'>
             <label>学校</label>
-            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请选择学校' />
+            <input class='rt-ipt' type='text' name="university" placeholder-class='c9' placeholder='请选择学校' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>学院/单位</label>
-            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请选择学院/单位' />
+            <input class='rt-ipt' type='text' name="academy" placeholder-class='c9' placeholder='请选择学院/单位' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>最高学位</label>
-            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请选择最高学位' />
+            <input class='rt-ipt' type='text' name="education" placeholder-class='c9' placeholder='请选择最高学位' />
         </view>
 
         <button form-type='submit' class='modal-btn'>提交注册</button>
-    </form> -->
+    </form>
 
     <!-- 其他 -->
-    <form report-submit='true' bindsubmit=''>
+    <form report-submit='true' bindsubmit='loginRegistEvent' data-types="perfect" class='{{showPerfect[3]}}'>
         <view class='modal-title'>注册-其他</view>
         <view class='input-box flex_start flex_items'>
             <label>真实姓名</label>
-            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请输入真实姓名' />
+            <input class='rt-ipt' type='text' name="name" placeholder-class='c9' placeholder='请输入真实姓名' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>性别</label>
             <view class='flex1 flex_start flex_items'>
-                <view class='flex_start flex_items' bindtap='registIdentity' data-index='1'>
-                    <view class='circle on'></view>
+                <view class='flex_start flex_items' bindtap='loginRegistEvent' data-types='genderId' data-index='1'>
+                    <view class='circle {{genderId == 1 ? "on" : ""}}'></view>
                     <view class='f28 c3 ml10'>男</view>
                 </view>
-                <view class='flex_start flex_items ml30' bindtap='registIdentity' data-index='2'>
-                    <view class='circle'></view>
+                <view class='flex_start flex_items ml30' bindtap='loginRegistEvent' data-types='genderId' data-index='2'>
+                    <view class='circle {{genderId == 2 ? "on" : ""}}'></view>
                     <view class='f28 c3 ml10'>女</view>
                 </view>
             </view>
         </view>
         <view class='input-box flex_start flex_items'>
             <label>工作单位</label>
-            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请输入工作单位' />
+            <input class='rt-ipt' type='text' name="university" placeholder-class='c9' placeholder='请输入工作单位' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>最高学位</label>
-            <input class='rt-ipt' type='text' placeholder-class='c9' placeholder='请选择最高学位' />
+            <input class='rt-ipt' type='text' name="education" placeholder-class='c9' placeholder='请选择最高学位' />
         </view>
 
         <button form-type='submit' class='modal-btn'>提交注册</button>

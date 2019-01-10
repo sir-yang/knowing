@@ -18,8 +18,19 @@ Page({
         list: [],
         role: 1, //权限 默认普通用户
         needAuth: true,
-
-        identity: 1 //注册角色
+        
+        // 登录注册
+        loginRegistTk: 'hide',
+        showLogin: 'hide',//登录
+        showRegist: 'hide',//注册
+        showForget: 'hide',//忘记密码
+        showPerfect: ['hide', 'hide', 'hide', 'hide'],//0:完善信息 1:学生 2:教师 3:其他
+        identity: 1, //注册角色
+        genderId: 1,
+        CountdownVal: '发送验证码',
+        CountdownTime: 60,
+        onClick: true,
+        clearTimeout: true,
     },
 
     state: {
@@ -43,10 +54,14 @@ Page({
         let token = common.getAccessToken();
         if (token) {
             that.requestGetCate();
+            //登录图片验证码
+            common.requestGetImgSend(that);
         } else {
             getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
                 that.requestGetCate();
+                //登录图片验证码
+                common.requestGetImgSend(that);
             };
         }
     },
@@ -61,8 +76,20 @@ Page({
             if (userInfo.status != 5 && userInfo.status != 6 && userInfo.status != 8) {
                 role = 1;
             }
+            let loginRegistTk = this.data.loginRegistTk;
+            let showLogin = this.data.showLogin;
+            if (!userInfo.name) {
+                loginRegistTk = 'show';
+                showLogin = 'show';
+                // 隐藏底部导航
+                if(wx.hideTabBar()) {
+                    wx.hideTabBar({});
+                }
+            }
             this.setData({
-                role
+                role,
+                loginRegistTk,
+                showLogin
             })
         }
     },
@@ -259,31 +286,8 @@ Page({
 
 
     // ==============  登录 注册  ============ //
-    loginEvent(event) {
-        let vals = event.detail.value;
-        console.log(vals);
-        if (common.isNull(vals.phone)) {
-            common.showTimeToast('请输入手机号');
-            return false;
-        }
-        if (common.isNull(vals.password)) {
-            common.showTimeToast('请输入密码');
-            return false;
-        }
-        if (common.isNull(vals.code)) {
-            common.showTimeToast('请输入验证码');
-            return false;
-        }
-        common.requestLogin(vals);
-    },
-
-
-    registIdentity(event) {
-        let index = event.currentTarget.dataset.index;
-        if (index == this.data.identity) return;
-        this.setData({
-            identity: index
-        })
+    loginRegistEvent(event) {
+        common.loginRegistEvent(event, this);
     },
 
 

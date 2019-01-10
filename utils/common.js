@@ -147,16 +147,17 @@ function nullObj(obj) {
 function isNull(str) {
     let regu = '^[ ]+$';
     let re = new RegExp(regu);
-    if (!str || str == null || str === '' || str.length === 0 || re.test(str)) {
+    if (!str || str == null || str == undefined || str === '' || str.length === 0 || re.test(str) || !str.trim()) {
         return true;
     }
-    let reNum = /^[0-9]+.?[0-9]*$/;
-    if (!reNum.test(str)) {
-        let strValue = str.replace(/\n/g, '');
-        if (jsTrim(strValue) == '') {
-            return true;
-        }
-    }
+
+    // let reNum = /^[0-9]+.?[0-9]*$/;
+    // if (!reNum.test(str)) {
+    //     let strValue = str.replace(/\n/g, '');
+    //     if (jsTrim(strValue) == '') {
+    //         return true;
+    //     }
+    // }
     return false;
 }
 
@@ -328,6 +329,143 @@ function timeCountDown(that, timestamp) {
 }
 
 
+// 登录注册事件
+function loginRegistEvent(event, that) {
+    let dataset = event.currentTarget.dataset;
+    if (dataset.types === 'toForget') { //忘记密码
+        that.setData({
+            showLogin: 'hide',
+            showForget: 'show'
+        })
+    } else if (dataset.types === 'toRegist') { //去注册
+        that.setData({
+            showLogin: 'hide',
+            showRegist: 'show'
+        })
+    } else if (dataset.types === 'login') { //登录
+        console.log(event);
+        let vals = event.detail.value;
+        console.log(vals);
+        if (isNull(vals.phone)) {
+            showTimeToast('请输入手机号');
+            return false;
+        }
+        if (isNull(vals.password)) {
+            showTimeToast('请输入密码');
+            return false;
+        }
+        if (isNull(vals.code)) {
+            showTimeToast('请输入验证码');
+            return false;
+        }
+        vals.wx_form_id = event.detail.formId;
+        requestLogin(vals);
+    } else if (dataset.types === 'imgCode') {
+        wx.showLoading({
+            title: '',
+            mask: true
+        })
+        // 调用图片验证码
+        requestGetImgSend(that);
+    } else if (dataset.types === 'sendCode') { //验证码
+        if (isNull(that.data.phoneVal)) {
+            showTimeToast('请先输入手机号');
+            return false;
+        }
+        if (!that.data.onClick) return; 
+        requestGetSend(that, that.data.phoneVal);
+    } else if (dataset.types === 'identity') { // 注册角色切换
+        let index = event.currentTarget.dataset.index;
+        if (index == that.data.identity) return;
+        that.setData({
+            identity: index
+        })
+    } else if (dataset.types === 'toLogin') { //去登录
+        that.setData({
+            showLogin: 'show',
+            showRegist: 'hide'
+        })
+    } else if (dataset.types === 'phoneIpt') { //监听手机号输入
+        that.setData({
+            phoneVal: event.detail.value
+        })
+    } else if (dataset.types === 'regist' || dataset.types === 'forget') { //注册
+        let vals = event.detail.value;
+        console.log(vals);
+        if (isNull(vals.phone)) {
+            showTimeToast('请输入手机号');
+            return false;
+        }
+        if (isNull(vals.password)) {
+            showTimeToast('请输入密码');
+            return false;
+        }
+        if (vals.password != vals.confirm) {
+            showTimeToast('两次密码不一致');
+            return false;
+        }
+        if (isNull(vals.code)) {
+            showTimeToast('请输入验证码');
+            return false;
+        }
+        vals.wx_form_id = event.detail.formId;
+        if (dataset.types === 'regist') {//注册
+            vals.type = that.data.identity;
+            requestRegist(that, vals);
+        } else {//忘记密码
+            requestForGet(that, vals);
+        }
+    } else if (dataset.types === 'genderId') {//性别选择
+        let index = event.currentTarget.dataset.index;
+        if (index == that.data.genderId) return;
+        that.setData({
+            genderId: index
+        })
+    } else if (dataset.types === 'perfect') { //完善信息
+        let vals = event.detail.value;
+
+        if (isNull(vals.name)) {
+            showTimeToast('请输入姓名');
+            return false;
+        }
+
+        if (isNull(vals.code)) {
+            showTimeToast('请输入验证码');
+            return false;
+        }
+        vals.wx_form_id = event.detail.formId;
+
+        requestSavePerfect(that, vals);
+    }
+}
+
+// 发送验证码倒计时
+function settime(that) {
+    let interval = setTimeout(() => {
+        if (!that.data.clearTimeout) {
+            clearTimeout(interval);
+        } else {
+            let CountdownTime = that.data.CountdownTime;
+            let CountdownVal = that.data.CountdownVal;
+            let onClick = that.data.onClick;
+            if (CountdownTime === 0) {
+                CountdownVal = '发送验证码';
+                CountdownTime = 60;
+                onClick = true;
+                clearTimeout(interval);
+            } else {
+                CountdownVal = '重新发送(' + that.data.CountdownTime + ')';
+                CountdownTime -= 1;
+                settime(that);
+            }
+            that.setData({
+                CountdownVal,
+                CountdownTime,
+                onClick
+            });
+        }
+    }, 1000);
+}
 
 
 // =================  公共接口 ============== //
@@ -335,14 +473,114 @@ function timeCountDown(that, timestamp) {
 // 登录
 function requestLogin(vals) {
     let url = 'api/Login/login';
+    wx.showLoading({
+        title: '',
+        mask: true
+    })
     util.httpRequest(url, vals, 'POST').then((res) => {
+        wx.hideLoading();
         if (res.result === 'success') {
-
+            that.setData({
+                showLogin: 'hide'
+            })
+            // 显示导航
+            if(wx.showTabBar()) {
+                wx.showTabBar({});
+            }
         } else {
             showClickModal(res.msg);
         }
     });
 }
+
+// 注册
+function requestRegist(that, vals) {
+    let url = 'api/Login/save';
+    wx.showLoading({
+        title: '提交中...',
+        mask: true
+    })
+    util.httpRequest(url, vals, 'POST').then((res) => {
+        wx.hideLoading();
+        if (res.result === 'success') {
+            // let showPerfect = that.data.showPerfect;
+            // showPerfect[0] = 'show';
+            // showPerfect[vals.type] = 'show';
+            // that.setData({
+            //     showRegist: 'hide',
+            //     showPerfect
+            // })
+            that.setData({
+                showRegist: 'hide',
+                showLogin: 'show'
+            })
+        } else {
+            showClickModal(res.msg);
+        }
+    })
+}
+
+// 忘记密码
+function requestForGet(that, vals) {
+    let url = 'api/Login/edits';
+    wx.showLoading({
+        title: '提交中...',
+        mask: true
+    })
+    util.httpRequest(url, vals, 'POST').then((res) => {
+        wx.hideLoading();
+        if (res.result === 'success') {
+            that.setData({
+                showForget: 'hide',
+                showLogin: 'show'
+            })
+        } else {
+            showClickModal(res.msg);
+        }
+    })
+}
+
+// 学校 学院列表
+function requestGetCollege(that) {
+    let url = 'api/login/college';
+    util.httpRequest(url).then((res) => {
+        if (res.result === 'success') {
+            that.setData({
+
+            })
+        } else {
+            showClickModal(res.msg);
+        }
+    });
+}
+
+// 完善信息
+function requestSavePerfect(that, vals) {
+    let url = 'api/User/save';
+    wx.showLoading({
+        title: '提交中...',
+        mask: true
+    })
+    util.httpRequest(url, vals, 'POST').then((res) => {
+        wx.hideLoading();
+        if (res.result === 'success') {
+            let showPerfect = that.data.showPerfect;
+            showPerfect[0] = 'hide';
+            showPerfect[that.data.identity] = 'hide';
+            that.setData({
+                showPerfect
+            })
+            // 显示导航
+            if (wx.showTabBar()) {
+                wx.showTabBar({});
+            }
+        } else {
+            showClickModal(res.msg);
+        }
+    });
+}
+
+
 
 // 问答分类
 function requestCate(func) {
@@ -379,25 +617,34 @@ function requestQiniuToken(func) {
 }
 
 // 获取短信验证码
-function requestGetSend(phone) {
+function requestGetSend(that, phone) {
     let url = 'api/Login/send';
+    that.setData({
+        onClick: false
+    })
     util.httpRequest(url, { phone: phone }).then((res) => {
         wx.hideLoading();
         if (res.result === 'success') {
-            
+            showTimeToast('发送成功');
+            settime(that);
         } else {
             showClickModal(res.msg);
+            that.setData({
+                onClick: true
+            })
         }
     });
 }
 
 // 获取图片验证码
-function requestGetImgSend() {
+function requestGetImgSend(that) {
     let url = 'api/Login/imgCode';
     util.httpRequest(url).then((res) => {
         wx.hideLoading();
         if (res.result === 'success') {
-
+            that.setData({
+                imgCodeUrl: res.results
+            })
         } else {
             showClickModal(res.msg);
         }
@@ -424,6 +671,7 @@ module.exports = {
     seeBigImg,
     uploadImg,
 
+    loginRegistEvent,
     requestLogin,
     requestCate,
     requestGetMoney,

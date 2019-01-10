@@ -40,7 +40,7 @@
 .verification-ipt {
     flex: 1;
     padding: 0 15rpx;
-    margin-right: 130rpx;
+    margin-right: 150rpx;
     box-sizing: border-box;
     font-size: 24rpx;
     color: #333;
