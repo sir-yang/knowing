@@ -160,7 +160,10 @@ Page({
     // 调用分类
     requestGetCate() {
         let that = this;
-        common.requestCate((res) => {
+        let data = {
+            type: 1
+        }
+        common.requestCate(data, (res) => {
             // 获取提问金额
             common.requestGetMoney(that);
             if (res.result === 'success') {

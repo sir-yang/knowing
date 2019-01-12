@@ -16,26 +16,16 @@
     </view>
 
     <!-- banner -->
-    <swiper class='banner-box' indicator-dots='true' indicator-color='#ffffff' indicator-active-color='#fff' autoplay="true" circular="true">
-        <swiper-item>
-            <image src='http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg'></image>
-        </swiper-item>
-        <swiper-item>
-            <image src='http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg'></image>
-        </swiper-item>
-        <swiper-item>
-            <image src='http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg'></image>
+    <swiper class='banner-box' indicator-dots='true' indicator-active-color='#fff' autoplay="true" circular="true">
+        <swiper-item wx:for="{{bannerArr}}" wx:key="">
+            <image src='{{item}}'></image>
         </swiper-item>
     </swiper>
 
     <!-- tab -->
     <view class='tab-box flex_warp'>
-        <view class='tab-item {{tabIndex == 0 ? "on" : ""}}' bindtap='zhishiEvent' data-types='tab' data-index='0'>全部</view>
-        <view class='tab-item {{tabIndex == 1 ? "on" : ""}}' bindtap='zhishiEvent' data-types='tab' data-index='1'>读研</view>
-        <view class='tab-item {{tabIndex == 2 ? "on" : ""}}' bindtap='zhishiEvent' data-types='tab' data-index='2'>留学</view>
-        <view class='tab-item {{tabIndex == 3 ? "on" : ""}}' bindtap='zhishiEvent' data-types='tab' data-index='3'>求职</view>
-        <view class='tab-item {{tabIndex == 4 ? "on" : ""}}' bindtap='zhishiEvent' data-types='tab' data-index='4'>专业技能</view>
-        <view class='tab-item {{tabIndex == 5 ? "on" : ""}}' bindtap='zhishiEvent' data-types='tab' data-index='5'>其他</view>
+        <view class='tab-item {{tabIndex == -1 ? "on" : ""}}' bindtap='zhishiEvent' data-types='tab' data-index='-1'>全部</view>
+        <view wx:for="{{typeTabArr}}" wx:key="" class='tab-item {{tabIndex == index ? "on" : ""}}' bindtap='zhishiEvent' data-types='tab' data-index='{{index}}'>{{item.name}}</view>
     </view>
 
     <view wx:if="{{list.length > 0}}" class='zhishi-list-box'>

@@ -38,7 +38,7 @@
 
     <view class='list-box pb20'>
         <!-- 普通用户 -->
-        <view wx:for="{{list}}" wx:key="" class='list-item' bindtap='questionAnswerEvent' data-types='onlookers' data-index='{{index}}'>
+        <view wx:for="{{list}}" wx:key="" class='list-item'>
             <view class='flex_start flex_items'>
                 <view class='flex1 flex_start flex_items'>
                     <image class='list-item-head' src='{{item.user.avatarUrl}}'></image>
@@ -55,11 +55,12 @@
                 <view wx:if="{{role == 1}}" class='f24 c9'>{{item.aroundNum}}人已围观</view>
                 <view class='money-box flex1 flex_end flex_items'>
                     <image src='/images/money_icon.png'></image>
-                    <view wx:if="{{role == 1}}">围观金额 {{item.aroundMoney}}元</view>
+                    <view wx:if="{{role == 1}}" catchtap='questionAnswerEvent' data-types='onlookers' data-index='{{index}}'>围观金额 {{item.aroundMoney}}元</view>
                     <view wx:else>提问金额 {{item.askMoney}}元</view>
                 </view>
             </view>
 
+            <!-- 知士 -->
             <view wx:if="{{role == 1}}" class='flex_start flex_items bte9s pt20 pb10'>
                 <image class='list-item-head' src='{{item.answers.avatarUrl}}'></image>
                 <view class='flex1 flex_between flex_column'>
@@ -67,31 +68,6 @@
                     <view class='f24 c6'>{{item.answers.keyWords}}</view>
                 </view>
                 <view class='f24 cmain self_end' catchtap='questionAnswerEvent' data-types='detail' data-index='{{index}}'>查看回答详情</view>
-            </view>
-        </view>
-
-        <!-- 知士 -->
-        <view hidden class='list-item' bindtap='questionAnswerEvent' data-types='onlookers' data-index='2'>
-            <view class='flex_start flex_items'>
-                <view class='flex1 flex_start flex_items'>
-                    <image class='list-item-head' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                    <view class='f28 c3'>李思涵</view>
-                </view>
-                <view class='answer-text'>去回答</view>
-            </view>
-            <view class='mt20 f24 c3'>请问一下浙大管理学院的保研复试要求？</view>
-            <view class='img-box flex_warp'>
-                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-            </view>
-            <view class='flex_start flex_items mt30 pb10'>
-                <view class='time-box'>1分钟前</view>
-                <view class='money-box flex1 flex_end flex_items'>
-                    <image src='/images/money_icon.png'></image>
-                    <view>提问金额 5元</view>
-                </view>
             </view>
         </view>
     </view>
@@ -103,6 +79,7 @@
     <!-- <button class='look-btn' open-type='share'>分享围观</button> -->
     <view class='look-btn' bindtap='questionAnswerEvent' data-types='share'>分享围观</view>
     <view class='look-btn bte9s' bindtap='questionAnswerEvent' data-types='pay'>付费围观</view>
+    <view class='look-btn mt10' bindtap='questionAnswerEvent' data-types=''>取消</view>
 </view>
 
 <!-- 海报 -->

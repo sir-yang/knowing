@@ -24,13 +24,12 @@ page {
     border-radius: 50%;
 }
 .zhishiInfo .attention-btn {
-    width: 110rpx;
+    width: 120rpx;
     height: 42rpx;
     margin-left: 50rpx;
     border-radius: 21rpx;
     border: 1px solid #e3e3e3;
     font-size: 24rpx;
-    color: #278ae2;
     text-align: center;
     line-height: 38rpx;
     box-sizing: border-box;
@@ -220,7 +219,7 @@ page {
 }
 
 .time-box {
-    width: 175rpx;
+    width: 240rpx;
     font-size: 24rpx;
     color: #999;
 }

@@ -8,7 +8,8 @@ Page({
      */
     data: {
         requestStatus: false,
-        tabIndex: 0,
+        bannerArr: [],
+        tabIndex: -1,
         list: []
     },
 
@@ -33,13 +34,19 @@ Page({
 
         let token = common.getAccessToken();
         if (token) {
+            that.requestGetBanner();
+            that.requestGetCate();
             that.requestList(0);
         } else {
             getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
+                that.requestGetBanner();
+                that.requestGetCate();
                 that.requestList(0);
             };
         }
+
+
     },
 
     /**
@@ -121,6 +128,37 @@ Page({
         }
     },
 
+    // 获取banner
+    requestGetBanner() {
+        let that = this;
+        let url = 'api/Configs/banner';
+        util.httpRequest(url).then((res) => {
+            if (res.result === 'success') {
+                that.setData({
+                    bannerArr: res.results
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        });
+    },
+
+    // 调用分类接口
+    requestGetCate() {
+        let that = this;
+        let data = {
+            type: 3
+        }
+        common.requestCate(data, (res) => {
+            if (res.result === 'success') {
+                that.setData({
+                    typeTabArr: res.results
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
+    },
 
     // 获取知士列表
     requestList(offset) {
@@ -131,8 +169,9 @@ Page({
             limit: that.state.limit,
         }
 
-        if (that.data.tabIndex != 0) {
-            data.type = that.data.tabIndex;
+        if (that.data.tabIndex != -1) {
+            let typeTabArr = that.data.typeTabArr;
+            data.type = typeTabArr[that.data.tabIndex].id;
         }
 
         // 切换类型是显示

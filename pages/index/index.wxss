@@ -5,10 +5,12 @@ Page {
 .top-search-box {
     margin-top: 10rpx;
 }
+
 .switch-box {
     position: relative;
     max-width: 200rpx;
 }
+
 .down-arrow {
     position: absolute;
     top: 15rpx;
@@ -19,6 +21,7 @@ Page {
     border-style: solid;
     border-color: #4a4e57 transparent transparent transparent;
 }
+
 .search-input {
     margin: 0 30rpx;
     height: 66rpx;
@@ -29,6 +32,7 @@ Page {
     -o-border-radius: 5rpx;
     border-radius: 5rpx;
 }
+
 .search-input > input {
     flex: 1;
     padding: 0 20rpx;
@@ -39,16 +43,19 @@ Page {
     font-size: 24rpx;
     color: #333;
 }
+
 .search-input > image {
     display: block;
     width: 32rpx;
     height: 32rpx;
     margin-right: 30rpx;
 }
+
 .right-msg {
     width: 32rpx;
     height: 32rpx;
 }
+
 .right-msg > image {
     display: block;
     width: 100%;
@@ -56,27 +63,32 @@ Page {
 }
 
 /* 筛选 */
+
 .filter-type-box {
     margin-top: 20rpx;
 }
+
 .filter-type-box .type-item {
     width: 104rpx;
     height: 88rpx;
     margin-right: 20rpx;
     border-radius: 10rpx;
-    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.1);
     text-align: center;
     line-height: 88rpx;
     font-size: 28rpx;
     color: #999;
 }
+
 .filter-type-box .type-item.on {
     background: #fff;
     color: #278ae2;
 }
+
 .filter-type-box .type-item:first-child {
     margin-left: 0;
 }
+
 .ask-question {
     width: 88rpx;
     height: 88rpx;
@@ -95,17 +107,19 @@ Page {
     line-height: 82rpx;
     background: #fff;
     border-radius: 10rpx;
-    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.1);
     font-size: 26rpx;
     color: #999;
 }
 
 .sort-box .sort-item {
-    position: relative
+    position: relative;
 }
+
 .sort-box .sort-item.on {
     color: #333;
 }
+
 .sort-box .sort-item::before {
     position: absolute;
     top: 30rpx;
@@ -118,6 +132,7 @@ Page {
     border-style: solid;
     border-color: transparent transparent #999 transparent;
 }
+
 .sort-box .sort-item::after {
     position: absolute;
     bottom: 25rpx;
@@ -130,9 +145,11 @@ Page {
     border-style: solid;
     border-color: #999 transparent transparent transparent;
 }
+
 .sort-box .sort-item.on::before {
     border-color: transparent transparent #4a4e57 transparent;
 }
+
 .sort-box .sort-item.down::after {
     border-color: #4a4e57 transparent transparent transparent;
 }
@@ -142,7 +159,7 @@ Page {
     padding: 20rpx;
     background: #fff;
     border-radius: 10rpx;
-    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.1);
 }
 
 .list-item-head {
@@ -155,7 +172,7 @@ Page {
 
 .answer-text {
     font-size: 26rpx;
-    color: #ff6600;
+    color: #f60;
 }
 
 .img-box image {
@@ -165,6 +182,7 @@ Page {
     margin-right: 19rpx;
     margin-top: 19rpx;
 }
+
 .img-box image:nth-child(4n) {
     margin-right: 0;
 }
@@ -174,10 +192,12 @@ Page {
     font-size: 24rpx;
     color: #999;
 }
+
 .money-box {
     font-size: 24rpx;
-    color: #ff6600;
+    color: #f60;
 }
+
 .money-box > image {
     display: block;
     width: 28rpx;
@@ -190,18 +210,34 @@ Page {
     left: 0;
     right: 0;
     bottom: 0;
-    background: #fff;
+    background: #f0f3f8;
     z-index: 500;
+    animation: modal 1s infinite;
+    animation-iteration-count: 1;
+    -webkit-animation: modal 1s infinite;
+    -webkit-animation-iteration-count: 1;
+}
+
+@keyframes modal {
+    0%   {bottom: -304rpx;}
+    30%  {bottom: 0;}
+    100% {bottom: 0;}
+}
+@-webkit-keyframes modal {
+    0%   {bottom: -304rpx;}
+    30%  {bottom: 0;}
+    100% {bottom: 0;}
 }
 
 .onlookers-modal-content .look-btn {
+    background: #fff;
     line-height: 98rpx;
     text-align: center;
     font-size: 28rpx;
     color: #333;
 }
 
-.poster-modal-content{
+.poster-modal-content {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -209,6 +245,7 @@ Page {
     transform: translate(-50%, -50%);
     z-index: 500;
 }
+
 .poster-modal-content .poster-img {
     width: 100%;
     height: 848rpx;
@@ -216,22 +253,23 @@ Page {
     border-radius: 10rpx;
     margin-bottom: 30rpx;
 }
+
 .poster-modal-content .poster-img image {
     width: 100%;
     height: 100%;
     border-radius: 10rpx;
 }
+
 .poster-modal-content .save-photo-btn {
     width: 100%;
     height: 78rpx;
-    background: #ff3300;
+    background: #f30;
     border-radius: 10rpx;
     line-height: 78rpx;
     text-align: center;
     font-size: 28rpx;
     color: #fff;
 }
-
 @import "/pages/common/login.wxss";
 @import "/pages/common/forgetPw.wxss";
 @import "/pages/common/regist.wxss";

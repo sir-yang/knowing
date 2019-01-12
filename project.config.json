@@ -42,8 +42,8 @@
 				{
 					"id": 0,
 					"name": "自定义",
-					"pathName": "pages/zhishiCircle/zhishiCircle",
-					"query": ""
+					"pathName": "pages/wendaDetail/wendaDetail",
+					"query": "id=6"
 				}
 			]
 		}

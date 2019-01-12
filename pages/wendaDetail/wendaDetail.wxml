@@ -1,53 +1,52 @@
-<view class='p20'>
+<view wx:if="{{requestStatus}}" class='p20'>
     <view class='detail-pages'>
         <view class='flex_start flex_items'>
-            <image class='detail-head' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-            <view class='f28 c3'>李思涵</view>
+            <image class='detail-head' src='{{details.user.avatarUrl}}'></image>
+            <view class='f28 c3'>{{details.user.name}}</view>
         </view>
-        <view class='mt20 f24 c3'>请问一下浙大管理学院的保研复试要求？</view>
+        <view class='mt20 f24 c3'>{{details.question}}</view>
         <view class='img-box flex_warp'>
-            <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-            <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-            <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-            <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            <image wx:for="{{details.qImg}}" wx:key="" catchtap='detailEvent' data-types='seeImg' data-index='{{index}}' src='{{item.thumb_small_url}}'></image>
         </view>
         <view class='flex_start flex_items mt30 pb20 bbe9s'>
-            <view class='time-box'>1分钟前</view>
-            <view class='f24 c9'>99人已围观</view>
+            <view class='time-box'>{{details.times}}</view>
+            <view class='f24 c9'>{{details.aroundNum}}人已围观</view>
             <view class='money-box flex1 flex_end flex_items'>
                 <image src='/images/money_icon.png'></image>
-                <view>围观金额 5元</view>
+                <view>围观金额 {{details.aroundMoney}}元</view>
             </view>
         </view>
 
         <view class='flex_start mtb30'>
-            <image class='detail-head' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-            <view class='flex1 flex_column flex_between'>
-                <view class='f26 c3'>何思思</view>
-                <view class='f24 c6'>浙江大学管理学院保研直博生</view>
+            <image class='detail-head' src='{{details.answers.avatarUrl}}'></image>
+            <view class='flex1'>
+                <view class='flex_between'>
+                    <view class='f26 c3'>{{details.answers.name}}</view>
+                    <view class='f24 c9'>{{details.answerTime}}</view>
+                </view>
+                <view class='f24 c6 mt10'>{{details.answers.keyWords}}</view>
             </view>
-            <view class='f24 c9'>1分钟前</view>
         </view>
 
-        <view class='audio-box flex_start flex_items'>
-            <image class='audio-img' src='/images/audio_icon.png'></image>
+        <view wx:if="{{details.aAudio}}" class='audio-box flex_start flex_items'>
+            <image class='audio-img' bindtap='detailEvent' data-types='play' src='/images/audio_icon.png'></image>
             <view class='flex1'>
                 <view class='f20 c3'>知士回答.mp3</view>
                 <view class='flex_start flex_items mt5'>
-                    <view class='f18 c9 mr10'>00:00</view>
-                    <progress class='flex1' percent='20' stroke-width="2" activeColor="#2889e2" backgroundColor="#edeaff"></progress>
-                    <view class='f18 c9 ml10'>02:38</view>
+                    <view class='f18 c9 mr10'>{{currentTime}}</view>
+                    <progress class='flex1' percent='{{percent}}' stroke-width="2" activeColor="#2889e2" backgroundColor="#edeaff"></progress>
+                    <view class='f18 c9 ml10'>{{}}</view>
                 </view>
             </view>
         </view>
 
         <!-- 详情 -->
         <view class='text-detail-box'>
-            <text>1.具有高尚的爱国主义情怀和集体主义精神，社会主义信念坚定，社会责任感强。身心健康，遵纪守法，诚实守信。积极参加学校、学院组织的社会公益活动，每学年的记实综合考评都达到良好及以上级别。在校期间学风端正，无任何考试作弊或其他违法违纪行为。</text>
+            <text>{{details.answer}}</text>
         </view>
 
         <view class='detail-image'>
-            <image src='http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg'></image>
+            <image wx:for="{{details.aImg}}" wx:key="" src='{{item.original_url}}'></image>
         </view>
     </view>
 </view>

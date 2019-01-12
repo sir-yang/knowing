@@ -1,24 +1,24 @@
-<view class='plr20 mb20'>
+<view wx:if="{{requestStatus}}" class='plr20 mb20'>
     <!-- 搜索栏 -->
     <include src="/pages/common/searchTop.wxml" />
 
     <view class='types-tab-box flex_start flex_items mt20'>
-        <view class='types-item {{tabIndex == 0 ? "on" : ""}}' bindtap='enjoyEvent' data-types='types' data-index='0'>知士话题</view>
-        <view class='types-item {{tabIndex == 1 ? "on" : ""}}' bindtap='enjoyEvent' data-types='types' data-index='1'>分享论坛</view>
+        <view class='types-item {{typeIndex == 0 ? "on" : ""}}' bindtap='enjoyEvent' data-types='types' data-index='0'>知士话题</view>
+        <view class='types-item {{typeIndex == 1 ? "on" : ""}}' bindtap='enjoyEvent' data-types='types' data-index='1'>分享论坛</view>
         <view class='publish-btn'>+发布</view>
     </view>
 
     <view class='secondary-class-box'>
         <view class='flex_warp'>
-            <view class='class-item'>全部</view>
-            <view class='class-item'>学习科研</view>
-            <view class='class-item'>留学出国</view>
-            <view class='class-item'>求职创业</view>
+            <view class='class-item {{tabIndex == -1 ? "on" : ""}}' bindtap='enjoyEvent' data-types='tab' data-index='-1'>全部</view>
+            <block wx:for="{{typeTabArr}}" wx:key="">
+                <view wx:if="{{index < (showMore ? 3 : typeTabArr.length)}}" class='class-item {{tabIndex == index ? "on" : ""}}' bindtap='enjoyEvent' data-types='tab' data-index='{{index}}'>{{item.name}}</view>
+            </block>
         </view>
         <!-- 更多 -->
-        <view class='top-more-box mt5 flex_center flex_items'>
-            <image src='/images/top_more_icon.png'></image>
-            <view class='f20 c9'>更多</view>
+        <view class='top-more-box mt5 flex_center flex_items' bindtap='enjoyEvent' data-types='moreTab'>
+            <image class='{{showMore ? "on" : ""}}' src='/images/top_more_icon.png'></image>
+            <view class='f20 c9'>{{showMore ? "更多" : "收起"}}</view>
         </view>
     </view>
 
@@ -43,8 +43,11 @@
             </view>
         </view>
 
-        <view class='content'><text>分享经济包括不同人或组织之间对生产资料、产品、分销渠道、处于交易或消费过程中的商品和服务的分享。这个</text><text class='cmain'>[查看详情]</text></view>
-        
+        <view class='content'>
+            <text>分享经济包括不同人或组织之间对生产资料、产品、分销渠道、处于交易或消费过程中的商品和服务的分享。这个</text>
+            <text class='cmain'>[查看详情]</text>
+        </view>
+
         <view class='img-box mt20 mb10 flex_warp'>
             <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
             <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
@@ -66,7 +69,7 @@
         </view>
 
         <!-- 评论 -->
-        <include src="/pages/common/comment.wxml" /> 
+        <include src="/pages/common/comment.wxml" />
     </view>
 
 </view>

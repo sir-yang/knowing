@@ -3,20 +3,20 @@
         <view class='modal-title'>忘记密码</view>
         <view class='input-box flex_start flex_items'>
             <label>手机号码</label>
-            <input class='rt-ipt' type='number' name="phone" value='{{phoneVal}}' bindinput='loginRegistEvent' data-types='phoneIpt' maxlength='15' placeholder-class='c9' placeholder='请输入手机号码' />
+            <input class='rt-ipt' type='number' name="phone" value='{{phoneVal}}' bindinput='loginRegistEvent' data-types='phoneIpt' data-valtype='phone' value='{{phoneVal}}' bindinput='loginRegistEvent' data-types='phoneIpt' maxlength='15' placeholder-class='c9' placeholder='请输入手机号码' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>新密码</label>
-            <input class='rt-ipt' type='text' name="password" maxlength='20' password="true" placeholder-class='c9' placeholder='请输入密码' />
+            <input class='rt-ipt' type='text' name="password" value='{{passwordVal}}' bindinput='loginRegistEvent' data-types='phoneIpt' data-valtype='password' maxlength='20' password="true" placeholder-class='c9' placeholder='请输入密码' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>确认密码</label>
-            <input class='rt-ipt' type='text' name="confirm" maxlength='20' password="true" placeholder-class='c9' placeholder='请确认密码' />
+            <input class='rt-ipt' type='text' name="confirm" value='{{confirmVal}}' bindinput='loginRegistEvent' data-types='phoneIpt' data-valtype='confirm' maxlength='20' password="true" placeholder-class='c9' placeholder='请确认密码' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>短信验证码</label>
             <view class='flex1 flex_start bbe9s pos'>
-                <input class='verification-ipt' type='text' name="code" maxlength='6' placeholder-class='c9' placeholder='请输入短信验证码' />
+                <input class='verification-ipt' type='text' name="code" value='{{codeVal}}' bindinput='loginRegistEvent' data-types='phoneIpt' data-valtype='code' maxlength='6' placeholder-class='c9' placeholder='请输入短信验证码' />
                 <view class='send-code-btn {{onClick ? "c6" : "c9"}}' bindtap='loginRegistEvent' data-types='sendCode'>{{CountdownVal}}</view>
             </view>
         </view>

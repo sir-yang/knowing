@@ -329,18 +329,56 @@ function timeCountDown(that, timestamp) {
 }
 
 
+// 登录注册 数据
+function loginRegistData(that) {
+    that.setData({
+        loginRegistTk: 'hide',
+        showLogin: 'hide',//登录
+        showRegist: 'hide',//注册
+        showForget: 'hide',//忘记密码
+        showPerfect: ['hide', 'hide', 'hide', 'hide'],//0:完善信息 1:学生 2:教师 3:其他
+        identity: 1, //注册角色
+        genderId: 1,
+        CountdownVal: '发送验证码',
+        CountdownTime: 60,
+        onClick: true,
+        clearTimeout: true,
+        phoneVal: '',
+        passwordVal: '',
+        confirmVal: '',
+        codeVal: '',
+    })
+}
+
+
 // 登录注册事件
 function loginRegistEvent(event, that) {
     let dataset = event.currentTarget.dataset;
     if (dataset.types === 'toForget') { //忘记密码
         that.setData({
             showLogin: 'hide',
-            showForget: 'show'
+            showForget: 'show',
+            phoneVal: '',
+            passwordVal: '',
+            confirmVal: '',
+            codeVal: '',
+            CountdownVal: '发送验证码',
+            CountdownTime: 60,
+            onClick: true,
+            clearTimeout: true
         })
     } else if (dataset.types === 'toRegist') { //去注册
         that.setData({
             showLogin: 'hide',
-            showRegist: 'show'
+            showRegist: 'show',
+            phoneVal: '',
+            passwordVal: '',
+            confirmVal: '',
+            codeVal: '',
+            CountdownVal: '发送验证码',
+            CountdownTime: 60,
+            onClick: true,
+            clearTimeout: true
         })
     } else if (dataset.types === 'login') { //登录
         console.log(event);
@@ -359,7 +397,7 @@ function loginRegistEvent(event, that) {
             return false;
         }
         vals.wx_form_id = event.detail.formId;
-        requestLogin(vals);
+        requestLogin(that, vals);
     } else if (dataset.types === 'imgCode') {
         wx.showLoading({
             title: '',
@@ -383,11 +421,30 @@ function loginRegistEvent(event, that) {
     } else if (dataset.types === 'toLogin') { //去登录
         that.setData({
             showLogin: 'show',
-            showRegist: 'hide'
+            showRegist: 'hide',
+            phoneVal: '',
+            passwordVal: '',
+            codeVal: '',
         })
-    } else if (dataset.types === 'phoneIpt') { //监听手机号输入
+    } else if (dataset.types === 'phoneIpt') { //监听输入
+        let phoneVal = that.data.phoneVal;
+        let passwordVal = that.data.passwordVal;
+        let confirmVal = that.data.confirmVal;
+        let codeVal = that.data.codeVal;
+        if (dataset.valtype === 'password') {
+            passwordVal = event.detail.value;
+        } else if (dataset.valtype === 'confirm') {
+            confirmVal = event.detail.value;
+        } else if (dataset.valtype === 'code') {
+            codeVal = event.detail.value;
+        } else {
+            phoneVal = event.detail.value;
+        }
         that.setData({
-            phoneVal: event.detail.value
+            phoneVal,
+            passwordVal,
+            confirmVal,
+            codeVal
         })
     } else if (dataset.types === 'regist' || dataset.types === 'forget') { //注册
         let vals = event.detail.value;
@@ -471,7 +528,7 @@ function settime(that) {
 // =================  公共接口 ============== //
 
 // 登录
-function requestLogin(vals) {
+function requestLogin(that, vals) {
     let url = 'api/Login/login';
     wx.showLoading({
         title: '',
@@ -481,7 +538,10 @@ function requestLogin(vals) {
         wx.hideLoading();
         if (res.result === 'success') {
             that.setData({
-                showLogin: 'hide'
+                showLogin: 'hide',
+                phoneVal: '',
+                passwordVal: '',
+                codeVal: '',
             })
             // 显示导航
             if(wx.showTabBar()) {
@@ -512,7 +572,10 @@ function requestRegist(that, vals) {
             // })
             that.setData({
                 showRegist: 'hide',
-                showLogin: 'show'
+                showLogin: 'show',
+                phoneVal: '',
+                passwordVal: '',
+                codeVal: '',
             })
         } else {
             showClickModal(res.msg);
@@ -532,7 +595,10 @@ function requestForGet(that, vals) {
         if (res.result === 'success') {
             that.setData({
                 showForget: 'hide',
-                showLogin: 'show'
+                showLogin: 'show',
+                phoneVal: '',
+                passwordVal: '',
+                codeVal: '',
             })
         } else {
             showClickModal(res.msg);
@@ -583,9 +649,9 @@ function requestSavePerfect(that, vals) {
 
 
 // 问答分类
-function requestCate(func) {
+function requestCate(data, func) {
     let url = "api/Cate/getPage";
-    return util.httpRequest(url, { type: 1 }).then((res) => {
+    return util.httpRequest(url, data).then((res) => {
         return func(res);
     })
 }
@@ -671,6 +737,7 @@ module.exports = {
     seeBigImg,
     uploadImg,
 
+    loginRegistData,
     loginRegistEvent,
     requestLogin,
     requestCate,

@@ -18,19 +18,6 @@ Page({
         list: [],
         role: 1, //权限 默认普通用户
         needAuth: true,
-        
-        // 登录注册
-        loginRegistTk: 'hide',
-        showLogin: 'hide',//登录
-        showRegist: 'hide',//注册
-        showForget: 'hide',//忘记密码
-        showPerfect: ['hide', 'hide', 'hide', 'hide'],//0:完善信息 1:学生 2:教师 3:其他
-        identity: 1, //注册角色
-        genderId: 1,
-        CountdownVal: '发送验证码',
-        CountdownTime: 60,
-        onClick: true,
-        clearTimeout: true,
     },
 
     state: {
@@ -47,21 +34,20 @@ Page({
      */
     onLoad: function(options) {
         wx.showLoading({
-            title: '加载中',
+            title: '请稍后...',
             mask: true
         });
+
+        //登录注册 数据
         let that = this;
+        common.loginRegistData(that);
         let token = common.getAccessToken();
         if (token) {
             that.requestGetCate();
-            //登录图片验证码
-            common.requestGetImgSend(that);
         } else {
             getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
                 that.requestGetCate();
-                //登录图片验证码
-                common.requestGetImgSend(that);
             };
         }
     },
@@ -76,16 +62,19 @@ Page({
             if (userInfo.status != 5 && userInfo.status != 6 && userInfo.status != 8) {
                 role = 1;
             }
+            // 判断是否需要登录
             let loginRegistTk = this.data.loginRegistTk;
             let showLogin = this.data.showLogin;
-            if (!userInfo.name) {
-                loginRegistTk = 'show';
-                showLogin = 'show';
-                // 隐藏底部导航
-                if(wx.hideTabBar()) {
-                    wx.hideTabBar({});
-                }
-            }
+            // if (!userInfo.name) {
+            //     loginRegistTk = 'show';
+            //     showLogin = 'show';
+            //     // 隐藏底部导航
+            //     if(wx.hideTabBar()) {
+            //         wx.hideTabBar({});
+            //     }
+            //     // 获取图片验证码
+            //     common.requestGetImgSend(this);
+            // }
             this.setData({
                 role,
                 loginRegistTk,
@@ -178,7 +167,7 @@ Page({
             }
         } else if (dataset.types === 'onlookers') { //围观弹框
             wx.showActionSheet({
-                itemList: ["分享围观", "一元围观"],
+                itemList: ["分享围观", "付费围观"],
                 success(res) {
                     console.log(res.tapIndex);
                 }
@@ -296,7 +285,10 @@ Page({
     // 类别
     requestGetCate() {
         let that = this;
-        common.requestCate((res) => {
+        let data = {
+            type: 1
+        }
+        common.requestCate(data, (res) => {
             if (res.result === 'success') {
                 that.setData({
                     typeTabArr: res.results
