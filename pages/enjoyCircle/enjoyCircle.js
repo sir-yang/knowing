@@ -37,7 +37,7 @@ Page({
             that.requestGetCate();
             that.requestGetList(0);
         } else {
-            getApp().globalData.tokenUpdated = function () {
+            getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
                 that.requestGetCate();
                 that.requestGetList(0);
@@ -113,6 +113,7 @@ Page({
     // 事件
     enjoyEvent(event) {
         let dataset = event.currentTarget.dataset;
+        let list = this.data.list;
         if (dataset.types === 'types') {
             if (dataset.index == this.data.typeIndex) return;
             this.setData({
@@ -130,6 +131,20 @@ Page({
             this.setData({
                 showMore: !this.data.showMore
             })
+        } else if (dataset.types === 'seeImg') {
+            let index = dataset.index;
+            let idx = dataset.idx;
+            common.seeBigImg(list[index].img[idx].original_url, list[index].img, 2);
+        } else if (dataset.types === 'like') {
+            let index = dataset.index;
+            wx.showLoading({
+                title: '',
+                mask: true
+            })
+            this.requestLike(list, index);
+        } else if (dataset.types === 'report') {
+            let index = dataset.index;
+            this.requestReport(list[index].id);
         }
     },
 
@@ -167,6 +182,17 @@ Page({
             wx.hideLoading();
             if (res.result === 'success') {
                 let handle = common.dataListHandle(that, res, that.data.list, offset);
+                handle.list.forEach((item) => {
+                    console.log(item);
+                    if (item.content && item.content.length > 49) {
+                        item.str = common.stringObject(item.content, 49);
+                    }
+                    if (item.audio) {
+                        item.playing = false; //播放状态
+                        item.percent = 0;
+                        item.currentTime = '00:00';
+                    }
+                })
                 that.setData({
                     requestStatus: true,
                     list: handle.list,
@@ -174,6 +200,56 @@ Page({
                 })
             } else {
                 common.showClickModal(res.mmsg);
+            }
+        })
+    },
+
+    // 点赞/取消点赞
+    requestLike(list, index) {
+        let that = this;
+        let url = 'api/Share/zan';
+        let data = {
+            id: list[index].id,
+            status: list[index].zan == 1 ? 1 : 2
+        }
+        util.httpRequest(url, data).then((res) => {
+            wx.hideLoading();
+            if (res.result === 'success') {
+                if (list[index].zan == 1) {
+                    list[index].likeNum = Number(list[index].likeNum) + 1;
+                    list[index].zan = 0;
+                } else {
+                    list[index].likeNum = Number(list[index].likeNum) - 1;
+                    list[index].zan = 1;
+                }
+                that.setData({
+                    list
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
+    },
+
+
+    // 举报
+    requestReport(id) {
+        let that = this;
+        let url = 'api/user/report';
+        let data = {
+            objId: id,
+            message: ''
+        }
+        wx.showLoading({
+            title: '',
+            mask: true
+        })
+        util.httpRequest(url, data, 'POST').then((res) => {
+            wx.hideLoading();
+            if (res.result === 'success') {
+
+            } else { 
+                common.showClickModal(res.msg);
             }
         })
     }

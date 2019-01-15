@@ -161,6 +161,12 @@ function isNull(str) {
     return false;
 }
 
+// 截取字符串
+function stringObject (str, leng) {
+    str = str.substring(0, leng);
+    return str;
+}
+
 // 列表接口数据处理
 function dataListHandle(that, data, list, offset) {
     wx.stopPullDownRefresh();
@@ -215,6 +221,18 @@ function seeBigImg(imgUrl, imgList, types) {
     });
 }
 
+// 图片上传的api
+function singleUpload(res, path) {
+    return wx.pro.uploadFile({
+        url: 'https://upload-z2.qiniup.com',
+        filePath: path,
+        name: 'file',
+        formData: {
+            token: res.token
+        }
+    });
+}
+
 // 上传图片
 function uploadImg(num, func) {
     let tempFilePaths = '';
@@ -225,7 +243,7 @@ function uploadImg(num, func) {
     }).then((res) => {
         // console.log(JSON.stringify(res));
         tempFilePaths = res.tempFilePaths;
-        let url = '/album/0/photo_upload_url/?scenario=' + scenario;
+        let url = 'api/Index/getToken';
         return util.httpRequest(url);
     }).then((res) => {
         //console.log(JSON.stringify(res));
@@ -236,10 +254,23 @@ function uploadImg(num, func) {
         tempFilePaths.forEach((path) => {
             pros.push(singleUpload(res, path));
         });
+        
         return wx.pro.all(pros);
     }).then((_res) => {
+        console.log(2,_res);
         wx.hideLoading();
         func(_res, tempFilePaths);
+    });
+}
+
+// 拨打电话
+function phoneCall(phone) {
+    if (isNull(phone)) {
+        showClickModal('暂无联系电话！');
+        return;
+    }
+    wx.makePhoneCall({
+        phoneNumber: phone
     });
 }
 
@@ -254,7 +285,6 @@ function getPersonInfo() {
             return res.results;
         } else {
             showClickModal(res.msg);
-            wx.hideLoading()
         }
     })
 }
@@ -674,11 +704,12 @@ function requestGetMoney(that) {
 function requestQiniuToken(func) {
     let url = 'api/Index/getToken';
     util.httpRequest(url).then((res) => {
-        if (res.result === 'success') {
-            return func(res);
-        } else {
-            showClickModal(res.msg);
-        }
+        return func(res);
+        // if (res.result === 'success') {
+        //     return func(res);
+        // } else {
+        //     showClickModal(res.msg);
+        // }
     });
 }
 
@@ -731,11 +762,13 @@ module.exports = {
     dataListHandle,
     nullObj,
     isNull,
+    stringObject,
     getPersonInfo,
     userInfoBind,
     timeCountDown,
     seeBigImg,
     uploadImg,
+    phoneCall,
 
     loginRegistData,
     loginRegistEvent,

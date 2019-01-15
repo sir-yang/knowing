@@ -1,11 +1,7 @@
 <view class='p20'>
     <scroll-view scroll-x class='reply-type-tab'>
-        <view class='tab-item'>全部</view>
-        <view class='tab-item'>读研</view>
-        <view class='tab-item'>留学</view>
-        <view class='tab-item'>求职</view>
-        <view class='tab-item'>竞赛</view>
-        <view class='tab-item'>其他</view>
+        <view class='tab-item {{typeIndex == -1 ? "on" : ""}}' bindtap='myReplyEvent' data-types='typeTab' data-index='-1'>全部</view>
+        <view wx:for="{{typeTabArr}}" wx:key="" class='tab-item {{typeIndex == index ? "on" : ""}}' bindtap='myReplyEvent' data-types='typeTab' data-index='{{index}}'>{{item.name}}</view>
     </scroll-view>
 
     <view class='reply-list-box'>

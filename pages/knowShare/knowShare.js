@@ -1,4 +1,5 @@
-// pages/knowShare/knowShare.js
+let common = getApp().globalData.commonFun;
+let util = getApp().globalData.utilFun;
 Page({
 
     /**
@@ -29,7 +30,9 @@ Page({
     onShow: function () {
         let text = this.data.content;
         if (text.length > 49) {
-            text = text.substring(0,49);
+
+            // text = text.substring(0,49);
+            text = common.stringObject(text, 49);
             this.setData({
                 content: text
             })

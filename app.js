@@ -6,7 +6,7 @@ let common = require('utils/common.js');
 App({
     onLaunch(_options) {
         checkToken: false,
-        wx.setStorageSync("serverurl", "http://192.168.0.104/");
+            wx.setStorageSync("serverurl", "http://shuzhi.loaderwang.cn/");
     },
 
     onShow(options) {

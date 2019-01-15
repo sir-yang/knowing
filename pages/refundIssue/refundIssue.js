@@ -1,66 +1,39 @@
-// pages/refundIssue/refundIssue.js
+let common = getApp().globalData.commonFun;
+let util = getApp().globalData.utilFun;
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-
+        content: ''
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        wx.showLoading({
+            title: '请稍后...',
+            mask: true
+        })
+        this.requestRefundDesc();
     },
 
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function () {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function () {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
-
+    // 使用说明
+    requestRefundDesc() {
+        let that = this;
+        let url = 'api/Configs/refuse';
+        util.httpRequest(url).then((res) => {
+            wx.hideLoading();
+            if (res.result === 'success') {
+                that.setData({
+                    content: res.results.refuse
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
     }
+
 })

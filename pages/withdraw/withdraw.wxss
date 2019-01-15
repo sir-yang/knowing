@@ -17,6 +17,9 @@ page {
     margin-left: 40rpx;
     font-size: 80rpx;
     color: #030303;
+    height: 80rpx;
+    line-height: 80rpx;
+    overflow: auto;
 }
 
 .withdraw-type-box {

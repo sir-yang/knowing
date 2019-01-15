@@ -2,55 +2,40 @@
     <view class='top-bg-box'></view>
     <view class='base-info-box'>
         <view class='flex_start'>
-            <image class='head-img flex_shrink' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+            <image class='head-img flex_shrink' src='{{userInfo.avatarUrl}}'></image>
             <view>
-                <view class='f28 c3 mt5'>何茜</view>
+                <view class='f28 c3 mt5'>{{userInfo.name}}</view>
                 <view class='f24 c6 mt10'>知了</view>
-            </view>
-        </view>
-        
-        <view class='bte9s mt20 pt20 flex_start'>
-            <view class='flex1'>
-                <view class='f24 c6 txt_center mb5'>7</view>
-                <view class='flex_center flex_items'>
-                    <image class='share-icon' src='/images/icon_5.png'></image>
-                    <view class='f24 c6'>分享</view>
-                </view>
-            </view>
-            <view class='flex1'>
-                <view class='f24 c6 txt_center mb5'>16</view>
-                <view class='flex_center flex_items'>
-                    <image class='attention-icon' src='/images/icon_2.png'></image>
-                    <view class='f24 c6'>关注</view>
-                </view>
             </view>
         </view>
 
         <!-- 问答知士 -->
-        <view class='bte9s mt20 pt20 flex_start hide'>
-            <view class='flex1'>
-                <view class='f24 c6 txt_center mb5'>7</view>
+        <view class='bte9s mt20 pt20 flex_start'>
+            <view class='flex1' bindtap='myEvent' data-types='share'>
+                <view class='f24 c6 txt_center mb5'>{{userInfo.shareNum}}</view>
                 <view class='flex_center flex_items'>
                     <image class='share-icon' src='/images/icon_5.png'></image>
                     <view class='f24 c6'>分享</view>
                 </view>
             </view>
-            <view class='flex1'>
-                <view class='f24 c6 txt_center mb5'>7</view>
-                <view class='flex_center flex_items'>
-                    <image class='reply-icon' src='/images/icon_6.png'></image>
-                    <view class='f24 c6'>回答</view>
+            <block wx:if="{{userInfo.status == 5 || userInfo.status == 6 || userInfo.status == 8}}">
+                <view class='flex1' bindtap='myEvent' data-types='reply'>
+                    <view class='f24 c6 txt_center mb5'>{{userInfo.solveNum}}</view>
+                    <view class='flex_center flex_items'>
+                        <image class='reply-icon' src='/images/icon_6.png'></image>
+                        <view class='f24 c6'>回答</view>
+                    </view>
                 </view>
-            </view>
-            <view class='flex1'>
-                <view class='f24 c6 txt_center mb5'>3</view>
-                <view class='flex_center flex_items'>
-                    <image class='fan-icon' src='/images/icon_1.png'></image>
-                    <view class='f24 c6'>粉丝</view>
+                <view class='flex1' bindtap='myEvent' data-types='fans'>
+                    <view class='f24 c6 txt_center mb5'>{{userInfo.fansNum}}</view>
+                    <view class='flex_center flex_items'>
+                        <image class='fan-icon' src='/images/icon_1.png'></image>
+                        <view class='f24 c6'>粉丝</view>
+                    </view>
                 </view>
-            </view>
-            <view class='flex1'>
-                <view class='f24 c6 txt_center mb5'>16</view>
+            </block>
+            <view class='flex1' bindtap='myEvent' data-types='attention'>
+                <view class='f24 c6 txt_center mb5'>{{userInfo.attentionNum}}</view>
                 <view class='flex_center flex_items'>
                     <image class='attention-icon' src='/images/icon_2.png'></image>
                     <view class='f24 c6'>关注</view>
@@ -61,27 +46,27 @@
 
     <!-- 九宫格 -->
     <view class='flex_warp mt10'>
-        <view class='features-item-box flex_column flex_center flex_items'>
+        <view class='features-item-box flex_column flex_center flex_items' bindtap='myEvent' data-types='wenda'>
             <image src='/images/my_icon_1.png'></image>
             <view class='text msg'>我的问答</view>
         </view>
-        <view class='features-item-box flex_column flex_center flex_items'>
+        <!-- <view class='features-item-box flex_column flex_center flex_items'>
             <image src='/images/my_icon_2.png'></image>
             <view class='text'>我的知识车</view>
         </view>
         <view class='features-item-box flex_column flex_center flex_items'>
             <image src='/images/my_icon_3.png'></image>
             <view class='text'>我的订单</view>
-        </view>
-        <view class='features-item-box flex_column flex_center flex_items'>
+        </view> -->
+        <view wx:if="{{userInfo.status == 5 || userInfo.status == 6 || userInfo.status == 8}}" class='features-item-box flex_column flex_center flex_items' bindtap='myEvent' data-types='wallet'>
             <image src='/images/my_icon_4.png'></image>
             <view class='text msg'>我的钱包</view>
         </view>
-        <view class='features-item-box flex_column flex_center flex_items'>
+        <view class='features-item-box flex_column flex_center flex_items' bindtap='myEvent' data-types='apply'>
             <image src='/images/my_icon_5.png'></image>
             <view class='text'>申请</view>
         </view>
-        <view class='features-item-box flex_column flex_center flex_items'>
+        <view class='features-item-box flex_column flex_center flex_items' bindtap='myEvent' data-types='set'>
             <image src='/images/my_icon_6.png'></image>
             <view class='text'>设置</view>
         </view>

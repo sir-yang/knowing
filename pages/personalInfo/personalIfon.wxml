@@ -1,43 +1,43 @@
 <view class='p20'>
-    <form report-submit='true' bindsubmit=''>
+    <form report-submit='true' bindsubmit='personalEvent' data-types='submit'>
         <view class='base-info-box'>
             <view class='flex_between flex_items'>
                 <view>昵称</view>
-                <input type='text' name="name" placeholder='请输入昵称' />
+                <input type='text' name="nickName" value='{{userInfo.nickName}}' placeholder='请输入昵称' />
             </view>
             <view class='flex_between flex_items'>
                 <view>真实姓名</view>
-                <input type='text' name="name" placeholder='请输入真实姓名' />
+                <input type='text' name="name" value='{{userInfo.name}}' placeholder='请输入真实姓名' />
             </view>
             <view class='flex_between flex_items'>
                 <view>性别</view>
-                <input type='text' name="name" placeholder='女' />
+                <input type='text' disabled bindtap='personalEvent' data-types='gender' value='{{genderData[tabIndex].name}}' placeholder='女' />
             </view>
             <view class='flex_between flex_items'>
                 <view>学校名称</view>
-                <input type='text' name="name" placeholder='请输入学校名称' />
+                <input type='text' name="university" value='{{userInfo.inform.university}}' placeholder='请输入学校名称' />
             </view>
             <view class='flex_between flex_items'>
                 <view>学院</view>
-                <input type='text' name="name" placeholder='请输入学院' />
+                <input type='text' name="academy" value='{{userInfo.inform.academy}}' placeholder='请输入学院' />
             </view>
             <view class='flex_between flex_items'>
                 <view>专业</view>
-                <input type='text' name="name" placeholder='请输入专业' />
+                <input type='text' name="major" value='{{userInfo.inform.major}}' placeholder='请输入专业' />
             </view>
             <view class='flex_between flex_items'>
                 <view>学历</view>
-                <input type='text' name="name" placeholder='请输入学历' />
+                <input type='text' name="education" value='{{userInfo.inform.education}}' placeholder='请输入学历' />
             </view>
             <view class='flex_between flex_items'>
                 <view>年级</view>
-                <input type='text' name="name" placeholder='请输入年级' />
+                <input type='text' name="session" value='{{userInfo.inform.session}}' placeholder='请输入年级' />
             </view>
         </view>
 
         <view class='base-info-box'>
             <view class='desc'>简介</view>
-            <textarea placeholder='请输入简介'></textarea>
+            <textarea name="introduce" placeholder='请输入简介'></textarea>
         </view>
 
         <view class='footer-spacing'></view>

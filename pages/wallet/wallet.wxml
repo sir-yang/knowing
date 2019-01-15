@@ -1,7 +1,7 @@
 <view class='plr20 pb20'>
     <view class='account-balance-box flex_center flex_column flex_items'>
         <view class='f22 c6'>账户余额</view>
-        <view class='balance'>￥0.00</view>
+        <view class='balance'>￥{{account.remainMoney}}</view>
 
         <view class='withdraw-btn' bindtap='walletEvent' data-types='wattle'>提现</view>
     </view>
@@ -12,45 +12,24 @@
     </view>
 
     <view class='recording-box'>
-        <view class='recording-item-box'>
+        <view wx:for="{{list}}" wx:key="" class='recording-item-box'>
             <view class='flex_start flex_items'>
                 <view class='label f28 c0'>消费</view>
-                <view class='c9'>2018-08-12 18:20:00</view>
+                <view class='c9'>{{item.addTime}}</view>
             </view>
             <view class='flex_start flex_items'>
                 <view class='flex1 flex_start flex_items'>
                     <view class='label'>交易类型：</view>
-                    <view>关注分享知士</view>
+                    <view>{{item.remark}}</view>
                 </view>
-                <view class='money'>-￥190.00</view>
+                <view class='money'>{{item.status == 2 ? "-" : ""}}{{item.money}}</view>
             </view>
             <view class='flex_start flex_items'>
                 <view class='flex1 flex_start flex_items'>
                     <view class='label'>订单编号：</view>
-                    <view>20182908470270570</view>
+                    <view>{{item.orderNo}}</view>
                 </view>
             </view>
         </view>
-
-        <view class='recording-item-box'>
-            <view class='flex_start flex_items'>
-                <view class='label f28 c0'>提现</view>
-                <view class='c9'>2018-08-12 18:20:00</view>
-            </view>
-            <view class='flex_start flex_items'>
-                <view class='flex1 flex_start flex_items'>
-                    <view class='label'>交易类型：</view>
-                    <view>关注分享知士</view>
-                </view>
-                <view class='money'>-￥190.00</view>
-            </view>
-            <view class='flex_start flex_items'>
-                <view class='flex1 flex_start flex_items'>
-                    <view class='label'>订单编号：</view>
-                    <view>20182908470270570</view>
-                </view>
-            </view>
-        </view>
-    
     </view>
 </view>

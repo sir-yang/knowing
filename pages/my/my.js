@@ -1,66 +1,107 @@
-// pages/my/my.js
+let common = getApp().globalData.commonFun;
+let util = getApp().globalData.utilFun;
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-
+        userInfo: ''
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
-
+    onLoad: function(options) {
+        wx.showLoading({
+            title: '请稍后...',
+            mask: true
+        })
     },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function () {
+    onReady: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
-
+    onShow: function() {
+        let that = this;
+        let token = common.getAccessToken();
+        if (token) {
+            common.getPersonInfo().then((info) => {
+                wx.hideLoading();
+                that.setData({
+                    userInfo: info
+                })
+            })
+        } else {
+            getApp().globalData.tokenUpdated = function () {
+                console.log('update success');
+                common.getPersonInfo().then((info) => {
+                    wx.hideLoading();
+                    console.log(info);
+                    that.setData({
+                        userInfo: info
+                    })
+                })
+            };
+        }
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function () {
+    onHide: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload: function () {
+    onUnload: function() {
 
     },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh: function () {
+    onPullDownRefresh: function() {
 
     },
 
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
+    // 事件
+    myEvent(event) {
+        let dataset = event.currentTarget.dataset;
+        let url = '';
+        if (dataset.types === 'share') {//分享
+            url = '/pages/shareList/shareList';
+        } else if (dataset.types === 'reply') {//回答
+            url = '/pages/myReply/myReply';
+        } else if (dataset.types === 'fans') {//粉丝
+            url = '/pages/attentionList/attentionList?status=1';
+        } else if (dataset.types === 'attention') {//关注
+            url = '/pages/attentionList/attentionList?status=2';
+        } else if (dataset.types === 'wenda') {//问答
+            url = '/pages/wenda/wenda';
+        } else if (dataset.types === 'wallet') {//钱包
+            url = '/pages/wallet/wallet';
+        } else if (dataset.types === 'apply') {//申请
+            url = '/pages/apply/apply';
+        } else if (dataset.types === 'set') {//设置
+            url = '/pages/setting/setting';
+        } else if (dataset.types === 'wenda') {//问答
+            url = '/pages/wallet/wallet';
+        }
 
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
-
+        wx.navigateTo({
+            url
+        })
     }
+
+
 })

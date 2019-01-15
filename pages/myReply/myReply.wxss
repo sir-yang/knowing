@@ -20,6 +20,10 @@ page {
     color: #999;
     font-weight: bold;
 }
+.tab-item.on {
+    color: #278ae2;
+    background: #fff;
+}
 .tab-item:last-child {
     margin-right: 0;
 }
