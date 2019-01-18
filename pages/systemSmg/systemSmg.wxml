@@ -1,0 +1,16 @@
+<view class='plr20'>
+    <view class='system-smg-item'>
+        <view class='flex_between flex_items'>
+            <view class='f30 c3'>关于提现</view>
+            <view class='f18 c6'>2018-06-19</view>
+        </view>
+        <view class='content clamp2'>关于提现的内容，关于提现的内容关于提现的内容关于提现的内容关于提现的内容关于提现的内容。关于提现的内容关于提现…</view>
+    </view>
+    <view class='system-smg-item'>
+        <view class='flex_between flex_items'>
+            <view class='f30 c3'>关于提现</view>
+            <view class='f18 c6'>2018-06-19</view>
+        </view>
+        <view class='content clamp2'>关于提现的内容，关于提现的内容关于提现的内容关于提现的内容关于提现的内容关于提现的内容。关于提现的内容关于提现…</view>
+    </view>
+</view>

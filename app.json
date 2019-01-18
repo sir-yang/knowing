@@ -26,7 +26,11 @@
         "pages/about/about",
         "pages/message/message",
         "pages/myReply/myReply",
-        "pages/knowShare/knowShare"
+        "pages/knowShare/knowShare",
+        "pages/systemSmg/systemSmg",
+        "pages/privateSmg/privateSmg",
+        "pages/systemSmgDetail/systemSmgDetail",
+        "pages/privateSmgDetail/privateSmgDetail"
     ],
     "window": {
         "backgroundTextStyle": "light",

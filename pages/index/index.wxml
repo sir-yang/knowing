@@ -9,7 +9,7 @@
             <input type='text' bindinput='questionAnswerEvent' data-types='ipt' value='{{searchVal}}' placeholder-class='cbc' placeholder='请输入' />
             <image catchtap='questionAnswerEvent' data-types='search' src='/images/home_search_icon.png'></image>
         </view>
-        <view class='right-msg'>
+        <view class='right-msg' bindtap='questionAnswerEvent' data-types='message'>
             <text></text>
             <image src='/images/home_msg_icon.png'></image>
         </view>
@@ -86,7 +86,7 @@
 <view class='tankuang {{posterTk}}'></view>
 <view class='poster-modal-content {{posterTk}}'>
     <view class='poster-img'>
-        <image src='http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg'></image>
+        <image src='{{posterUrl}}'></image>
     </view>
     <button wx:if="{{needAuth}}" class='save-photo-btn' open-type='openSetting' bindopensetting="openSetBack">保存图片</button>
     <view wx:else class='save-photo-btn' bindtap='questionAnswerEvent' data-types='savaImg'>保存图片</view>

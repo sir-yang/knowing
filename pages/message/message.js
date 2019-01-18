@@ -1,4 +1,5 @@
-// pages/message/message.js
+let common = getApp().globalData.commonFun;
+let util = getApp().globalData.utilFun;
 Page({
 
     /**
@@ -30,37 +31,28 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function () {
-
-    },
-
-    /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
 
     },
 
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
-
+    // 事件
+    messageEvent(event) {
+        let dataset = event.currentTarget.dataset;
+        let url = '';
+        if (dataset.types === 'mine') {
+            url = '/pages/knowShare/knowShare';
+        } else if (dataset.types === 'system') {
+            url = '/pages/systemSmg/systemSmg';
+        } else if (dataset.types === 'private') {
+            url = '/pages/privateSmg/privateSmg';
+        } else if (dataset.types === 'know') {
+            url = '/pages/knowShare/knowShare';
+        }
+        wx.navigateTo({
+            url
+        })
     }
+
 })

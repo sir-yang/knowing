@@ -30,28 +30,17 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function() {
-
+        let askData = common.getStorage('askData');
+        if (askData) {
+            this.setData({
+                typeTab: askData.typeTab,
+                imgList: askData.imgArr,
+                contentVal: askData.question,
+                moneyIndex: askData.moneyIndex,
+                moneyVal: askData.askMoney
+            })
+            this.state.imgArr = askData.qImg;
+        }
     },
 
     // 事件
@@ -64,18 +53,20 @@ Page({
                 typeTab: dataset.index
             })
         } else if (dataset.types === 'upload') {
-            let imgList = [];
-            let imgListArr = [];
-            common.uploadImg(9, (photoUrl, tempFilePaths) => {
+            let imgList = that.data.imgList;
+            let imgListArr = that.state.imgArr;
+            if (imgList.length >= 9) {
+                common.showClickModal('请先删除部分图片');
+                return false;
+            }
+            common.uploadImg((9 - imgList.length), (photoUrl, tempFilePaths) => {
                 tempFilePaths.forEach((url) => {
                     imgList.push(url);
                 });
 
                 photoUrl.forEach((obj) => {
-                    //console.log(JSON.parse(obj.data).url);
-                    let img = {
-                        oss_object: JSON.parse(obj.data).url
-                    };
+                    //console.log(JSON.parse(obj.data).key);
+                    let img = JSON.parse(obj.data).key;
                     imgListArr.push(img);
                 });
 
@@ -88,8 +79,8 @@ Page({
             let imgList = that.data.imgList;
             let imgArr = that.state.imgArr;
             let index = dataset.index;
-            imgList = imgList.splice(index, 1);
-            imgArr = imgArr.splice(index, 1);
+            imgList.splice(index, 1);
+            imgArr.splice(index, 1);
             that.state.imgArr = imgArr;
             that.setData({
                 imgList
@@ -107,9 +98,25 @@ Page({
         } else if (dataset.types === 'temporary') { //暂存
             let data = that.getSubmitVal();
             console.log(data);
-            if (data) common.setStorage('askData', data);
+            if (!data) return;
+            data.typeTab = that.data.typeTab;
+            data.imgArr = that.data.imgList;
+            data.moneyIndex = that.data.moneyIndex;
+            common.setStorage('askData', data);
+            wx.showModal({
+                title: '提示',
+                content: '数据保存成功',
+                showCancel: false,
+                success() {
+                    wx.navigateBack({ });
+                },
+                fail(res) {
+                    common.showClickModal(res.errMsg);
+                }
+            })
         } else if (dataset.types === 'submit') { //提交
             let vals = that.getSubmitVal();
+            if (!vals) return;
             vals.wx_form_id = event.detail.formId;
             this.requestSubmit(vals);
         } else if (dataset.types === 'moneyIpt') {
@@ -135,12 +142,12 @@ Page({
             type: typeTabArr[typeTab].id
         }
 
-        if (that.state.imgArr.length > 0) {
+        if (that.data.imgList.length > 0) {
             data.qImg = that.state.imgArr;
         }
         if (that.data.contentVal == '') {
             common.showTimeToast('请填写提问内容');
-            return;
+            return false;
         }
         data.question = that.data.contentVal;
 
@@ -150,7 +157,7 @@ Page({
         } else {
             if (that.data.moneyVal == '') {
                 common.showTimeToast('请选择围观金额');
-                return;
+                return false;
             }
             data.askMoney = that.data.moneyVal;
         }
@@ -187,9 +194,39 @@ Page({
                     content: res.msg,
                     showCancel: false,
                     success() {
+                        wx.removeStorageSync('askData');
                         wx.navigateBack({});
                     }
                 })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
+    },
+
+
+    // 暂存数据
+    requestCache() {
+        let that = this;
+        let url = 'api/Answer/answerCache';
+        util.httpRequest(url, vals, 'POST').then((res) => {
+            wx.hideLoading();
+            if (res.result === 'success') {
+
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
+    },
+
+    // 获取暂存数据
+    requestGetCache() {
+        let that = this;
+        let url = 'api/Answer/getCache';
+        util.httpRequest(url, vals, 'POST').then((res) => {
+            wx.hideLoading();
+            if (res.result === 'success') {
+
             } else {
                 common.showClickModal(res.msg);
             }

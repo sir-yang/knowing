@@ -1,0 +1,19 @@
+page {
+    background: #f0f3f8;
+}
+
+.system-smg-item {
+    margin-top: 25rpx;
+    padding: 35rpx 20rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+
+.content {
+    margin-top: 20rpx;
+    font-size: 24rpx;
+    color: #666;
+    line-height: 36rpx;
+    text-align: justify;
+}

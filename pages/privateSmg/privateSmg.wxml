@@ -1,0 +1,24 @@
+<view class='plr20'>
+    <view class='private-item flex_start'>
+        <image class='flex_shrink head-img' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+        <view class='flex1 flex_between'>
+            <view class='flex1'>
+                <view class='f30 c3'>卢林涛</view>
+                <view class='f24 c6 mt10'>嗯嗯</view>
+            </view>
+            <view class='f18 c6'>2018-06-19</view>
+        </view>
+    </view>
+    
+    <view class='private-item flex_start'>
+        <image class='flex_shrink head-img' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+        <view class='flex1 flex_between'>
+            <view class='flex1'>
+                <view class='f30 c3'>卢林涛</view>
+                <view class='f24 c6 mt10'>嗯嗯</view>
+            </view>
+            <view class='f18 c6'>2018-06-19</view>
+        </view>
+    </view>
+
+</view>

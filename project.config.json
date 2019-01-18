@@ -42,8 +42,8 @@
 				{
 					"id": 0,
 					"name": "自定义",
-					"pathName": "pages/withdraw/withdraw",
-					"query": "id=6"
+					"pathName": "pages/privateSmgDetail/privateSmgDetail",
+					"query": "id=4"
 				}
 			]
 		}

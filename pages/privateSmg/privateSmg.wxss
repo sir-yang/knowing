@@ -1,0 +1,18 @@
+page {
+    background: #f0f3f8;
+}
+
+.private-item {
+    margin-top: 25rpx;
+    padding: 20rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.1);
+}
+.head-img {
+    display: block;
+    width: 84rpx;
+    height: 84rpx;
+    margin-right: 25rpx;
+    border-radius: 10rpx;
+}

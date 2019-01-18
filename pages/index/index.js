@@ -13,11 +13,12 @@ Page({
         order: 1,
         onlookersTk: 'hide', // 围观弹框
         posterTk: 'hide', //海报弹框
+        posterUrl: '', //海报路径
         searchVal: '',
         typeTabArr: [],
         list: [],
         role: 1, //权限 默认普通用户
-        needAuth: true,
+        needAuth: true //保存图片授权
     },
 
     state: {
@@ -154,25 +155,51 @@ Page({
             let index = dataset.index;
             if (list[index].around == 1) {
                 wx.navigateTo({
-                    url: '/pages/wendaDetail/wendaDetail?id='+ list[index].id
+                    url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
                 })
             } else {
-                wx.hideTabBar({
-                    success() {
-                        that.setData({
-                            onlookersTk: 'show'
-                        })
+                that.state.shareId = list[index].id;
+                wx.showActionSheet({
+                    itemList: ["分享围观", "付费围观"],
+                    success(res) {
+                        console.log(res.tapIndex);
+                        if (res.tapIndex == 0) {
+                            that.getIsAuth();
+                            that.requestPoster();
+                        } else {
+                            wx.showTabBar({
+                                success() {
+                                    that.setData({
+                                        onlookersTk: 'hide'
+                                    })
+                                }
+                            })
+                            that.requestPay();
+                        }
                     }
-                });
+                })
             }
         } else if (dataset.types === 'onlookers') { //围观弹框
+            that.state.shareId = list[dataset.index].id;
             wx.showActionSheet({
                 itemList: ["分享围观", "付费围观"],
                 success(res) {
-                    console.log(res.tapIndex);
+                    if (res.tapIndex == 0) {
+                        that.getIsAuth();
+                        that.requestPoster();
+                    } else {
+                        wx.showTabBar({
+                            success() {
+                                that.setData({
+                                    onlookersTk: 'hide'
+                                })
+                            }
+                        })
+                        that.requestPay();
+                    }
                 }
             })
-        } else if (dataset.types === 'reply') {//去回答
+        } else if (dataset.types === 'reply') { //去回答
             let index = dataset.index;
             wx.navigateTo({
                 url: '/pages/reply/reply?id=' + list[index].id
@@ -194,46 +221,20 @@ Page({
                 searchVal: event.detail.value
             })
         } else if (dataset.types === 'search') { //搜索
-            if (that.data.searchVal == "") {
-                common.showTimeToast('请输入搜索关键词');
-                return;
-            }
+            // if (that.data.searchVal == "") {
+            //     common.showTimeToast('请输入搜索关键词');
+            //     return;
+            // }
             that.state.offset = 0;
             that.requestList(0);
+        } else if (dataset.types === 'message') {
+            wx.navigateTo({
+                url: '/pages/message/message'
+            })
         } else if (dataset.types === 'share') { //分享海报
             // 授权判断
-            wx.getSetting({
-                success(res) {
-                    if (!res.authSetting['scope.writePhotosAlbum']) {
-                        wx.authorize({
-                            scope: 'scope.writePhotosAlbum',
-                            success(suc) {
-                                that.setData({
-                                    needAuth: false
-                                })
-                            },
-                            fail() {
-                                that.setData({
-                                    needAuth: true
-                                })
-                            }
-                        })
-                    } else {
-                        that.setData({
-                            needAuth: false
-                        })
-                    }
-                }
-            })
-            // 隐藏底部导航 显示显示海报
-            wx.showTabBar({
-                success() {
-                    that.setData({
-                        onlookersTk: 'hide',
-                        posterTk: 'show'
-                    })
-                }
-            })
+            that.getIsAuth();
+            that.requestPoster();
         } else if (dataset.types === 'pay') { //付费
             wx.showTabBar({
                 success() {
@@ -242,22 +243,59 @@ Page({
                     })
                 }
             })
+            that.requestPay();
         } else if (dataset.types === 'savaImg') { //保存海报
-            wx.saveImageToPhotosAlbum({
-                filePath: '',
-                success() {
-                    wx.showToast({
-                        title: '保存成功',
-                        icon: 'none',
+            wx.getImageInfo({
+                src: that.data.posterUrl,
+                success(res) {
+                    wx.saveImageToPhotosAlbum({
+                        filePath: res.path,
                         success() {
-                            that.setData({
-                                posterTk: 'hide'
+                            wx.showToast({
+                                title: '保存成功',
+                                icon: 'none',
+                                success() {
+                                    that.setData({
+                                        posterTk: 'hide'
+                                    })
+                                }
                             })
                         }
                     })
+                },
+                fail(err) {
+                    common.showClickModal(res.errMsg);
                 }
             })
         }
+    },
+
+    // 授权判断
+    getIsAuth() {
+        let that = this;
+        wx.getSetting({
+            success(res) {
+                if (!res.authSetting['scope.writePhotosAlbum']) {
+                    wx.authorize({
+                        scope: 'scope.writePhotosAlbum',
+                        success(suc) {
+                            that.setData({
+                                needAuth: false
+                            })
+                        },
+                        fail() {
+                            that.setData({
+                                needAuth: true
+                            })
+                        }
+                    })
+                } else {
+                    that.setData({
+                        needAuth: false
+                    })
+                }
+            }
+        })
     },
 
     // 权限设置回调
@@ -328,7 +366,7 @@ Page({
                 mask: true
             });
         }
-        
+
         util.httpRequest(url, data).then((res) => {
             wx.hideLoading();
             if (res.result === 'success') {
@@ -347,22 +385,50 @@ Page({
     // 获取海报
     requestPoster() {
         let that = this;
-        let url = '';
-        util.httpRequest(url).then((res) => {
+        let url = 'api/Share/share';
+        wx.showLoading({
+            title: '海报生成中...',
+            mask: true
+        })
+        util.httpRequest(url, {
+            id: that.state.shareId
+        }).then((res) => {
+            wx.hideLoading();
             if (res.result === 'success') {
-
+                // 隐藏底部导航 显示显示海报
+                wx.showTabBar({
+                    success() {
+                        that.setData({
+                            onlookersTk: 'hide',
+                            posterTk: 'show',
+                            posterUrl: res.results
+                        })
+                    }
+                })
             } else {
                 common.showClickModal(res.msg);
             }
         });
     },
 
-    // 调用支付
+    // 调用支付围观
     requestPay() {
         let that = this;
-        let url = '';
-        util.httpRequest(url, data, 'POST').then((res) => {
+        let url = 'api/Answer/around';
+        wx.showLoading({
+            title: '',
+            mask: true
+        })
+        util.httpRequest(url, {
+            id: that.state.shareId
+        }, 'POST').then((res) => {
+            wx.hideLoading();
             console.log(res);
+            if (res.result === 'success') {
+
+            } else {
+                common.showClickModal(res.msg);
+            }
         })
     }
 })
