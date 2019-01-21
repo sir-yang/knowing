@@ -27,10 +27,11 @@
         "pages/message/message",
         "pages/myReply/myReply",
         "pages/knowShare/knowShare",
-        "pages/systemSmg/systemSmg",
-        "pages/privateSmg/privateSmg",
-        "pages/systemSmgDetail/systemSmgDetail",
-        "pages/privateSmgDetail/privateSmgDetail"
+        "pages/systemMsg/systemMsg",
+        "pages/privateMsg/privateMsg",
+        "pages/systemMsgDetail/systemMsgDetail",
+        "pages/privateMsgDetail/privateMsgDetail",
+        "pages/myMsg/myMsg"
     ],
     "window": {
         "backgroundTextStyle": "light",

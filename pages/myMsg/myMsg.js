@@ -1,5 +1,6 @@
 let common = getApp().globalData.commonFun;
 let util = getApp().globalData.utilFun;
+
 Page({
 
     /**
@@ -7,9 +8,7 @@ Page({
      */
     data: {
         requestStatus: false,
-        tabIndex: 0,
-        list: [],
-        content: '分享经济包括不同人或组织之间对生产资料、产品、分销渠道、处于交易或消费过程中的商品和服务的分享。这个拉斯单撒开单费'
+        list: []
     },
 
     state: {
@@ -25,20 +24,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        wx.showLoading({
-            title: '请稍后...',
-            mask: true
-        });
-        let that = this;
-        let token = common.getAccessToken();
-        if (token) {
-            that.requestGetList(0);
-        } else {
-            getApp().globalData.tokenUpdated = function () {
-                console.log('update success');
-                that.requestGetList(0);
-            };
-        }
+
     },
 
     /**
@@ -52,13 +38,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        let text = this.data.content;
-        if (text.length > 49) {
-            text = common.stringObject(text, 49);
-            this.setData({
-                content: text
-            })
-        }
+
     },
 
     /**
@@ -72,7 +52,7 @@ Page({
         });
         this.state.offset = 0;
         this.state.hasmore = true;
-        this.requestGetList(0);
+        this.requestGetMsgList(0);
     },
 
     /**
@@ -87,31 +67,30 @@ Page({
             mask: true
         });
         this.state.offset = this.state.offset + this.state.limit;
-        this.requestGetList(this.state.offset);
+        this.requestGetMsgList(this.state.offset);
         this.state.isOnReachBottom = false;
     },
 
-    // 事件
-    knowShareEvent(event) {
-        let dataset = event.currentTarget.dataset;
-        if (dataset.types === 'tab') {
-            if (dataset.index == this.data.tabIndex) return;
-            this.setData({
-                tabIndex: dataset.index
-            })
-        }
+    // 查看详情
+    viewDetail(event) {
+        let id = event.currentTarget.dataset.id;
+        // wx.navigateTo({
+        //     url: '/pages/systemMsgDetail/systemMsgDetail?id=' + id
+        // })
+        wx.navigateTo({
+            url: '/pages/systemMsgDetail/systemMsgDetail'
+        })
     },
 
-    // 获取列表
-    requestGetList(offset) {
+    // 获取消息列表
+    requestGetMsgList(offset) {
         let that = this;
-        let url = 'api/share/getPage';
+        let url = '';
         let data = {
             offset,
-            limit: that.state.limit,
-            audit: that.data.tabIndex
+            limit: that.state.limit
         }
-        util.httpRequest(url, data).then((res) => {
+        util.httpRequest(url).then((res) => {
             wx.hideLoading();
             if (res.result === 'success') {
                 let handle = common.dataListHandle(that, res, that.data.list, offset);

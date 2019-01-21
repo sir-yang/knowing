@@ -1,0 +1,26 @@
+<view class='txt_center plr20'>
+    <view>
+        <!-- <text class='time-box'>16:40</text> -->
+
+        <block wx:for="{{list}}" wx:key="">
+            <view wx:if="{{item.user.id == userInfo.id}}" class='right-msg flex_end mt20'>
+                <view class='content-msg'>{{item.content}}</view>
+                <image class='head-img flex_shrink ml20' src='{{item.user.avatarUrl}}'></image>
+            </view>
+            <view wx:else class='left-msg flex_start mt20'>
+                <image class='head-img flex_shrink mr20' src='{{item.user.avatarUrl}}'></image>
+                <view class='content-msg'>{{item.content}}</view>
+            </view>
+        </block>
+    </view>
+
+    <view class='comment-ipt-spacing'></view>
+    <view class='comment-ipt'>
+        <form report-submit='true' bindsubmit='requestSendMsg'>
+            <view class='flex_start flex_items plr20'>
+                <input type='text' name="content" class='flex1' value='{{contentVal}}' placeholder='回复内容' />
+                <button form-type='submit' class='comment-btn'>发送</button>
+            </view>
+        </form>
+    </view>
+</view>

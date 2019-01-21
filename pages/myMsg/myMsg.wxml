@@ -1,0 +1,17 @@
+
+<view class='plr20'>
+    <view wx:for="{{list}}" wx:key="" class='msg-item flex_between flex_items' bindtap='viewDetail' data-id='{{item.id}}'>
+        <view class='f26 c3'>***评论了我，点击查看详情</view>
+        <view>
+            <view class='f20 c6'>2018-06-29</view>
+            <view class='f18 c9 txt_right'>18:09:00</view>
+        </view>
+    </view>
+    <view class='msg-item flex_between flex_items' bindtap='viewDetail'>
+        <view class='f26 c3'>***赞了我，点击查看详情</view>
+        <view>
+            <view class='f20 c6'>2018-06-29</view>
+            <view class='f18 c9 txt_right'>18:09:00</view>
+        </view>
+    </view>
+</view>

@@ -60,20 +60,6 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function() {
-
-    },
-
-    /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
@@ -183,7 +169,6 @@ Page({
             if (res.result === 'success') {
                 let handle = common.dataListHandle(that, res, that.data.list, offset);
                 handle.list.forEach((item) => {
-                    console.log(item);
                     if (item.content && item.content.length > 49) {
                         item.str = common.stringObject(item.content, 49);
                     }

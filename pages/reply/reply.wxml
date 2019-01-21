@@ -30,19 +30,7 @@
             <view class='flex1 flex_warp'>
                 <view wx:for="{{imgList}}" wx:key="" class='pic-box'>
                     <view class='remove-img' catchtap='replyEvent' data-types='removeImg' data-index='{{index}}'>X</view>
-                    <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                </view>
-                <view class='pic-box'>
-                    <view class='remove-img'>X</view>
-                    <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                </view>
-                <view class='pic-box'>
-                    <view class='remove-img'>X</view>
-                    <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                </view>
-                <view class='pic-box'>
-                    <view class='remove-img'>X</view>
-                    <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                    <image src='{{item}}'></image>
                 </view>
             </view>
         </view>

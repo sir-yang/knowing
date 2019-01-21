@@ -42,11 +42,11 @@ Page({
         let dataset = event.currentTarget.dataset;
         let url = '';
         if (dataset.types === 'mine') {
-            url = '/pages/knowShare/knowShare';
+            url = '/pages/myMsg/myMsg';
         } else if (dataset.types === 'system') {
-            url = '/pages/systemSmg/systemSmg';
+            url = '/pages/systemMsg/systemMsg';
         } else if (dataset.types === 'private') {
-            url = '/pages/privateSmg/privateSmg';
+            url = '/pages/privateMsg/privateMsg';
         } else if (dataset.types === 'know') {
             url = '/pages/knowShare/knowShare';
         }

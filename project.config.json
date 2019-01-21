@@ -42,7 +42,7 @@
 				{
 					"id": 0,
 					"name": "自定义",
-					"pathName": "pages/privateSmgDetail/privateSmgDetail",
+					"pathName": "pages/myMsg/myMsg",
 					"query": "id=4"
 				}
 			]

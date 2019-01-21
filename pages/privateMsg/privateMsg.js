@@ -7,9 +7,7 @@ Page({
      */
     data: {
         requestStatus: false,
-        tabIndex: 0,
-        list: [],
-        content: '分享经济包括不同人或组织之间对生产资料、产品、分销渠道、处于交易或消费过程中的商品和服务的分享。这个拉斯单撒开单费'
+        list: []
     },
 
     state: {
@@ -29,36 +27,26 @@ Page({
             title: '请稍后...',
             mask: true
         });
+
         let that = this;
         let token = common.getAccessToken();
         if (token) {
-            that.requestGetList(0);
+            that.requestGetMsgList(0);
         } else {
-            getApp().globalData.tokenUpdated = function () {
+            getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
-                that.requestGetList(0);
+                that.requestGetMsgList(0);
             };
         }
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        let text = this.data.content;
-        if (text.length > 49) {
-            text = common.stringObject(text, 49);
-            this.setData({
-                content: text
-            })
-        }
+        if (!this.state.pageOnShow) return;
+        this.state.offset = 0;
+        this.requestGetMsgList(0);
     },
 
     /**
@@ -72,7 +60,7 @@ Page({
         });
         this.state.offset = 0;
         this.state.hasmore = true;
-        this.requestGetList(0);
+        this.requestGetMsgList(0);
     },
 
     /**
@@ -87,29 +75,25 @@ Page({
             mask: true
         });
         this.state.offset = this.state.offset + this.state.limit;
-        this.requestGetList(this.state.offset);
+        this.requestGetMsgList(this.state.offset);
         this.state.isOnReachBottom = false;
     },
 
-    // 事件
-    knowShareEvent(event) {
-        let dataset = event.currentTarget.dataset;
-        if (dataset.types === 'tab') {
-            if (dataset.index == this.data.tabIndex) return;
-            this.setData({
-                tabIndex: dataset.index
-            })
-        }
+    // 查看消息详情
+    viewDetail(event) {
+        let uid = event.currentTarget.dataset.uid;
+        wx.navigateTo({
+            url: '/pages/privateMsgDetail/privateMsgDetail?uid=' + uid,
+        })
     },
 
-    // 获取列表
-    requestGetList(offset) {
+    // 获取消息列表
+    requestGetMsgList(offset) {
         let that = this;
-        let url = 'api/share/getPage';
+        let url = 'api/Letter/getPage';
         let data = {
             offset,
-            limit: that.state.limit,
-            audit: that.data.tabIndex
+            limit: that.state.limit
         }
         util.httpRequest(url, data).then((res) => {
             wx.hideLoading();
@@ -125,4 +109,5 @@ Page({
             }
         })
     }
+
 })

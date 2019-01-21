@@ -7,7 +7,7 @@ function showClickModal(title) {
         title: '提示',
         content: title,
         showCancel: false,
-        success(_res) { }
+        success(_res) {}
     });
 }
 
@@ -162,7 +162,7 @@ function isNull(str) {
 }
 
 // 截取字符串
-function stringObject (str, leng) {
+function stringObject(str, leng) {
     str = str.substring(0, leng);
     return str;
 }
@@ -254,10 +254,10 @@ function uploadImg(num, func) {
         tempFilePaths.forEach((path) => {
             pros.push(singleUpload(res, path));
         });
-        
+
         return wx.pro.all(pros);
     }).then((_res) => {
-        console.log(2,_res);
+        console.log(2, _res);
         wx.hideLoading();
         func(_res, tempFilePaths);
     });
@@ -363,10 +363,10 @@ function timeCountDown(that, timestamp) {
 function loginRegistData(that) {
     that.setData({
         loginRegistTk: 'hide',
-        showLogin: 'hide',//登录
-        showRegist: 'hide',//注册
-        showForget: 'hide',//忘记密码
-        showPerfect: ['hide', 'hide', 'hide', 'hide'],//0:完善信息 1:学生 2:教师 3:其他
+        showLogin: 'hide', //登录
+        showRegist: 'hide', //注册
+        showForget: 'hide', //忘记密码
+        showPerfect: ['hide', 'hide', 'hide', 'hide'], //0:完善信息 1:学生 2:教师 3:其他
         identity: 1, //注册角色
         genderId: 1,
         CountdownVal: '发送验证码',
@@ -440,7 +440,7 @@ function loginRegistEvent(event, that) {
             showTimeToast('请先输入手机号');
             return false;
         }
-        if (!that.data.onClick) return; 
+        if (!that.data.onClick) return;
         requestGetSend(that, that.data.phoneVal);
     } else if (dataset.types === 'identity') { // 注册角色切换
         let index = event.currentTarget.dataset.index;
@@ -496,13 +496,13 @@ function loginRegistEvent(event, that) {
             return false;
         }
         vals.wx_form_id = event.detail.formId;
-        if (dataset.types === 'regist') {//注册
+        if (dataset.types === 'regist') { //注册
             vals.type = that.data.identity;
             requestRegist(that, vals);
-        } else {//忘记密码
+        } else { //忘记密码
             requestForGet(that, vals);
         }
-    } else if (dataset.types === 'genderId') {//性别选择
+    } else if (dataset.types === 'genderId') { //性别选择
         let index = event.currentTarget.dataset.index;
         if (index == that.data.genderId) return;
         that.setData({
@@ -574,7 +574,7 @@ function requestLogin(that, vals) {
                 codeVal: '',
             })
             // 显示导航
-            if(wx.showTabBar()) {
+            if (wx.showTabBar()) {
                 wx.showTabBar({});
             }
         } else {
@@ -705,11 +705,6 @@ function requestQiniuToken(func) {
     let url = 'api/Index/getToken';
     util.httpRequest(url).then((res) => {
         return func(res);
-        // if (res.result === 'success') {
-        //     return func(res);
-        // } else {
-        //     showClickModal(res.msg);
-        // }
     });
 }
 
@@ -719,7 +714,9 @@ function requestGetSend(that, phone) {
     that.setData({
         onClick: false
     })
-    util.httpRequest(url, { phone: phone }).then((res) => {
+    util.httpRequest(url, {
+        phone: phone
+    }).then((res) => {
         wx.hideLoading();
         if (res.result === 'success') {
             showTimeToast('发送成功');
@@ -746,6 +743,44 @@ function requestGetImgSend(that) {
             showClickModal(res.msg);
         }
     });
+}
+
+// 暂存数据 提问/回答/发布
+function requestCache(that, vals) {
+    let url = 'api/Answer/answerCache';
+    util.httpRequest(url, vals, 'POST').then((res) => {
+        wx.hideLoading();
+        if (res.result === 'success') {
+            if (res.result === 'success') {
+                wx.showModal({
+                    title: '提示',
+                    content: '数据保存成功',
+                    showCancel: false,
+                    success() {
+                        wx.navigateBack({});
+                    },
+                    fail(res) {
+                        common.showClickModal(res.errMsg);
+                    }
+                })
+            }
+        } else {
+            common.showClickModal(res.msg);
+        }
+    })
+}
+
+// 获取暂存数据 提问/回答/发布
+function requestGetCache(that, vals, func) {
+    let url = 'api/Answer/getCache';
+    util.httpRequest(url, vals).then((res) => {
+        wx.hideLoading();
+        if (res.result === 'success') {
+            func(res.results);
+        } else {
+            common.showClickModal(res.msg);
+        }
+    })
 }
 
 
@@ -777,5 +812,7 @@ module.exports = {
     requestGetMoney,
     requestQiniuToken,
     requestGetSend,
-    requestGetImgSend
+    requestGetImgSend,
+    requestCache,
+    requestGetCache
 };

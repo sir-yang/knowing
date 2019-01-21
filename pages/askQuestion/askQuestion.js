@@ -12,7 +12,7 @@ Page({
         contentVal: '',
         moneyData: [],
         moneyVal: '',
-        moneyIndex: -1
+        moneyIndex: 0
     },
 
     state: {
@@ -37,7 +37,7 @@ Page({
                 imgList: askData.imgArr,
                 contentVal: askData.question,
                 moneyIndex: askData.moneyIndex,
-                moneyVal: askData.askMoney
+                moneyVal: askData.moneyIndex == -1 ? askData.askMoney : ''
             })
             this.state.imgArr = askData.qImg;
         }
@@ -99,21 +99,21 @@ Page({
             let data = that.getSubmitVal();
             console.log(data);
             if (!data) return;
+            
             data.typeTab = that.data.typeTab;
             data.imgArr = that.data.imgList;
             data.moneyIndex = that.data.moneyIndex;
-            common.setStorage('askData', data);
-            wx.showModal({
-                title: '提示',
-                content: '数据保存成功',
-                showCancel: false,
-                success() {
-                    wx.navigateBack({ });
-                },
-                fail(res) {
-                    common.showClickModal(res.errMsg);
-                }
+            let vals = {
+                type: 1,
+                data
+            }
+
+            wx.showLoading({
+                title: '数据保存中...',
+                mask: true
             })
+            // 调用暂存
+            common.requestCache(that, vals);
         } else if (dataset.types === 'submit') { //提交
             let vals = that.getSubmitVal();
             if (!vals) return;
@@ -177,6 +177,26 @@ Page({
                 that.setData({
                     typeTabArr: res.results
                 })
+
+                // 调用缓存
+                common.requestGetCache(that, {type: 1}, (da) => {
+                    console.log(da);
+                    if (da) {
+                        if (da.status == 1) {
+                            let askData = da.content.data;
+                            if (askData) {
+                                that.setData({
+                                    typeTab: askData.typeTab,
+                                    imgList: askData.imgArr,
+                                    contentVal: askData.question,
+                                    moneyIndex: askData.moneyIndex,
+                                    moneyVal: askData.moneyIndex == -1 ? askData.askMoney : ''
+                                })
+                                that.state.imgArr = askData.qImg;
+                            }
+                        }
+                    }
+                });
             } else {
                 common.showClickModal(res.msg);
             }
@@ -198,35 +218,6 @@ Page({
                         wx.navigateBack({});
                     }
                 })
-            } else {
-                common.showClickModal(res.msg);
-            }
-        })
-    },
-
-
-    // 暂存数据
-    requestCache() {
-        let that = this;
-        let url = 'api/Answer/answerCache';
-        util.httpRequest(url, vals, 'POST').then((res) => {
-            wx.hideLoading();
-            if (res.result === 'success') {
-
-            } else {
-                common.showClickModal(res.msg);
-            }
-        })
-    },
-
-    // 获取暂存数据
-    requestGetCache() {
-        let that = this;
-        let url = 'api/Answer/getCache';
-        util.httpRequest(url, vals, 'POST').then((res) => {
-            wx.hideLoading();
-            if (res.result === 'success') {
-
             } else {
                 common.showClickModal(res.msg);
             }

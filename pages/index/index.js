@@ -82,6 +82,10 @@ Page({
                 showLogin
             })
         }
+
+        if (!this.state.pageOnShow) return;
+        this.state.offset = 0;
+        this.requestList(0);
     },
 
     /**

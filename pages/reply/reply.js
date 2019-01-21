@@ -25,7 +25,7 @@ Page({
         contentVal: '',
         moneyData: [],
         moneyVal: '',
-        moneyIndex: -1,
+        moneyIndex: 0,
         needAuth: true,
         playing: false, //播放状态
         status: false, //录音状态
@@ -34,7 +34,7 @@ Page({
     },
 
     state: {
-        audio: '',
+        options: {},
         audio_duration: 0,
         imgArr: []
     },
@@ -43,9 +43,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        // 调用锁定问题
-        // this.requestAnswerLock(options);
-        
+        this.state.options = options;
         if (!(wx.createInnerAudioContext())) {
             wx.showModal({
                 title: '提示',
@@ -58,13 +56,44 @@ Page({
         if (token) {
             // 获取提问金额
             common.requestGetMoney(that);
+            that.getCache();
         } else {
             getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
                 // 获取提问金额
                 common.requestGetMoney(that);
+                that.getCache();
             };
         }
+    },
+
+    // 获取暂存数据
+    getCache() {
+        let that = this;
+        common.requestGetCache(that, { type: 2 }, (da) => {
+            if (da) {
+                if (da.status == 1) {
+                    let replyData = da.content.data;
+                    if (replyData) {
+                        that.setData({
+                            aAudio: replyData.aAudio,
+                            imgList: replyData.imgArr,
+                            contentVal: replyData.answer,
+                            moneyIndex: replyData.moneyIndex,
+                            moneyVal: replyData.moneyIndex == -1 ? replyData.askMoney : ''
+                        })
+                        that.state.options.id = replyData.id;
+                        that.state.imgArr = replyData.aImg;
+                    }
+                } else {
+                    // 调用锁定问题
+                    that.requestAnswerLock();
+                }
+            } else {
+                // 调用锁定问题
+                that.requestAnswerLock();
+            }
+        })
     },
 
     /**
@@ -197,18 +226,20 @@ Page({
         let that = this;
         let dataset = event.currentTarget.dataset;
         if (dataset.types === 'upload') {
-            let imgList = [];
-            let imgListArr = [];
-            common.uploadImg(9, (photoUrl, tempFilePaths) => {
+            let imgList = that.data.imgList;
+            let imgListArr = that.state.imgArr;
+            if (imgList.length >= 9) {
+                common.showClickModal('请先删除部分图片');
+                return false;
+            }
+            common.uploadImg((9 - imgList.length), (photoUrl, tempFilePaths) => {
                 tempFilePaths.forEach((url) => {
                     imgList.push(url);
                 });
 
                 photoUrl.forEach((obj) => {
-                    //console.log(JSON.parse(obj.data).url);
-                    let img = {
-                        oss_object: JSON.parse(obj.data).url
-                    };
+                    //console.log(JSON.parse(obj.data).key);
+                    let img = JSON.parse(obj.data).key;
                     imgListArr.push(img);
                 });
 
@@ -221,8 +252,8 @@ Page({
             let imgList = that.data.imgList;
             let imgArr = that.state.imgArr;
             let index = dataset.index;
-            imgList = imgList.splice(index, 1);
-            imgArr = imgArr.splice(index, 1);
+            imgList.splice(index, 1);
+            imgArr.splice(index, 1);
             that.state.imgArr = imgArr;
             that.setData({
                 imgList
@@ -239,11 +270,31 @@ Page({
             })
         } else if (dataset.types === 'temporary') { //暂存
             let data = that.getSubmitVal();
-            if (data) common.setStorage('answerData', data);
+            if (!data) return;
+
+            data.id = that.state.options.id;
+            data.imgArr = that.data.imgList;
+            data.moneyIndex = that.data.moneyIndex;
+            console.log(data);
+
+            let vals = {
+                type: 2,
+                data
+            }
+
+            wx.showLoading({
+                title: '数据保存中...',
+                mask: true
+            })
+            // 调用暂存
+            common.requestCache(that, vals);
+
         } else if (dataset.types === 'submit') { //提交
             let vals = that.getSubmitVal();
+            if (!vals) return;
+            data.id = that.state.options.id;
             vals.wx_form_id = event.detail.formId;
-            this.requestSubmit(vals);
+            that.requestSubmit(vals);
         } else if (dataset.types === 'moneyIpt') { //监听输入金额
             that.setData({
                 moneyVal: event.detail.value
@@ -344,7 +395,11 @@ Page({
         }
         data.answer = that.data.contentVal;
 
-        if (that.state.imgArr.length > 0) {
+        if (that.data.aAudio) {
+            data.aAudio = that.data.aAudio;
+        }
+
+        if (that.data.imgList.length > 0) {
             data.aImg = that.state.imgArr;
         }
 
@@ -362,14 +417,14 @@ Page({
     },
 
     // 问题锁定
-    requestAnswerLock(opt) {
+    requestAnswerLock() {
         let that = this;
         let url = 'api/Answer/edits';
         let data = {
-            id: opt.id
+            id: that.state.options.id
         }
         util.httpRequest(url, data).then((res) => {
-            common.showClickModal(res.msg)
+            // console.log(res);
         });
     },
 
@@ -377,6 +432,11 @@ Page({
     requestSubmit(vals) {
         let that = this;
         let url = 'api/Answer/save';
+        if (vals.hasOwnProperty('aAudio')) {//判断是否有语音 有则执行上传
+            that.uploadAudio((aAudio) => {
+                vals.aAudio = aAudio;
+            })
+        }
         util.httpRequest(url, vals, 'POST').then((res) => {
             if (res.result === 'success') {
                 wx.showModal({
@@ -391,5 +451,28 @@ Page({
                 common.showClickModal(res.msg);
             }
         })
-    }
+    },
+
+    // 上传语音
+    uploadAudio(func) {
+        let that = this;
+        wx.showLoading({
+            title: '请稍后...',
+            mask: true
+        });
+        let url = 'api/Index/getToken';
+        util.httpRequest(url).then((res) => {
+            return wx.pro.uploadFile({
+                url: 'https://upload-z2.qiniup.com',
+                filePath: that.data.aAudio,
+                name: 'file',
+                formData: {
+                    token: res.token
+                }
+            });
+        }).then((res) => {
+            let key = JSON.parse(res.data).key;
+            func(key);
+        });
+    },
 })
