@@ -10,7 +10,8 @@ Page({
         requestStatus: false,
         bannerArr: [],
         tabIndex: -1,
-        list: []
+        list: [],
+        searchVal: ''
     },
 
     state: {
@@ -107,11 +108,23 @@ Page({
             if (dataset.index == this.data.tabIndex) return;
             this.setData({
                 tabIndex: dataset.index,
+                searchVal: '',
                 list: []
             })
 
             this.state.offset = 0;
             this.requestList(0);
+        } else if (dataset.types === 'ipt') {
+            this.setData({
+                searchVal: event.detail.value
+            })
+        } else if (dataset.types === 'search') {
+            this.state.offset = 0;
+            this.requestList(0);
+        } else if (dataset.types === 'message') {
+            wx.navigateTo({
+                url: '/pages/message/message'
+            })
         } else if (dataset.types === 'detail') {
             let list = this.data.list;
             let index = dataset.index;
@@ -160,6 +173,10 @@ Page({
         let data = {
             offset,
             limit: that.state.limit,
+        }
+
+        if (that.data.searchVal != '') {
+            data.key = that.data.searchVal;
         }
 
         if (that.data.tabIndex != -1) {

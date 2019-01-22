@@ -6,13 +6,13 @@
     </view>
 
     <view class='know-share-list'>
-        <view class='know-share-item'>
+        <view wx:for="{{list}}" wx:key="" class='know-share-item'>
             <view class='flex_start flex_items'>
-                <image class='head-img' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                <view class='f28 c3 ml20 mr30'>李思涵</view>
-                <view class='f24 c6 mt5'>四川大学</view>
+                <image class='head-img' src='{{item.user.avatarUrl}}'></image>
+                <view class='f28 c3 ml20 mr30'>{{item.user.name}}</view>
+                <view class='f24 c6 mt5'>{{item.user.keyWords}}</view>
             </view>
-            <view class='audio-box flex_start flex_items'>
+            <view wx:if="{{item.audio}}" class='audio-box flex_start flex_items'>
                 <image class='audio-img' src='/images/audio_icon.png'></image>
                 <view class='flex1'>
                     <view class='f20 c3'>知士回答.mp3</view>
@@ -24,20 +24,17 @@
                 </view>
             </view>
 
-            <view class='content'><text>{{content}}</text><text class='cmain'>[查看详情]</text></view>
+            <view class='content'><text>{{item.more ? item.desc : item.content}}</text><text wx:if="{{item.desc}}" class='cmain' catchtap='knowShareEvent' data-types='morecont' data-index='{{index}}'>[{{item.more ? "查看详情" : "收起"}}]</text></view>
             
             <view class='img-box mt20 mb10 flex_warp'>
-                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-                <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
+                <image wx:for="{{item.img}}" wx:key="" wx:for-item="imgItem" wx:for-index="idx" catchtap='knowShareEvent' data-types='seeImg' data-index='{{index}}' data-idx='{{idx}}' src='{{imgItem.thumb_small_url}}'></image>
             </view>
 
             <view class='flex_between flex_items'>
-                <view class='f24 c9'>1分钟前</view>
+                <view class='f24 c9'>{{item.addTime}}</view>
                 <view class='flex1 flex_end flex_items'>
-                    <view class='f24 c6 mr30'>忽略申请</view>
-                    <view class='f24' style='color:#ff6600'>同意发布</view>
+                    <view class='f24 c6 mr30' catchtap='knowShareEvent' data-types='ignore' data-index='{{index}}'>忽略申请</view>
+                    <view class='f24' style='color:#ff6600' bindtap='knowShareEvent' data-types='agree' data-index='{{index}}'>同意发布</view>
                 </view>
             </view>
         </view>

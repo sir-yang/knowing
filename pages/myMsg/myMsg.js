@@ -24,21 +24,20 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
+        wx.showLoading({
+            title: '请稍后...',
+            mask: true
+        })
+        this.requestGetMsgList(0);
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-
+        if (!this.state.pageOnShow) return;
+        this.state.offset = 0;
+        this.requestGetMsgList(0);
     },
 
     /**
@@ -75,17 +74,14 @@ Page({
     viewDetail(event) {
         let id = event.currentTarget.dataset.id;
         // wx.navigateTo({
-        //     url: '/pages/systemMsgDetail/systemMsgDetail?id=' + id
+        //     url: '/pages/systemMsgDetail/systemMsgDetail?id=' + id + '&page=my'
         // })
-        wx.navigateTo({
-            url: '/pages/systemMsgDetail/systemMsgDetail'
-        })
     },
 
     // 获取消息列表
     requestGetMsgList(offset) {
         let that = this;
-        let url = '';
+        let url = 'api/SelfMessage/getPage';
         let data = {
             offset,
             limit: that.state.limit

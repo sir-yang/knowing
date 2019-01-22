@@ -99,6 +99,28 @@ Page({
             this.setData({
                 tabIndex: dataset.index
             })
+            wx.showLoading({
+                title: '',
+                mask: true
+            })
+            this.state.offset = 0;
+            this.requestGetList(0);
+        } else if (dataset.types === 'morecont') {
+            let list = this.data.list;
+            let index = dataset.index;
+            list[index].more = !list[index].more;
+            this.setData({
+                list
+            })
+        } else if (dataset.types === 'seeImg') {
+            let list = this.data.list;
+            let index = dataset.index;
+            let idx = dataset.idx;
+            common.seeBigImg(list[index].img[idx].original_url, list[index].img, 2);
+        } else if (dataset.types === 'ignore') { //忽略
+            this.requestReview(2, dataset.index);
+        } else if (dataset.types === 'agree') { //同意
+            this.requestReview(1, dataset.index);
         }
     },
 
@@ -115,10 +137,51 @@ Page({
             wx.hideLoading();
             if (res.result === 'success') {
                 let handle = common.dataListHandle(that, res, that.data.list, offset);
+                handle.list.forEach((item) => {
+                    item.more = false;
+                    if (item.content.length > 49) {
+                        item.desc = common.stringObject(item.content, 49);
+                        item.more = true;
+                    }
+                })
+                console.log(handle.list)
                 that.setData({
                     requestStatus: true,
                     list: handle.list,
                     hasNext: handle.hasNext
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
+    },
+
+    // 审核
+    requestReview(status, index) {
+        let that = this;
+        let list = that.data.list;
+        let url = 'api/Share/edits';
+        let data = {
+            id: list[index].id,
+            status
+        }
+        wx.showLoading({
+            title: '',
+            mask: true
+        })
+        util.httpRequest(url, data).then((res) => {
+            wx.hideLoading();
+            if (res.result === 'success') {
+                wx.showToast({
+                    title: res.msg,
+                    icon: 'none',
+                    mask: true,
+                    success() {
+                        list.splice(index, 1);
+                        that.setData({
+                            list
+                        })
+                    }
                 })
             } else {
                 common.showClickModal(res.msg);

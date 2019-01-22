@@ -27,7 +27,7 @@ Page({
         } else if (dataset.types === 'refund') {
             url = '/pages/refundIssue/refundIssue';
         } else if (dataset.types === 'apply') {
-            // url = '/pages/errorInfo/errorInfo';
+            url = '/pages/apply/apply'; //需要跳转到申请说明界面 需更改
         } else if (dataset.types === 'call') {
             common.phoneCall(this.data.info.phone);
             return;

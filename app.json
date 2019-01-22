@@ -31,7 +31,9 @@
         "pages/privateMsg/privateMsg",
         "pages/systemMsgDetail/systemMsgDetail",
         "pages/privateMsgDetail/privateMsgDetail",
-        "pages/myMsg/myMsg"
+        "pages/myMsg/myMsg",
+        "pages/coursesDetail/coursesDetail",
+        "pages/enjoyDetail/enjoyDetail"
     ],
     "window": {
         "backgroundTextStyle": "light",

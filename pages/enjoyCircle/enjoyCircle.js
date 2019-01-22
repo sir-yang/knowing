@@ -7,6 +7,7 @@ Page({
      */
     data: {
         requestStatus: false,
+        searchVal: '',
         typeIndex: 0,
         typeTabArr: [],
         tabIndex: -1,
@@ -43,6 +44,10 @@ Page({
                 that.requestGetList(0);
             };
         }
+        let userInfo = common.getStorage('userInfo');
+        that.setData({
+            userInfo
+        })
     },
 
     /**
@@ -108,11 +113,27 @@ Page({
         } else if (dataset.types === 'tab') {
             if (dataset.index == this.data.tabIndex) return;
             this.setData({
+                searchVal: '',
                 tabIndex: dataset.index,
                 list: []
             })
             this.state.offset = 0;
             this.requestGetList(0);
+        } else if (dataset.types === 'ipt') {
+            this.setData({
+                searchVal: event.detail.value
+            })
+        } else if (dataset.types === 'search') {
+            this.state.offset = 0;
+            this.requestGetList(0);
+        } else if (dataset.types === 'message') {
+            wx.navigateTo({
+                url: '/pages/message/message'
+            })
+        } else if (dataset.types === 'publish') {
+            wx.navigateTo({
+                url: '/pages/publish/publish'
+            })
         } else if (dataset.types === 'moreTab') {
             this.setData({
                 showMore: !this.data.showMore
@@ -160,6 +181,11 @@ Page({
             limit: that.state.limit,
             status: 1
         }
+
+        if (that.data.searchVal != '') {
+            data.key = that.data.searchVal;
+        }
+
         if (that.data.tabIndex != -1) {
             let typeTabArr = that.data.typeTabArr;
             data.type = typeTabArr[that.data.tabIndex].id

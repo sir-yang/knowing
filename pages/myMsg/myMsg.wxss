@@ -3,7 +3,7 @@ page {
 }
 
 .msg-item {
-    margin-top: 25rpx;
+    margin-top: 20rpx;
     padding: 20rpx;
     background: #fff;
     border-radius: 10rpx;

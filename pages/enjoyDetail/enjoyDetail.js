@@ -14,7 +14,8 @@ Page({
         playing: false, //播放状态
         percent: 0,
         currentTime: '00:00',
-        duration: '00:00'
+        duration: '00:00',
+        contentVal: ''
     },
 
     state: {
@@ -116,20 +117,39 @@ Page({
         let details = this.data.details;
         if (dataset.types === 'seeImg') { //查看大图
             let index = dataset.index;
-            common.seeBigImg(details.qImg[index].original_url, details.qImg, 2);
+            common.seeBigImg(details.img[index].original_url, details.img, 2);
         } else if (dataset.types === 'play') { //播放/暂停音频
             if (this.data.playing) {
                 innerAudioContext.pause();
             } else {
                 innerAudioContext.play();
             }
+        } else if (dataset.types === 'like') {
+            let userInfo = common.getStorage('userInfo');
+            if (userInfo.id == this.data.details.uid) return;
+            wx.showLoading({
+                title: '',
+                mask: true
+            })
+            this.requestLike();
+        } else if (dataset.types === 'ipt') {
+            console.log(event);
+            this.setData({
+                contentVal: event.detail.value
+            })
+        } else if (dataset.types === 'submit') {
+            if (common.isNull(this.data.contentVal)) {
+                common.showTimeToast('请输入评论内容');
+                return false;
+            }
+            this.requestSubmitComment();
         }
     },
 
-    // 调用问答详情
+    // 调用知享详情
     requestGetDetail() {
         let that = this;
-        let url = 'api/Answer/getPage';
+        let url = 'api/share/getPage';
         util.httpRequest(url, {
             id: that.state.options.id
         }).then((res) => {
@@ -141,7 +161,97 @@ Page({
                 that.setData({
                     requestStatus: true,
                     details: res.results,
-                    duration: res.results.audio_times
+                    // duration: res.results.audio_times
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
+    },
+
+    // 点赞/取消点赞
+    requestLike() {
+        let that = this;
+        let url = 'api/Share/zan';
+        let details = that.data.details;
+        let data = {
+            id: details.id,
+            status: details.zan == 1 ? 1 : 2
+        }
+        util.httpRequest(url, data).then((res) => {
+            wx.hideLoading();
+            if (res.result === 'success') {
+                if (details.zan == 1) {
+                    details.likeNum = Number(details.likeNum) + 1;
+                    details.zan = 0;
+                } else {
+                    details.likeNum = Number(details.likeNum) - 1;
+                    details.zan = 1;
+                }
+                that.setData({
+                    details
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
+    },
+
+    // 发布评论
+    requestSubmitComment() {
+        let that = this;
+        let url = 'api/Comment/save';
+        let data = {
+            objId: that.state.options.id,
+            content: that.data.contentVal
+        }
+        // 回复需传
+        // if (that.data.pid) {
+        //     data.pid = 1; 
+        // }
+        wx.showLoading({
+            title: '',
+            mask: true
+        })
+        util.httpRequest(url, data, 'POST').then((res) => {
+            wx.hideLoading();
+            if (res.result === 'success') {
+                that.setData({
+                    contentVal: ''
+                })
+                wx.showToast({
+                    title: res.msg,
+                    icon: 'none',
+                    success() {
+                        that.requestGetDetail();
+                    }
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
+    },
+
+    // 删除评论
+    requestDelComment() {
+        let that = this;
+        let url = 'api/Comment/del';
+        wx.showLoading({
+            title: '',
+            mask: true
+        })
+        util.httpRequest(url, {
+            id
+        }).then((res) => {
+            wx.hideLoading();
+            if (res.result === 'success') {
+                wx.showToast({
+                    title: res.msg,
+                    icon: 'none',
+                    success() {
+                        // 需优化
+                        that.requestGetDetail();
+                    }
                 })
             } else {
                 common.showClickModal(res.msg);

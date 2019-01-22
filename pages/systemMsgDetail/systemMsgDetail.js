@@ -1,67 +1,55 @@
 let common = getApp().globalData.commonFun;
 let util = getApp().globalData.utilFun;
+
+let WxParse = require('../../wxParse/wxParse.js');
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-
+        requestStatus: false,
+        details: ''
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        wx.showLoading({
+            title: '请稍后...',
+            mask: true
+        })
+        this.requestDetail(options);
     },
 
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function () {
 
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function () {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function () {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
-
+    // 调用详情接口
+    requestDetail(opt) {
+        let that = this;
+        let url = 'api/System/getPage';
+        if (opt.hasOwnProperty('page')) {
+            url = 'api/SelfMessage/getPage';
+        }
+        util.httpRequest(url, {
+            id: opt.id
+        }).then((res) => {
+            wx.hideLoading();
+            if (res.result === 'success') {
+                that.setData({
+                    requestStatus: true,
+                    details: res.results
+                })
+                setTimeout(() => {
+                    if (res.results.content) {
+                        let wxData = WxParse.wxParse('article', 'html', res.results.content, that, 5);
+                        that.setData(wxData);
+                    }
+                }, 200)
+            } else {
+                common.showClickModal(res.msg);
+            }
+        });
     }
+
 })

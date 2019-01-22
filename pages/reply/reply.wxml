@@ -52,7 +52,7 @@
 
     <!-- 底部悬浮 -->
     <view class='footer-tab-box'>
-        <form report-submit='true' bindsubmit=''>
+        <form report-submit='true' bindsubmit='replyEvent' data-types='submit'>
             <view class='flex_start'>
                 <view class='footer-left-btn' catchtap='replyEvent' data-types='temporary'>暂存</view>
                 <button form-type='submit' class='submit-btn'>提交</button>

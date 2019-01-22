@@ -78,7 +78,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 650rpx;
-    min-height: 300rpx;
     padding: 30rpx;
     border-radius: 10rpx;
     background: #fff;
@@ -99,6 +98,12 @@
     font-size: 24rpx;
     color: red;
     background: #fff;
+}
+
+.checkbox-content-box{
+    min-height: 280rpx;
+    max-height: 54rpx;
+    overflow-y: auto; 
 }
 .checkbox-box .flex_warp > view {
     margin: 20rpx 15rpx;

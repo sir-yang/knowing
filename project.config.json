@@ -42,8 +42,8 @@
 				{
 					"id": 0,
 					"name": "自定义",
-					"pathName": "pages/myMsg/myMsg",
-					"query": "id=4"
+					"pathName": "pages/enjoyDetail/enjoyDetail",
+					"query": "id=1"
 				}
 			]
 		}

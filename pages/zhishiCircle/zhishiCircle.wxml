@@ -6,10 +6,10 @@
             <view class='down-arrow'></view>
         </view>
         <view class='flex1 search-input flex_start flex_items'>
-            <input type='text' placeholder-class='cbc' placeholder='请输入' />
-            <image src='/images/home_search_icon.png'></image>
+            <input type='text' bindinput='zhishiEvent' data-types='ipt' value='{{searchVal}}' placeholder-class='cbc' placeholder='请输入' />
+            <image src='/images/home_search_icon.png' bindtap='zhishiEvent' data-types='search'></image>
         </view>
-        <view class='right-msg'>
+        <view class='right-msg' bindtap='zhishiEvent' data-types='message'>
             <text></text>
             <image src='/images/home_msg_icon.png'></image>
         </view>

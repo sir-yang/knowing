@@ -1,0 +1,115 @@
+page {
+    background: #f0f3f8;
+}
+
+.enjoy-item-box {
+    position: relative;
+    padding: 25rpx 20rpx 20rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+}
+.head-img {
+    display: block;
+    width: 64rpx;
+    height: 64rpx;
+    border-radius: 50%;
+}
+
+.report {
+    position: absolute;
+    top: 25rpx;
+    right: 20rpx;
+    font-size: 20rpx;
+    color: #b6b7b7;
+}
+
+.audio-box {
+    margin-top: 25rpx;
+    padding: 20rpx;
+    border: 1px solid #e9e9e9;
+    border-radius: 10rpx;
+}
+.audio-img {
+    display: block;
+    width: 48rpx;
+    height: 48rpx;
+    margin-right: 10rpx;
+}
+.enjoy-item-box .content {
+    margin-top: 15rpx;
+    font-size: 24rpx;
+    color: #333;
+    line-height: 36rpx;
+}
+
+@import "/pages/common/comment.wxss";
+
+.img-box image{
+    display: block;
+    width: 155rpx;
+    height: 155rpx;
+    margin-right: 18rpx;
+    margin-bottom: 18rpx;
+}
+.img-box image:nth-child(4n) {
+    margin-right: 0;
+}
+
+.zan-icon {
+    display: block;
+    width: 24rpx;
+    height: 24rpx;
+    margin-left: 10rpx;
+}
+.com-box {
+    margin-left: 40rpx;
+}
+.com-icon {
+    display: block;
+    width: 27rpx;
+    height: 24rpx;
+    margin-left: 10rpx;
+}
+
+.comment-ipt-spacing {
+    width: 100%;
+    height: 95rpx;
+}
+.comment-ipt {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    width: 100%;
+    height: 90rpx;
+    line-height: 90rpx;
+    background: #f4f4f6;
+    border-top: 1px solid #e3e3e3;
+}
+
+.comment-ipt input,
+.comment-ipt button {
+    height: 64rpx;
+    margin-top: 12rpx;
+    border-radius: 6rpx;
+}
+.comment-ipt input {
+    flex: 1;
+    width: 572rpx;
+    padding: 0 10rpx;
+    background: #fff;
+    border: 1px solid #e9e9e9;
+    font-size: 24rpx;
+    color: #333;
+}
+.comment-ipt button {
+    width: 120rpx;
+    margin-left: 20rpx;
+    background: #268de1;
+    font-size: 26rpx;
+    color: #fff;
+    text-align: center;
+    line-height: 64rpx;
+}

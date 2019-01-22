@@ -1,11 +1,25 @@
 <view wx:if="{{requestStatus}}" class='plr20 mb20'>
     <!-- 搜索栏 -->
-    <include src="/pages/common/searchTop.wxml" />
+    <!-- <include src="/pages/common/searchTop.wxml" /> -->
+    <view class='top-search-box flex_start flex_items'>
+        <view class='switch-box flex_between'>
+            <view class='f26 c3 clamp1 mr30'>四川大学</view>
+            <view class='down-arrow'></view>
+        </view>
+        <view class='flex1 search-input flex_start flex_items'>
+            <input type='text' bindinput='enjoyEvent' data-types='ipt' value='{{searchVal}}' placeholder-class='cbc' placeholder='请输入' />
+            <image src='/images/home_search_icon.png' bindtap='enjoyEvent' data-types='search'></image>
+        </view>
+        <view class='right-msg' bindtap='enjoyEvent' data-types='message'>
+            <text></text>
+            <image src='/images/home_msg_icon.png'></image>
+        </view>
+    </view>
 
     <view class='types-tab-box flex_start flex_items mt20'>
-        <view class='types-item {{typeIndex == 0 ? "on" : ""}}' bindtap='enjoyEvent' data-types='types' data-index='0'>知士话题</view>
-        <view class='types-item {{typeIndex == 1 ? "on" : ""}}' bindtap='enjoyEvent' data-types='types' data-index='1'>分享论坛</view>
-        <view class='publish-btn'>+发布</view>
+        <view class='types-item {{typeIndex == 0 ? "on" : ""}} {{(userInfo.status == 1 || userInfo.status != 3 || userInfo.status != 5) ? "flex1" : ""}}' bindtap='enjoyEvent' data-types='types' data-index='0'>知士话题</view>
+        <view class='types-item {{typeIndex == 1 ? "on" : ""}} {{(userInfo.status == 1 || userInfo.status != 3 || userInfo.status != 5) ? "flex1" : ""}}' bindtap='enjoyEvent' data-types='types' data-index='1'>分享论坛</view>
+        <view wx:if="{{userInfo.status != 1 && userInfo.status != 3 && userInfo.status != 5}}" class='publish-btn' bindtap='enjoyEvent' data-types='publish'>+发布</view>
     </view>
 
     <view class='secondary-class-box'>

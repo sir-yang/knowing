@@ -6,7 +6,7 @@
         <view class='withdraw-btn' bindtap='walletEvent' data-types='wattle'>提现</view>
     </view>
 
-    <view class='card-box flex_between flex_items'>
+    <view class='card-box flex_between flex_items hide'>
         <view>知享月卡</view>
         <view>1张</view>
     </view>

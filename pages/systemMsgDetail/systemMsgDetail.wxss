@@ -12,7 +12,7 @@ page {
 
 .content-detail {
     margin-top: 15rpx;
-    font-size: 24rpx;
-    color: #666;
-    line-height: 36rpx;
+    /* font-size: 24rpx; */
+    /* color: #666; */
+    /* line-height: 36rpx; */
 }

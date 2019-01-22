@@ -1,8 +1,8 @@
 let common = getApp().globalData.commonFun;
 let util = getApp().globalData.utilFun;
+let WxParse = require('../../wxParse/wxParse.js');
 
-const innerAudioContext = wx.createInnerAudioContext()
-
+const innerAudioContext = wx.createInnerAudioContext();
 Page({
 
     /**
@@ -18,27 +18,25 @@ Page({
     },
 
     state: {
-        options: {}
+        audio_duration: 0
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
-        let that = this;
-        that.state.options = options;
+    onLoad: function(options) {
         wx.showLoading({
             title: '请稍后...',
             mask: true
         })
-
+        let that = this;
         let token = common.getAccessToken();
         if (token) {
-            that.requestGetDetail();
+            that.requestCoursesDetail(options);
         } else {
             getApp().globalData.tokenUpdated = function () {
                 console.log('update success');
-                that.requestGetDetail();
+                that.requestCoursesDetail(options);
             };
         }
     },
@@ -46,7 +44,7 @@ Page({
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function () {
+    onReady: function() {
         let that = this;
         // 播放
         innerAudioContext.onPlay(() => {
@@ -92,32 +90,21 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function () {
+    onShow: function() {
 
     },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function () {
+    onShareAppMessage: function() {
 
     },
 
     // 事件
     detailEvent(event) {
         let dataset = event.currentTarget.dataset;
-        let details = this.data.details;
-        if (dataset.types === 'seeImg') { //查看大图
-            let index = dataset.index;
-            common.seeBigImg(details.qImg[index].original_url, details.qImg, 2);
-        } else if (dataset.types === 'play') { //播放/暂停音频
+        if (dataset.types === 'play') { //播放/暂停音频
             if (this.data.playing) {
                 innerAudioContext.pause();
             } else {
@@ -126,25 +113,31 @@ Page({
         }
     },
 
-    // 调用问答详情
-    requestGetDetail() {
+    // 调用课程详情
+    requestCoursesDetail(opt) {
         let that = this;
-        let url = 'api/Answer/getPage';
+        let url = 'api/Courses/getPage';
         util.httpRequest(url, {
-            id: that.state.options.id
+            id: opt.id
         }).then((res) => {
             wx.hideLoading();
             if (res.result === 'success') {
-                if (res.results.aAudio) {
-                    innerAudioContext.src = res.results.aAudio;
+                if (res.results.audio) {
+                    innerAudioContext.src = res.results.audio;
                 }
                 that.setData({
                     requestStatus: true,
                     details: res.results,
                     duration: res.results.audio_times
                 })
+                setTimeout(() => {
+                    if (res.results.info) {
+                        let wxData = WxParse.wxParse('article', 'html', res.results.info, that, 5);
+                        that.setData(wxData);
+                    }
+                }, 200)
             } else {
-                common.showClickModal(res.msg);
+                common.showClickModal(res, msg);
             }
         })
     }

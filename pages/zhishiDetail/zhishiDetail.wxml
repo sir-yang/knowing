@@ -18,7 +18,7 @@
                     </view>
                 </view>
             </view>
-            <view class='flex_start flex_items self_start' bindtap='detailEvent' data-types='letters'>
+            <view wx:if="{{details.attention != 1}}" class='flex_start flex_items self_start' bindtap='detailEvent' data-types='letters'>
                 <image class='message-icon' src='/images/message_icon.png'></image>
                 <view class='f24 cmain'>私信</view>
             </view>
@@ -46,7 +46,7 @@
     <!-- 知士介绍 -->
     <view class='introduction-box'>
         <view class='title'>知士简介</view>
-        <view class='row'>{{details.introduce}}</view>
+        <view class='row'>{{details.introduce ? details.introduce : "暂无简介"}}</view>
     </view>
 
     <!-- 分享 课程 回答 -->
@@ -84,7 +84,7 @@
 
             <!-- ta的课程 -->
             <block wx:elif="{{tabIndex == 1}}">
-                <view wx:for="{{list}}" wx:key="" bindtap='detailEvent' data-types='courses' data-index='{{index}}' class='course-item-box flex_start'>
+                <view wx:for="{{list}}" wx:key="" bindtap='detailEvent' data-types='courses' data-id='{{item.id}}' class='course-item-box flex_start'>
                     <image class='flex_shrink' src='{{item.logo}}'></image>
                     <view class='flex1 flex_between flex_column'>
                         <view class='f28 c3'>{{item.name}}</view>

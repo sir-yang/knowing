@@ -75,15 +75,23 @@ Page({
                 if (da.status == 1) {
                     let replyData = da.content.data;
                     if (replyData) {
+                        let aAudio = '';
+                        let imgList = [];
+                        if (replyData.hasOwnProperty('aAudio')) {
+                            aAudio = replyData.aAudio;
+                        }
+                        if (replyData.hasOwnProperty('aImg')) {
+                            imgList = replyData.imgArr;
+                            that.state.imgArr = replyData.aImg;
+                        }
+                        that.state.options.id = replyData.id;
                         that.setData({
-                            aAudio: replyData.aAudio,
-                            imgList: replyData.imgArr,
+                            aAudio,
+                            imgList,
                             contentVal: replyData.answer,
                             moneyIndex: replyData.moneyIndex,
                             moneyVal: replyData.moneyIndex == -1 ? replyData.askMoney : ''
                         })
-                        that.state.options.id = replyData.id;
-                        that.state.imgArr = replyData.aImg;
                     }
                 } else {
                     // 调用锁定问题
@@ -474,5 +482,5 @@ Page({
             let key = JSON.parse(res.data).key;
             func(key);
         });
-    },
+    }
 })

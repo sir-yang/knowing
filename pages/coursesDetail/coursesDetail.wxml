@@ -1,0 +1,26 @@
+<import src="../../wxParse/wxParse.wxml" />
+<view wx:if="{{requestStatus}}" class='p20'>
+    <view class='course-page-box'>
+        <view class='course-tit'>{{details.name}}</view>
+        <view wx:if="{{details.audio}}" class='audio-box flex_start flex_items'>
+            <image class='audio-img' bindtap='detailEvent' data-types='play' src='/images/audio_icon.png'></image>
+            <view class='flex1'>
+                <view class='f20 c3'>{{details.name}}.mp3</view>
+                <view class='flex_start flex_items mt5'>
+                    <view class='f18 c9 mr10'>{{currentTime}}</view>
+                    <progress class='flex1' percent='{{percent}}' stroke-width="2" activeColor="#2889e2" backgroundColor="#edeaff"></progress>
+                    <view class='f18 c9 ml10'>{{duration}}</view>
+                </view>
+            </view>
+        </view>
+
+        <view class='detail-box'>
+            <view wx:if="{{details.info === null || details.info === ''}}" class="noDetail">暂无详细信息</view>
+            <block wx:else>
+                <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+            </block>
+        </view>
+
+        <!-- <image class='course-pic' src='{{details.logo}}'></image> -->
+    </view>
+</view>

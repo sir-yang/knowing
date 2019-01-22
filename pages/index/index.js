@@ -132,7 +132,9 @@ Page({
         let list = that.data.list;
         let dataset = event.currentTarget.dataset;
         if (dataset.types === 'typeTab') {
+            if (dataset.index == that.data.typeTab) return;
             that.setData({
+                searchVal: '',
                 typeTab: dataset.index
             })
             this.state.offset = 0;

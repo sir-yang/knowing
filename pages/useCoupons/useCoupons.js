@@ -1,5 +1,6 @@
 let common = getApp().globalData.commonFun;
 let util = getApp().globalData.utilFun;
+let WxParse = require('../../wxParse/wxParse.js');
 Page({
 
     /**
@@ -27,9 +28,10 @@ Page({
         util.httpRequest(url).then((res) => {
             wx.hideLoading();
             if (res.result === 'success') {
-                that.setData({
-                    content: res.results.explain
-                })
+                if (res.results.explain) {
+                    let wxData = WxParse.wxParse('article', 'html', res.results.explain, that, 5);
+                    that.setData(wxData);
+                }
             } else {
                 common.showClickModal(res.msg);
             }

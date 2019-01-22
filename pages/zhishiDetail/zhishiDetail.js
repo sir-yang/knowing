@@ -139,7 +139,9 @@ Page({
         } else if (dataset.types === 'attention') { //关注
             this.requestAttention();
         } else if (dataset.types === 'letters') { //私信
-
+            wx.navigateTo({
+                url: '/pages/privateMsgDetail/privateMsgDetail?uid=' + this.state.options.id
+            })
         } else if (dataset.types === 'showEvaluate') { //显示评价框
             let details = this.data.details;
             if (details.valuation == 0) return;
@@ -187,6 +189,10 @@ Page({
             } else {
                 common.seeBigImg(list[index].qImg[idx].original_url, list[index].qImg, 2);
             }
+        } else if (dataset.types === 'courses') {
+            wx.navigateTo({
+                url: '/pages/coursesDetail/coursesDetail?id='+dataset.id
+            })
         } else if (dataset.types === 'question') { //提问
             wx.navigateTo({
                 url: '/pages/askQuestion/askQuestion'

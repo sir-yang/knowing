@@ -10,11 +10,24 @@ Page({
         list: []
     },
 
+    state: {
+        hasmore: true,
+        offset: 0, //从第几条数据开始查询
+        limit: 10, //每页条数
+        pageOnShow: false,
+        isOnReachBottom: true,
+        isonPullDownRefresh: false,
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
-
+    onLoad: function() {
+        wx.showLoading({
+            title: '请稍后...',
+            mask: true
+        })
+        this.requestGetMsgList(0);
     },
 
     /**
@@ -64,18 +77,15 @@ Page({
     // 查看详情
     viewDetail(event) {
         let id = event.currentTarget.dataset.id;
-        // wx.navigateTo({
-        //     url: '/pages/systemMsgDetail/systemMsgDetail?id=' + id
-        // })
         wx.navigateTo({
-            url: '/pages/systemMsgDetail/systemMsgDetail'
+            url: '/pages/systemMsgDetail/systemMsgDetail?id=' + id
         })
     },
 
     // 获取消息列表
     requestGetMsgList(offset) {
         let that = this;
-        let url = '';
+        let url = 'api/System/getPage';
         let data = {
             offset,
             limit: that.state.limit

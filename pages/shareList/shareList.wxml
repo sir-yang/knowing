@@ -20,7 +20,7 @@
         </view>
 
         <!-- 评论 -->
-        <include src="/pages/common/comment.wxml" />
+        <!-- <include src="/pages/common/comment.wxml" /> -->
     </view>
 
     <view class='my-share-item-box' hidden>

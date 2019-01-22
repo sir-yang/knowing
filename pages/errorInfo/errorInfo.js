@@ -1,12 +1,13 @@
 let common = getApp().globalData.commonFun;
 let util = getApp().globalData.utilFun;
+let WxParse = require('../../wxParse/wxParse.js');
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        content: ''
+        
     },
 
     /**
@@ -27,9 +28,10 @@ Page({
         util.httpRequest(url).then((res) => {
             wx.hideLoading();
             if (res.result === 'success') {
-                that.setData({
-                    content: res.results.inform
-                })
+                if (res.results.inform) {
+                    let wxData = WxParse.wxParse('article', 'html', res.results.inform, that, 5);
+                    that.setData(wxData);
+                }
             } else {
                 common.showClickModal(res.msg);
             }

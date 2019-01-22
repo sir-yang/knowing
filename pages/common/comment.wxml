@@ -1,22 +1,16 @@
 <view class='comment-box'>
-    <view class='flex_start'>
+    <view wx:for="{{details.comment}}" wx:key="" class='flex_start'>
         <view class='name flex_shrink'>锦觅：</view>
         <view class='reply-box flex1'>
-            <view>挖哟，老师您在哪里呀？</view>
-            <view class='flex_start'>
+            <view>{{item.content}}</view>
+            <view wx:for="{{item.reply}}" wx:key="" wx:for-item="reply" wx:for-index="idx" class='flex_start'>
                 <view class='flex_shrink'>
                     <text class='name'>李思荷</text>
                     <text> 回复 </text>
-                    <text class='name'>锦觅：</text>
+                    <text class='name'>{{reply.user.name}}：</text>
                 </view>
-                <view class='flex1'>不拉不拉不阿里不啊</view>
+                <view class='flex1'>{{reply.content}}</view>
             </view>
-        </view>
-    </view>
-    <view class='flex_start'>
-        <view class='name flex_shrink'>十六：</view>
-        <view class='reply-box flex1'>
-            <view>挺喜欢的~嘿嘿~~~</view>
         </view>
     </view>
 </view>

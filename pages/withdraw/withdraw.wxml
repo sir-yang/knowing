@@ -1,5 +1,5 @@
 <view class='plr20'>
-    <form report-submit='true' bindsubmit=''>
+    <form report-submit='true' bindsubmit='withdrawEvent' data-types='submit'>
         <view class='withdraw-box'>
             <view class='flex_start flex_items'>
                 <view class='f30 c0 bold'>￥</view>
