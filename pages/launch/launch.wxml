@@ -1,7 +1,7 @@
 <view wx:if="{{loadStatus}}" class="userinfo">
-    <block wx:if="{{!hasUserInfo && canIUse}}">
-        <image class='userinfo-avatar' src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-        <button wx:if="{{!hasUserInfo && canIUse}}" class='get-userinfo-btn' open-type='getUserInfo' bindgetuserinfo='getUserInfo'>获取头像昵称</button>
+    <block wx:if="{{!hasUserInfo}}">
+        <image class='userinfo-avatar' src='/images/avatar.png'></image>
+        <button class='get-userinfo-btn' open-type='getUserInfo' bindgetuserinfo='getUserInfo'>获取头像昵称</button>
     </block>
     <block wx:else>
         <image class='userinfo-avatar' src='{{userInfo.avatarUrl}}'></image>
@@ -9,3 +9,14 @@
         <navigator open-type='switchTab' class='enter-use-btn' url='/pages/index/index' hover-class='none'>进入使用</navigator>
     </block>
 </view>
+
+<!-- <view class='load-modal'></view>
+<view class='load-modal-content'>
+    <swiper indicator-dots="true">
+        <block wx:for="{{loadImg}}" wx:key="">
+            <swiper-item>
+                <image src="{{item}}" class="slide-image" />
+            </swiper-item>
+        </block>
+    </swiper>
+</view> -->

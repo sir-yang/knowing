@@ -2,7 +2,7 @@
     <view class='enjoy-item-box'>
         <view class='flex_start flex_items'>
             <image class='head-img' src='{{details.user.avatarUrl}}'></image>
-            <view class='f28 c3 ml20 mr30'>{{details.user.name}}</view>
+            <view class='f28 c3 ml20 mr30'>{{details.user.name ? details.user.name : details.user.nickName}}</view>
             <view class='f24 c6'>{{details.user.keyWords}}</view>
             <!-- 分享论坛 -->
             <view wx:if="{{typeIndex == 1}}" class='report' catchtap='enjoyEvent' data-types='report' data-index='{{index}}'>举报</view>
@@ -49,7 +49,7 @@
     <view class='comment-ipt'>
         <form report-submit='true' bindsubmit='detailEvent' data-types='submit'>
             <view class='flex_start flex_items plr30'>
-                <input type='text' class='flex1' value='{{contentVal}}' bindinput='detailEvent' data-types='ipt' placeholder='评论' />
+                <input type='text' class='flex1' value='{{contentVal}}' focus="{{iptFocus}}" bindinput='detailEvent' data-types='ipt' placeholder='评论' />
                 <button form-type='submit' class='comment-btn'>评论</button>
             </view>
         </form>

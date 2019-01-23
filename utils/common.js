@@ -516,13 +516,24 @@ function loginRegistEvent(event, that) {
             return false;
         }
 
-        if (isNull(vals.code)) {
-            showTimeToast('请输入验证码');
-            return false;
-        }
+        // if (isNull(vals.code)) {
+        //     showTimeToast('请输入验证码');
+        //     return false;
+        // }
         vals.wx_form_id = event.detail.formId;
 
         requestSavePerfect(that, vals);
+    } else if (dataset.types === 'school') {//选择学校
+        let schoolList = that.data.schoolList;
+        that.setData({
+            schoolIdx: event.detail.value,
+            collegeList: schoolList[event.detail.value].academy,
+            collegeIdx: 0
+        })
+    } else if (dataset.types === 'college') {//选择学院
+        that.setData({
+            collegeIdx: event.detail.value
+        })
     }
 }
 
@@ -557,6 +568,21 @@ function settime(that) {
 
 // =================  公共接口 ============== //
 
+// 引导
+function requestLoadPage(that) {
+    let url = 'api/Configs/getLead';
+    util.httpRequest(url).then((res) => {
+        if (res.result === 'success') {
+            that.setData({
+                loadImg: res.results
+            })
+        } else {
+            showClickModal(res.msg);
+        }
+    })
+}
+
+
 // 登录
 function requestLogin(that, vals) {
     let url = 'api/Login/login';
@@ -567,16 +593,17 @@ function requestLogin(that, vals) {
     util.httpRequest(url, vals, 'POST').then((res) => {
         wx.hideLoading();
         if (res.result === 'success') {
+            requestGetCollege(that);
+            let showPerfect = that.data.showPerfect;
+            showPerfect[0] = 'show';
+            showPerfect[that.data.identity] = 'show';
             that.setData({
                 showLogin: 'hide',
+                showPerfect,
                 phoneVal: '',
                 passwordVal: '',
                 codeVal: '',
             })
-            // 显示导航
-            if (wx.showTabBar()) {
-                wx.showTabBar({});
-            }
         } else {
             showClickModal(res.msg);
         }
@@ -593,13 +620,7 @@ function requestRegist(that, vals) {
     util.httpRequest(url, vals, 'POST').then((res) => {
         wx.hideLoading();
         if (res.result === 'success') {
-            // let showPerfect = that.data.showPerfect;
-            // showPerfect[0] = 'show';
-            // showPerfect[vals.type] = 'show';
-            // that.setData({
-            //     showRegist: 'hide',
-            //     showPerfect
-            // })
+            requestGetImgSend(that);
             that.setData({
                 showRegist: 'hide',
                 showLogin: 'show',
@@ -642,7 +663,7 @@ function requestGetCollege(that) {
     util.httpRequest(url).then((res) => {
         if (res.result === 'success') {
             that.setData({
-
+                schoolList: res.results
             })
         } else {
             showClickModal(res.msg);
@@ -664,6 +685,7 @@ function requestSavePerfect(that, vals) {
             showPerfect[0] = 'hide';
             showPerfect[that.data.identity] = 'hide';
             that.setData({
+                loginRegistTk: 'hide',
                 showPerfect
             })
             // 显示导航
@@ -675,8 +697,6 @@ function requestSavePerfect(that, vals) {
         }
     });
 }
-
-
 
 // 问答分类
 function requestCate(data, func) {
@@ -805,9 +825,11 @@ module.exports = {
     uploadImg,
     phoneCall,
 
+    requestLoadPage,
     loginRegistData,
     loginRegistEvent,
     requestLogin,
+    requestGetCollege,
     requestCate,
     requestGetMoney,
     requestQiniuToken,

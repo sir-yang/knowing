@@ -50,13 +50,4 @@
         </view>
 
     </view>
-    <view class='comment-ipt-spacing'></view>
-    <view class='comment-ipt'>
-        <form report-submit='true' bindsubmit=''>
-            <view class='flex_start flex_items plr30'>
-                <input type='text' class='flex1' placeholder='评论' />
-                <button form-type='submit' class='comment-btn'>评论</button>
-            </view>
-        </form>
-    </view>
 </view>

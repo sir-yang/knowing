@@ -8,7 +8,7 @@ Page({
     data: {
         requestStatus: false,
         searchVal: '',
-        typeIndex: 0,
+        typeIndex: 2,
         typeTabArr: [],
         tabIndex: -1,
         list: [],
@@ -110,6 +110,8 @@ Page({
             this.setData({
                 typeIndex: dataset.index
             })
+            this.state.offset = 0;
+            this.requestGetList(0);
         } else if (dataset.types === 'tab') {
             if (dataset.index == this.data.tabIndex) return;
             this.setData({
@@ -142,6 +144,11 @@ Page({
             let index = dataset.index;
             let idx = dataset.idx;
             common.seeBigImg(list[index].img[idx].original_url, list[index].img, 2);
+        } else if (dataset.types === 'detail') {
+            let id = dataset.id;
+            wx.navigateTo({
+                url: '/pages/enjoyDetail/enjoyDetail?id=' + id
+            })
         } else if (dataset.types === 'like') {
             let index = dataset.index;
             wx.showLoading({
@@ -179,7 +186,7 @@ Page({
         let data = {
             offset,
             limit: that.state.limit,
-            status: 1
+            status: that.data.typeIndex
         }
 
         if (that.data.searchVal != '') {

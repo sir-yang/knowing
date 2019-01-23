@@ -97,7 +97,8 @@ Page({
         if (dataset.types === 'tab') {
             if (dataset.index == this.data.tabIndex) return;
             this.setData({
-                tabIndex: dataset.index
+                tabIndex: dataset.index,
+                list: []
             })
             wx.showLoading({
                 title: '',
@@ -163,7 +164,7 @@ Page({
         let url = 'api/Share/edits';
         let data = {
             id: list[index].id,
-            status
+            audit: status
         }
         wx.showLoading({
             title: '',

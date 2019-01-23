@@ -31,8 +31,8 @@
             </view>
 
             <view class='flex_between flex_items'>
-                <view class='f24 c9'>{{item.addTime}}</view>
-                <view class='flex1 flex_end flex_items'>
+                <view class='f24 c9'>{{item.times}}</view>
+                <view wx:if="{{tabIndex == 0}}" class='flex1 flex_end flex_items'>
                     <view class='f24 c6 mr30' catchtap='knowShareEvent' data-types='ignore' data-index='{{index}}'>忽略申请</view>
                     <view class='f24' style='color:#ff6600' bindtap='knowShareEvent' data-types='agree' data-index='{{index}}'>同意发布</view>
                 </view>

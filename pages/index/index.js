@@ -18,7 +18,11 @@ Page({
         typeTabArr: [],
         list: [],
         role: 1, //权限 默认普通用户
-        needAuth: true //保存图片授权
+        needAuth: true, //保存图片授权
+        schoolList: [], //学校
+        schoolIdx: -1,
+        collegeList: [], //学院
+        collegeIdx: -1
     },
 
     state: {
@@ -41,7 +45,7 @@ Page({
 
         //登录注册 数据
         let that = this;
-        common.loginRegistData(that);
+        common.loginRegistData(that)
         let token = common.getAccessToken();
         if (token) {
             that.requestGetCate();
@@ -57,31 +61,46 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        let userInfo = common.getStorage('userInfo');
-        if (userInfo) {
-            let role = 2;
-            if (userInfo.status != 5 && userInfo.status != 6 && userInfo.status != 8) {
-                role = 1;
+        let that = this;
+        common.getPersonInfo().then((userInfo) => {
+            if (userInfo) {
+                let role = 2;
+                if (userInfo.status != 5 && userInfo.status != 6 && userInfo.status != 8) {
+                    role = 1;
+                }
+                // 判断是否需要登录
+                let loginRegistTk = that.data.loginRegistTk;
+                let showLogin = that.data.showLogin;
+                let showPerfect = that.data.showPerfect;
+
+                if (userInfo.statusId == 0) {//未登录
+                    loginRegistTk = 'show';
+                    showLogin = 'show';
+                    // 隐藏底部导航
+                    if (wx.hideTabBar()) {
+                        wx.hideTabBar({});
+                    }
+                    // 获取图片验证码
+                    common.requestGetImgSend(that);
+                } else if (!userInfo.name) {
+                    // 隐藏底部导航
+                    if (wx.hideTabBar()) {
+                        wx.hideTabBar({});
+                    }
+                    common.requestGetCollege(that);
+                    loginRegistTk = 'show';
+                    showPerfect[0] = 'show';
+                    showPerfect[userInfo.type] = 'show';
+                }
+
+                that.setData({
+                    role,
+                    loginRegistTk,
+                    showLogin,
+                    showPerfect
+                })
             }
-            // 判断是否需要登录
-            let loginRegistTk = this.data.loginRegistTk;
-            let showLogin = this.data.showLogin;
-            // if (!userInfo.name) {
-            //     loginRegistTk = 'show';
-            //     showLogin = 'show';
-            //     // 隐藏底部导航
-            //     if(wx.hideTabBar()) {
-            //         wx.hideTabBar({});
-            //     }
-            //     // 获取图片验证码
-            //     common.requestGetImgSend(this);
-            // }
-            this.setData({
-                role,
-                loginRegistTk,
-                showLogin
-            })
-        }
+        });        
 
         if (!this.state.pageOnShow) return;
         this.state.offset = 0;

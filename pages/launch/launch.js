@@ -1,4 +1,4 @@
-let commom = getApp().globalData.commonFun;
+let common = getApp().globalData.commonFun;
 let util = getApp().globalData.utilFun;
 Page({
 
@@ -9,29 +9,39 @@ Page({
         loadStatus: true,
         userInfo: {},
         hasUserInfo: false,
-        canIUse: wx.canIUse('button.open-type.getUserInfo')
+        loadImg: []
+    },
+
+    state: {
+        options: {}
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        // console.log(getApp().globalData.isLaunch);
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
+        this.state.options = options;
+        console.log(this.state.options);
+        
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
+        let that = this;
+        let token = common.getAccessToken();
+        console.log(token);
+        if (token) {
+            common.requestLoadPage(that);
+        } else {
+            getApp().globalData.tokenUpdated = function () {
+                console.log('update success');
+                common.requestLoadPage(that);
+            };
+        }
         let userInfo = wx.getStorageSync('userInfo');
-        if (userInfo.hasOwnProperty('nickName')) {
+        if (userInfo && userInfo.avatarUrl && userInfo.nickName) {
             this.setData({
                 userInfo,
                 hasUserInfo: true
@@ -41,7 +51,6 @@ Page({
 
     // 获取个人信息
     getUserInfo(event) {
-        console.log(event.detail.userInfo);
         if (event.detail.userInfo) {
             let userInfo = event.detail.userInfo;
             wx.setStorageSync('userInfo', userInfo);
@@ -55,6 +64,9 @@ Page({
                 nickName: userInfo.nickName,
                 gender: userInfo.gender
             }
+            if (this.state.options.hasOwnProperty('inviteId')) {
+                vals.inviteId = this.state.options.inviteId;
+            }
             this.requestSaveInfo(vals);
         }
     },
@@ -65,9 +77,9 @@ Page({
         let url = 'api/User/saveUser';
         util.httpRequest(url, vals, 'POST').then((res) => {
             if (res.result === 'success') {
-                commom().getPersonInfo().then(() => {});
+                common.getPersonInfo().then(() => {});
             } else {
-                commom.showClickModal(res.msg);
+                common.showClickModal(res.msg);
             }
         });
     }

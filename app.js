@@ -4,12 +4,14 @@ let util = require('utils/util.js');
 let common = require('utils/common.js');
 
 App({
+    checkToken: false,
     onLaunch(_options) {
-        checkToken: false,
-            wx.setStorageSync("serverurl", "http://shuzhi.loaderwang.cn/");
+        this.checkToken = true;
+        wx.setStorageSync("serverurl", "http://shuzhi.loaderwang.cn/");
     },
 
     onShow(options) {
+        console.log('app', options);
         let that = this;
         wx.getSystemInfo({
             success(res) {
@@ -28,11 +30,11 @@ App({
         //更新
         if (wx.canIUse('getUpdateManager')) {
             const updateManager = wx.getUpdateManager()
-            updateManager.onCheckForUpdate(function (res) {
+            updateManager.onCheckForUpdate(function(res) {
                 // 请求完新版本信息的回调
                 console.log(res);
             })
-            updateManager.onUpdateReady(function () {
+            updateManager.onUpdateReady(function() {
                 console.log("新的版本已经下载好");
                 // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                 updateManager.applyUpdate()
@@ -41,21 +43,25 @@ App({
 
         wx.pro.checkSession().then(() => {
             let token = common.getAccessToken();
+            console.log(that.checkToken);
             if (!token) {
                 console.log('no token');
             } else if (that.checkToken) {
                 that.checkToken = false;
-                let myInfo = common.getStorage('userInfo');
-                if (!myInfo.avatarUrl && !myInfo.nickName) {
-                    wx.reLaunch({
-                        url: '/pages/launch/launch'
-                    })
-                    return common.getPersonInfo().then(() => {});
-                } else {
-                    wx.switchTab({
-                        url: '/pages/index/index'
-                    })
-                }
+                // let myInfo = common.getStorage('userInfo');
+                // if (!myInfo.avatarUrl && !myInfo.nickName) {
+                //     return common.getPersonInfo().then(() => { });
+                // }
+                // if (!myInfo.avatarUrl && !myInfo.nickName) {
+                //     wx.reLaunch({
+                //         url: '/pages/launch/launch?inviteId=4'
+                //     })
+                //     return common.getPersonInfo().then(() => {});
+                // } else {
+                //     wx.switchTab({
+                //         url: '/pages/index/index'
+                //     })
+                // }
             }
             that.refresh(options);
         }).catch((_e) => {

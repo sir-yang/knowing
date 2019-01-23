@@ -12,7 +12,7 @@
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.4.3",
+	"libVersion": "2.5.1",
 	"appid": "wx8ae2071e2ea5a7d7",
 	"projectname": "knowing",
 	"debugOptions": {
@@ -42,8 +42,9 @@
 				{
 					"id": 0,
 					"name": "自定义",
-					"pathName": "pages/enjoyDetail/enjoyDetail",
-					"query": "id=1"
+					"pathName": "pages/launch/launch",
+					"query": "inviteId=4",
+					"scene": "1008"
 				}
 			]
 		}

@@ -15,11 +15,13 @@ Page({
         percent: 0,
         currentTime: '00:00',
         duration: '00:00',
-        contentVal: ''
+        contentVal: '',
+        iptFocus: false
     },
 
     state: {
-        options: {}
+        options: {},
+        pid: ''
     },
 
     /**
@@ -132,6 +134,28 @@ Page({
                 mask: true
             })
             this.requestLike();
+        } else if (dataset.types === 'reply') { //回复
+            let that = this;
+            let userInfo = common.getStorage('userInfo');
+            let itemList = ["回复", "删除"];
+            if (userInfo.id != dataset.uid) {
+                itemList = ["回复"];
+            }
+            wx.showActionSheet({
+                itemList,
+                success(res) {
+                    console.log(res.tapIndex);
+                    if (res.tapIndex == 0) {
+                        that.state.pid = dataset.pid;
+                        that.setData({
+                            iptFocus: true
+                        })
+                    } else {
+                        // 删除评论
+                        that.requestDelComment(dataset);
+                    }
+                }
+            })
         } else if (dataset.types === 'ipt') {
             console.log(event);
             this.setData({
@@ -198,7 +222,7 @@ Page({
     },
 
     // 发布评论
-    requestSubmitComment() {
+    requestSubmitComment(dataset) {
         let that = this;
         let url = 'api/Comment/save';
         let data = {
@@ -206,26 +230,20 @@ Page({
             content: that.data.contentVal
         }
         // 回复需传
-        // if (that.data.pid) {
-        //     data.pid = 1; 
-        // }
+        if (that.state.pid) {
+            data.pid = that.state.pid; 
+        }
         wx.showLoading({
             title: '',
             mask: true
         })
         util.httpRequest(url, data, 'POST').then((res) => {
-            wx.hideLoading();
             if (res.result === 'success') {
+                that.state.pid = '';
                 that.setData({
                     contentVal: ''
                 })
-                wx.showToast({
-                    title: res.msg,
-                    icon: 'none',
-                    success() {
-                        that.requestGetDetail();
-                    }
-                })
+                that.requestGetDetail();
             } else {
                 common.showClickModal(res.msg);
             }
@@ -233,8 +251,9 @@ Page({
     },
 
     // 删除评论
-    requestDelComment() {
+    requestDelComment(dataset) {
         let that = this;
+        let id = dataset.pid;
         let url = 'api/Comment/del';
         wx.showLoading({
             title: '',
@@ -243,16 +262,8 @@ Page({
         util.httpRequest(url, {
             id
         }).then((res) => {
-            wx.hideLoading();
             if (res.result === 'success') {
-                wx.showToast({
-                    title: res.msg,
-                    icon: 'none',
-                    success() {
-                        // 需优化
-                        that.requestGetDetail();
-                    }
-                })
+                that.requestGetDetail();
             } else {
                 common.showClickModal(res.msg);
             }

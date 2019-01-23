@@ -17,7 +17,7 @@
     </view>
 
     <view class='types-tab-box flex_start flex_items mt20'>
-        <view class='types-item {{typeIndex == 0 ? "on" : ""}} {{(userInfo.status == 1 || userInfo.status != 3 || userInfo.status != 5) ? "flex1" : ""}}' bindtap='enjoyEvent' data-types='types' data-index='0'>知士话题</view>
+        <view class='types-item {{typeIndex == 2 ? "on" : ""}} {{(userInfo.status == 1 || userInfo.status != 3 || userInfo.status != 5) ? "flex1" : ""}}' bindtap='enjoyEvent' data-types='types' data-index='2'>知士话题</view>
         <view class='types-item {{typeIndex == 1 ? "on" : ""}} {{(userInfo.status == 1 || userInfo.status != 3 || userInfo.status != 5) ? "flex1" : ""}}' bindtap='enjoyEvent' data-types='types' data-index='1'>分享论坛</view>
         <view wx:if="{{userInfo.status != 1 && userInfo.status != 3 && userInfo.status != 5}}" class='publish-btn' bindtap='enjoyEvent' data-types='publish'>+发布</view>
     </view>
@@ -36,7 +36,7 @@
         </view>
     </view>
 
-    <view wx:for="{{list}}" wx:key="" class='enjoy-item-box'>
+    <view wx:for="{{list}}" wx:key="" class='enjoy-item-box' bindtap='enjoyEvent' data-types='detail' data-id='{{item.id}}'>
         <view class='flex_start flex_items'>
             <image class='head-img' src='{{item.user.avatarUrl}}'></image>
             <view class='f28 c3 ml20 mr30'>{{item.user.name}}</view>
@@ -78,9 +78,6 @@
                 </view>
             </view>
         </view>
-
-        <!-- 评论 -->
-        <!-- <include src="/pages/common/comment.wxml" /> -->
     </view>
 
 </view>

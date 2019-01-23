@@ -1,7 +1,7 @@
 {
     "pages": [
-        "pages/index/index",
         "pages/launch/launch",
+        "pages/index/index",
         "pages/wendaDetail/wendaDetail",
         "pages/reply/reply",
         "pages/askQuestion/askQuestion",
@@ -33,7 +33,8 @@
         "pages/privateMsgDetail/privateMsgDetail",
         "pages/myMsg/myMsg",
         "pages/coursesDetail/coursesDetail",
-        "pages/enjoyDetail/enjoyDetail"
+        "pages/enjoyDetail/enjoyDetail",
+        "pages/applyDesc/applyDesc"
     ],
     "window": {
         "backgroundTextStyle": "light",
