@@ -18,7 +18,9 @@ Page({
         schoolList: [],
         schoolIdx: -1,
         collegeList: [],
-        collegeIdx: -1
+        collegeIdx: -1,
+        educationList: ["学士","硕士","博士","其他"],
+        educationIdx: -1
     },
 
     /**
@@ -74,6 +76,10 @@ Page({
         } else if (dataset.types === 'college') {//选择学院
             this.setData({
                 collegeIdx: event.detail.value
+            })
+        } else if (dataset.types === 'education') {
+            this.setData({
+                educationIdx: event.detail.value
             })
         }
     },

@@ -56,8 +56,8 @@ App({
             that.refresh(options);
         }).catch((_e) => {
             //移出token
-            wx.removeStorageSync('token');
-            wx.removeStorageSync('expire_at');
+            // wx.removeStorageSync('token');
+            // wx.removeStorageSync('expire_at');
             that.refresh(options);
         });
     },

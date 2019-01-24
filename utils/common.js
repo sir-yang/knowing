@@ -500,6 +500,10 @@ function loginRegistEvent(event, that) {
         that.setData({
             collegeIdx: event.detail.value
         })
+    } else if (dataset.types === 'education') {
+        that.setData({
+            educationIdx: event.detail.value
+        })
     }
 }
 

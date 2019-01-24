@@ -24,6 +24,8 @@ Page({
         schoolTab: 0, //顶部学校索引
         collegeList: [], //学院
         collegeIdx: -1,
+        educationList: ["学士", "硕士", "博士", "其他"],
+        educationIdx: -1,
 
         // 登录注册相关
         loginRegistTk: 'hide',

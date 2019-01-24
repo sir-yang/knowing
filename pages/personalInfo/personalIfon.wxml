@@ -30,8 +30,11 @@
                 <input type='text' name="major" value='{{userInfo.inform.major}}' placeholder='请输入专业' />
             </view>
             <view class='flex_between flex_items'>
-                <view>学历</view>
-                <input type='text' name="education" value='{{userInfo.inform.education}}' placeholder='请输入学历' />
+                <view>学位</view>
+                <picker bindchange="personalEvent" data-types='education' value="{{educationIdx}}" range="{{educationList}}">
+                    <input type='text' name="education" value='{{educationIdx == -1 ? userInfo.inform.education : educationList[educationIdx]}}' disabled placeholder='请选择学位' />
+                </picker>
+                <!-- <input type='text' name="education" value='{{userInfo.inform.education}}' placeholder='请输入学历' /> -->
             </view>
             <view class='flex_between flex_items'>
                 <view>年级</view>
