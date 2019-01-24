@@ -14,7 +14,11 @@ Page({
         }, {
             id: 2,
             name: "女"
-        }]
+        }],
+        schoolList: [],
+        schoolIdx: -1,
+        collegeList: [],
+        collegeIdx: -1
     },
 
     /**
@@ -25,6 +29,7 @@ Page({
         //     title: '请稍后...',
         //     mask: true
         // })
+        common.requestGetCollege(this);
         let userInfo = common.getStorage('userInfo');
         if (userInfo) {
             let tabIndex = this.data.tabIndex;
@@ -59,6 +64,17 @@ Page({
 
             // 调用接口
             this.requestSaveInfo(vals);
+        } else if (dataset.types === 'school') {
+            let schoolList = this.data.schoolList;
+            this.setData({
+                schoolIdx: event.detail.value,
+                collegeList: schoolList[event.detail.value].academy,
+                collegeIdx: 0
+            })
+        } else if (dataset.types === 'college') {//选择学院
+            this.setData({
+                collegeIdx: event.detail.value
+            })
         }
     },
 
@@ -66,10 +82,22 @@ Page({
     requestSaveInfo(vals) {
         let that = this;
         let url = 'api/User/save';
+        wx.showLoading({
+            title: '正在保存...',
+            mask: true
+        })
         util.httpRequest(url, vals, 'POST').then((res) => {
             wx.hideLoading();
             if (res.result === 'success') {
-                common.getPersonInfo().then((info) => {})
+                wx.showToast({
+                    title: res.msg,
+                    icon: 'none',
+                    success() {
+                        common.getPersonInfo().then((info) => {
+                            wx.navigateBack({ })
+                        })
+                    }
+                })
             } else {
                 common.showClickModal(res.msg);
             }

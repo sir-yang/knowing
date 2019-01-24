@@ -9,4 +9,9 @@
             <view class='f18 c6'>{{item.message.addTime}}</view>
         </view>
     </view>
+    <!-- 数据提示判断 -->
+    <block>
+        <view wx:if="{{list.length > 0 && !hasNext}}" class='notmore'>没有更多数据</view>
+        <view wx:if="{{list.length === 0}}" class='noComment'>暂无数据</view>
+    </block>
 </view>

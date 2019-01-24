@@ -6,10 +6,9 @@ Page({
      * 页面的初始数据
      */
     data: {
-        loadStatus: true,
+        loadStatus: false,
         userInfo: {},
-        hasUserInfo: false,
-        loadImg: []
+        hasUserInfo: false
     },
 
     state: {
@@ -22,32 +21,43 @@ Page({
     onLoad: function(options) {
         this.state.options = options;
         console.log(this.state.options);
-        
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
         let that = this;
         let token = common.getAccessToken();
-        console.log(token);
         if (token) {
-            common.requestLoadPage(that);
+            common.getPersonInfo().then((info) => {
+                that.launchLoad(info);
+            });
         } else {
             getApp().globalData.tokenUpdated = function () {
                 console.log('update success');
-                common.requestLoadPage(that);
+                common.getPersonInfo().then((info) => {
+                    that.launchLoad(info);
+                });
             };
         }
-        let userInfo = wx.getStorageSync('userInfo');
+    },
+
+    launchLoad(userInfo) {
         if (userInfo && userInfo.avatarUrl && userInfo.nickName) {
+            if (common.getStorage('loadStatus')) {
+                common.setStorage('loadStatus', false);
+                this.setData({
+                    userInfo,
+                    hasUserInfo: true,
+                    loadStatus: true
+                })
+            } else {
+                wx.switchTab({
+                    url: '/pages/index/index'
+                })
+            }
+        } else {
             this.setData({
-                userInfo,
-                hasUserInfo: true
+                loadStatus: true
             })
         }
     },
+
 
     // 获取个人信息
     getUserInfo(event) {

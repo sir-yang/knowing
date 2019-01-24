@@ -619,9 +619,15 @@
 .noComment, .noDetail {
     text-align: center;
     font-size: 30rpx;
-    color: #999;
+    color: #ccc;
     padding-top: 100rpx;
     padding-bottom: 100rpx;
+}
+.notmore {
+    font-size: 24rpx;
+    color: #ccc;
+    padding: 20rpx 0;
+    text-align: center;
 }
 
 button::after {

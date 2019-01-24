@@ -12,7 +12,9 @@ Page({
         typeTabArr: [],
         tabIndex: -1,
         list: [],
-        showMore: true
+        showMore: true,
+        schoolList: [],
+        schoolTab: 0 //顶部学校索引
     },
 
     state: {
@@ -37,31 +39,19 @@ Page({
         if (token) {
             that.requestGetCate();
             that.requestGetList(0);
+            common.requestGetCollege(that);
         } else {
             getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
                 that.requestGetCate();
                 that.requestGetList(0);
+                common.requestGetCollege(that);
             };
         }
         let userInfo = common.getStorage('userInfo');
         that.setData({
             userInfo
         })
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
-
     },
 
     /**
@@ -112,6 +102,10 @@ Page({
             })
             this.state.offset = 0;
             this.requestGetList(0);
+        } else if (dataset.types === 'school') {//学校切换
+            this.setData({
+                schoolTab: event.detail.value
+            })
         } else if (dataset.types === 'tab') {
             if (dataset.index == this.data.tabIndex) return;
             this.setData({

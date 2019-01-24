@@ -26,8 +26,7 @@
                 <image src='{{imgUrl}}'></image>
             </view>
         </view>
-
-        <!-- <view class='immediate-withdrawal-btn'>立即提现</view> -->
+        
         <button form-type='submit' class='immediate-withdrawal-btn'>立即提现</button>
     </form>
 </view>

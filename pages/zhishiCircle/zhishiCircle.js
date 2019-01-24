@@ -11,7 +11,9 @@ Page({
         bannerArr: [],
         tabIndex: -1,
         list: [],
-        searchVal: ''
+        searchVal: '',
+        schoolList: [],
+        schoolTab: 0 //顶部学校索引
     },
 
     state: {
@@ -38,29 +40,17 @@ Page({
             that.requestGetBanner();
             that.requestGetCate();
             that.requestList(0);
+            common.requestGetCollege(that);
         } else {
             getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
                 that.requestGetBanner();
                 that.requestGetCate();
                 that.requestList(0);
+                common.requestGetCollege(that);
             };
         }
 
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
 
     },
 
@@ -114,6 +104,10 @@ Page({
 
             this.state.offset = 0;
             this.requestList(0);
+        } else if (dataset.types === 'school') {//学校切换
+            this.setData({
+                schoolTab: event.detail.value
+            })
         } else if (dataset.types === 'ipt') {
             this.setData({
                 searchVal: event.detail.value

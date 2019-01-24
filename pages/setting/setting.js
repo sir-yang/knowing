@@ -44,8 +44,14 @@ Page({
         let url = 'api/Login/loginOut';
         util.httpRequest(url).then((res) => {
             if (res.result === 'success') {
-                wx.switchTab({
-                    url: '/index/index/index'
+                wx.showToast({
+                    title: res.msg,
+                    icon: 'none',
+                    success() {
+                        wx.switchTab({
+                            url: '/pages/index/index'
+                        })
+                    }
                 })
             } else {
                 common.showClickModal(res.msg);

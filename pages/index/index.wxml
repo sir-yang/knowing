@@ -1,11 +1,13 @@
-<view class='plr20'>
+<view wx:if="{{requestStatus}}" class='plr20'>
     <!-- 搜索栏 -->
     <view class='top-search-box flex_start flex_items'>
-        <view class='switch-box flex_between'>
-            <view class='f26 c3 clamp1 mr30'>四川大学</view>
-            <view class='down-arrow'></view>
+        <view wx:if="{{schoolList.length > 0}}" class='switch-box flex_between'>
+            <picker class='flex1' bindchange="questionAnswerEvent" data-types='school' value="{{schoolTab}}" range="{{schoolList}}" range-key='name'>
+                <view class='f26 c3 clamp1 mr30'>{{schoolList[schoolTab].name}}</view>
+                <view class='down-arrow'></view>
+            </picker>
         </view>
-        <view class='flex1 search-input flex_start flex_items'>
+        <view class='flex1 search-input {{schoolList.length > 0 ? "ml30" : ""}} mr30 flex_start flex_items'>
             <input type='text' bindinput='questionAnswerEvent' data-types='ipt' value='{{searchVal}}' placeholder-class='cbc' placeholder='请输入' />
             <image catchtap='questionAnswerEvent' data-types='search' src='/images/home_search_icon.png'></image>
         </view>
@@ -70,13 +72,18 @@
                 <view class='f24 cmain self_end' catchtap='questionAnswerEvent' data-types='detail' data-index='{{index}}'>查看回答详情</view>
             </view>
         </view>
+
+        <!-- 数据提示判断 -->
+        <block>
+            <view wx:if="{{list.length > 0 && !hasNext}}" class='notmore'>没有更多数据</view>
+            <view wx:if="{{list.length === 0}}" class='noComment'>暂无数据</view>
+        </block>
     </view>
 </view>
 
 <!-- 围观弹框 -->
 <view class='tankuang {{onlookersTk}}' bindtap='questionAnswerEvent' data-types='closeTk'></view>
 <view class='onlookers-modal-content {{onlookersTk}}'>
-    <!-- <button class='look-btn' open-type='share'>分享围观</button> -->
     <view class='look-btn' bindtap='questionAnswerEvent' data-types='share'>分享围观</view>
     <view class='look-btn bte9s' bindtap='questionAnswerEvent' data-types='pay'>付费围观</view>
     <view class='look-btn mt10' bindtap='questionAnswerEvent' data-types=''>取消</view>

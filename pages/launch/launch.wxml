@@ -9,14 +9,3 @@
         <navigator open-type='switchTab' class='enter-use-btn' url='/pages/index/index' hover-class='none'>进入使用</navigator>
     </block>
 </view>
-
-<!-- <view class='load-modal'></view>
-<view class='load-modal-content'>
-    <swiper indicator-dots="true">
-        <block wx:for="{{loadImg}}" wx:key="">
-            <swiper-item>
-                <image src="{{item}}" class="slide-image" />
-            </swiper-item>
-        </block>
-    </swiper>
-</view> -->

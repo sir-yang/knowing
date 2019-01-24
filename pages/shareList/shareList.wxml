@@ -18,36 +18,10 @@
                 </view>
             </view>
         </view>
-
-        <!-- 评论 -->
-        <!-- <include src="/pages/common/comment.wxml" /> -->
     </view>
-
-    <view class='my-share-item-box' hidden>
-        <view class='delete-btn'>删除</view>
-        <view class='f24 c3 mt10'>请问一下浙大管理学院的保研复试要求？</view>
-        <view class='img-box mt20 mb10 flex_warp'>
-            <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-            <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-            <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-            <image src='http://img.my.csdn.net/uploads/201407/26/1406383165_7197.jpg'></image>
-        </view>
-        <view class='flex_between flex_items'>
-            <view class='f24 c9'>1分钟前</view>
-            <view class='flex_end'>
-                <view class='flex_start flex_items'>
-                    <view class='f24 c9'>128</view>
-                    <image class='zan-icon' src='/images/icon_3.png'></image>
-                </view>
-                <view class='flex_start flex_items com-box'>
-                    <view class='f24 c9'>2</view>
-                    <image class='com-icon' src='/images/icon_4.png'></image>
-                </view>
-            </view>
-        </view>
-
-        <!-- 评论 -->
-        <include src="/pages/common/comment.wxml" />
-    </view>
-
+    <!-- 数据提示判断 -->
+    <block>
+        <view wx:if="{{list.length > 0 && !hasNext}}" class='notmore'>没有更多数据</view>
+        <view wx:if="{{list.length === 0}}" class='noComment'>暂无数据</view>
+    </block>
 </view>

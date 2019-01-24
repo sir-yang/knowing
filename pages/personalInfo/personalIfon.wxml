@@ -15,11 +15,15 @@
             </view>
             <view class='flex_between flex_items'>
                 <view>学校名称</view>
-                <input type='text' name="university" value='{{userInfo.inform.university}}' placeholder='请输入学校名称' />
+                <picker bindchange="personalEvent" data-types='school' value="{{schoolIdx}}" range="{{schoolList}}" range-key='name'>
+                    <input class='rt-ipt c3' type='text' name="university" value='{{schoolIdx == -1 ? userInfo.inform.university : schoolList[schoolIdx].name}}' disabled placeholder='请输入学校名称' />
+                </picker>
             </view>
             <view class='flex_between flex_items'>
                 <view>学院</view>
-                <input type='text' name="academy" value='{{userInfo.inform.academy}}' placeholder='请输入学院' />
+                <picker bindchange="personalEvent" data-types='college' value="{{collegeIdx}}" range="{{collegeList}}" range-key='name'>
+                    <input class='rt-ipt c3' type='text' name="academy" value='{{collegeIdx == -1 ? userInfo.inform.academy : collegeList[collegeIdx].name}}' disabled placeholder='请输入学院' />
+                </picker>
             </view>
             <view class='flex_between flex_items'>
                 <view>专业</view>
@@ -37,7 +41,7 @@
 
         <view class='base-info-box'>
             <view class='desc'>简介</view>
-            <textarea name="introduce" placeholder='请输入简介'></textarea>
+            <textarea name="introduce" value='{{userInfo.introduce}}' placeholder='请输入简介'></textarea>
         </view>
 
         <view class='footer-spacing'></view>

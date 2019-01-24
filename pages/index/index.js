@@ -21,8 +21,26 @@ Page({
         needAuth: true, //保存图片授权
         schoolList: [], //学校
         schoolIdx: -1,
+        schoolTab: 0, //顶部学校索引
         collegeList: [], //学院
-        collegeIdx: -1
+        collegeIdx: -1,
+
+        // 登录注册相关
+        loginRegistTk: 'hide',
+        showLogin: 'hide', //登录
+        showRegist: 'hide', //注册
+        showForget: 'hide', //忘记密码
+        showPerfect: ['hide', 'hide', 'hide', 'hide'], //0:完善信息 1:学生 2:教师 3:其他
+        identity: 1, //注册角色
+        genderId: 1,
+        CountdownVal: '发送验证码',
+        CountdownTime: 60,
+        onClick: true,
+        clearTimeout: true,
+        phoneVal: '',
+        passwordVal: '',
+        confirmVal: '',
+        codeVal: '',
     },
 
     state: {
@@ -38,29 +56,34 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        wx.showLoading({
-            title: '请稍后...',
-            mask: true
-        });
-
-        //登录注册 数据
-        let that = this;
-        common.loginRegistData(that)
-        let token = common.getAccessToken();
-        if (token) {
-            that.requestGetCate();
-        } else {
-            getApp().globalData.tokenUpdated = function() {
-                console.log('update success');
-                that.requestGetCate();
-            };
-        }
+        // wx.showLoading({
+        //     title: '请稍后...',
+        //     mask: true
+        // });
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
+        let that = this;
+        let token = common.getAccessToken();
+        if (token) {
+            that.requestGetCate();
+            that.indexShowLoad();
+            common.requestGetCollege(that);
+        } else {
+            getApp().globalData.tokenUpdated = function () {
+                console.log('update success');
+                that.requestGetCate();
+                that.indexShowLoad();
+                common.requestGetCollege(that);
+            };
+        }        
+    },
+
+    // 界面显示执行
+    indexShowLoad() {
         let that = this;
         common.getPersonInfo().then((userInfo) => {
             if (userInfo) {
@@ -87,10 +110,16 @@ Page({
                     if (wx.hideTabBar()) {
                         wx.hideTabBar({});
                     }
-                    common.requestGetCollege(that);
                     loginRegistTk = 'show';
                     showPerfect[0] = 'show';
                     showPerfect[userInfo.type] = 'show';
+                } else { //已登录 调用列表
+                    wx.showLoading({
+                        title: '加载中...',
+                        mask: true
+                    });
+                    this.state.offset = 0;
+                    that.requestList(0);
                 }
 
                 that.setData({
@@ -100,11 +129,7 @@ Page({
                     showPerfect
                 })
             }
-        });        
-
-        if (!this.state.pageOnShow) return;
-        this.state.offset = 0;
-        this.requestList(0);
+        });
     },
 
     /**
@@ -158,6 +183,10 @@ Page({
             })
             this.state.offset = 0;
             this.requestList(0);
+        } else if (dataset.types === 'school') {//学校切换
+            that.setData({
+                schoolTab: event.detail.value
+            })
         } else if (dataset.types === 'ask') { //提问
             wx.navigateTo({
                 url: '/pages/askQuestion/askQuestion'
@@ -356,7 +385,6 @@ Page({
                 that.setData({
                     typeTabArr: res.results
                 })
-                that.requestList(0);
             } else {
                 common.showClickModal(res.msg);
             }
@@ -367,7 +395,11 @@ Page({
     requestList(offset) {
         let that = this;
         let typeTabArr = that.data.typeTabArr;
-        let userInfo = common.getStorage('userInfo');
+        if (typeTabArr.length == 0) {
+            common.showClickModal('请先添加问答分类');
+            return false;
+        }
+        
         let url = 'api/Answer/getPage';
         let data = {
             offset,

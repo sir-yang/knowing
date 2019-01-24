@@ -5,7 +5,13 @@
             <image class='head-img flex_shrink' src='{{userInfo.avatarUrl}}'></image>
             <view>
                 <view class='f28 c3 mt5'>{{userInfo.name}}</view>
-                <view class='f24 c6 mt10'>知了</view>
+                <view wx:if="{{userInfo.status == 1}}" class='f24 c6 mt10'>求知者</view>
+                <view wx:elif="{{userInfo.status == 2}}" class='f24 c6 mt10'>知了</view>
+                <view wx:elif="{{userInfo.status == 3}}" class='f24 c6 mt10'>课程知士</view>
+                <view wx:elif="{{userInfo.status == 5}}" class='f24 c6 mt10'>问答知士</view>
+                <view wx:elif="{{userInfo.status == 6}}" class='f24 c6 mt10'>知了 <text class='ml20'>问答知士</text></view>
+                <view wx:elif="{{userInfo.status == 7}}" class='f24 c6 mt10'>知享圈知士</view>
+                <view wx:elif="{{userInfo.status == 8}}" class='f24 c6 mt10'>问答知士 <text class='ml20'>知享圈知士</text></view>
             </view>
         </view>
 
@@ -45,7 +51,7 @@
     </view>
 
     <!-- 九宫格 -->
-    <view class='flex_warp mt10'>
+    <view class='flex_warp mt10 pb10'>
         <view class='features-item-box flex_column flex_center flex_items' bindtap='myEvent' data-types='wenda'>
             <image src='/images/my_icon_1.png'></image>
             <view class='text msg'>我的问答</view>

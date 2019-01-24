@@ -8,6 +8,9 @@ App({
     onLaunch(_options) {
         this.checkToken = true;
         wx.setStorageSync("serverurl", "http://shuzhi.loaderwang.cn/");
+        if (wx.getStorageSync('loadStatus') != false) {//首次进入
+            wx.setStorageSync("loadStatus", true); 
+        }
     },
 
     onShow(options) {
@@ -41,30 +44,20 @@ App({
             })
         }
 
+
+
         wx.pro.checkSession().then(() => {
             let token = common.getAccessToken();
-            console.log(that.checkToken);
             if (!token) {
                 console.log('no token');
             } else if (that.checkToken) {
                 that.checkToken = false;
-                // let myInfo = common.getStorage('userInfo');
-                // if (!myInfo.avatarUrl && !myInfo.nickName) {
-                //     return common.getPersonInfo().then(() => { });
-                // }
-                // if (!myInfo.avatarUrl && !myInfo.nickName) {
-                //     wx.reLaunch({
-                //         url: '/pages/launch/launch?inviteId=4'
-                //     })
-                //     return common.getPersonInfo().then(() => {});
-                // } else {
-                //     wx.switchTab({
-                //         url: '/pages/index/index'
-                //     })
-                // }
             }
             that.refresh(options);
         }).catch((_e) => {
+            //移出token
+            wx.removeStorageSync('token');
+            wx.removeStorageSync('expire_at');
             that.refresh(options);
         });
     },
@@ -72,9 +65,10 @@ App({
     // 刷新token
     refresh(_options) {
         common.getToken().then((_res) => {
-            common.getPersonInfo().then((_re) => {
-                getApp().globalData.tokenUpdated();
-            });
+            getApp().globalData.tokenUpdated();
+            // common.getPersonInfo().then((_re) => {
+            //     getApp().globalData.tokenUpdated();
+            // });
         });
     },
 

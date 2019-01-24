@@ -1,7 +1,11 @@
-
 <view wx:if="{{requestStatus}}" class='plr20'>
     <view wx:for="{{list}}" wx:key="" class='msg-item' bindtap='viewDetail' data-id='{{item.id}}'>
         <view class='f28 c6'>{{item.addTime}}</view>
         <view class='f26 c3 mt10'>{{item.content}}</view>
     </view>
+    <!-- 数据提示判断 -->
+    <block>
+        <view wx:if="{{list.length > 0 && !hasNext}}" class='notmore'>没有更多数据</view>
+        <view wx:if="{{list.length === 0}}" class='noComment'>暂无数据</view>
+    </block>
 </view>

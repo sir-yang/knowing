@@ -289,40 +289,6 @@ function getPersonInfo() {
     })
 }
 
-
-/**
- * 绑定用户信息
- */
-function userInfoBind(that, event) {
-    let detail = event.detail;
-    if (detail.hasOwnProperty('userInfo')) {
-        wx.showLoading({
-            title: '绑定中...',
-            mask: true
-        });
-        let val = {
-            nickName: detail.userInfo.nickName,
-            face: detail.userInfo.avatarUrl,
-            gender: detail.userInfo.gender
-        };
-
-        let url = 'api/user/saveUser';
-        util.httpRequest(url, val, 'POST').then((res) => {
-            console.log(JSON.stringify(res));
-            wx.hideLoading();
-            if (res.result == 'success') {
-                that.setData({
-                    authALter: false
-                });
-                //重新获取信息
-                getPersonInfo().then(() => {});
-            } else {
-                showClickModal('绑定失败');
-            }
-        });
-    }
-}
-
 // 倒计时
 function timeCountDown(that, timestamp) {
     let now = Date.parse(new Date());
@@ -593,11 +559,23 @@ function requestLogin(that, vals) {
     util.httpRequest(url, vals, 'POST').then((res) => {
         wx.hideLoading();
         if (res.result === 'success') {
-            requestGetCollege(that);
+            let userInfo = getInfo('userInfo');
             let showPerfect = that.data.showPerfect;
-            showPerfect[0] = 'show';
-            showPerfect[that.data.identity] = 'show';
+            let loginRegistTk = 'hide';
+            if (isNull(userInfo.name)) {//未完善资料
+                showPerfect[0] = 'show';
+                showPerfect[that.data.identity] = 'show';
+                loginRegistTk = 'show';
+            } else {
+                // 调用接口
+                that.requestList(0);
+                // 显示导航
+                if (wx.showTabBar()) {
+                    wx.showTabBar({});
+                }
+            }
             that.setData({
+                loginRegistTk,
                 showLogin: 'hide',
                 showPerfect,
                 phoneVal: '',
@@ -681,6 +659,9 @@ function requestSavePerfect(that, vals) {
     util.httpRequest(url, vals, 'POST').then((res) => {
         wx.hideLoading();
         if (res.result === 'success') {
+            // 重新获取列表
+            that.requestList(0);
+
             let showPerfect = that.data.showPerfect;
             showPerfect[0] = 'hide';
             showPerfect[that.data.identity] = 'hide';
@@ -819,7 +800,6 @@ module.exports = {
     isNull,
     stringObject,
     getPersonInfo,
-    userInfoBind,
     timeCountDown,
     seeBigImg,
     uploadImg,
