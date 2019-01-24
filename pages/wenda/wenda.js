@@ -50,20 +50,6 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
-
-    },
-
-    /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
@@ -104,6 +90,10 @@ Page({
                 list: []
             })
 
+            wx.showLoading({
+                title: '',
+                mask: true
+            })
             this.state.offset = 0;
             this.requestKnowList(0);
         } else if (dataset.types === 'tabStatus') { //状态筛选
@@ -112,7 +102,10 @@ Page({
                 tabIndex: dataset.index,
                 list: []
             })
-
+            wx.showLoading({
+                title: '',
+                mask: true
+            })
             this.state.offset = 0;
             this.requestKnowList(0);
         } else if (dataset.types === 'seeImg') { //查看大图

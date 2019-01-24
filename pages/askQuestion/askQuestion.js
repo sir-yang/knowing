@@ -26,23 +26,6 @@ Page({
         this.requestGetCate();
     },
 
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-        let askData = common.getStorage('askData');
-        if (askData) {
-            this.setData({
-                typeTab: askData.typeTab,
-                imgList: askData.imgArr,
-                contentVal: askData.question,
-                moneyIndex: askData.moneyIndex,
-                moneyVal: askData.moneyIndex == -1 ? askData.askMoney : ''
-            })
-            this.state.imgArr = askData.qImg;
-        }
-    },
-
     // 事件
     askQuestionEvent(event) {
         let that = this;
@@ -207,15 +190,25 @@ Page({
     requestSubmit(vals) {
         let that = this;
         let url = 'api/Answer/save';
+        wx.showLoading({
+            title: '',
+            mask: true
+        })
         util.httpRequest(url, vals, 'POST').then((res) => {
+            wx.hideLoading();
             if (res.result === 'success') {
-                wx.showModal({
-                    title: '提示',
-                    content: res.msg,
-                    showCancel: false,
-                    success() {
-                        wx.removeStorageSync('askData');
-                        wx.navigateBack({});
+                common.requestPay(res.results, (status, res_1) => {
+                    if (status == 'success') {
+                        wx.showModal({
+                            title: '提示',
+                            content: '支付成功',
+                            showCancel: false,
+                            success() {
+                                wx.navigateBack({ })
+                            }
+                        })
+                    } else {
+                        common.showClickModal(res_1.errMsg);
                     }
                 })
             } else {

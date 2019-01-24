@@ -489,14 +489,14 @@ function loginRegistEvent(event, that) {
         vals.wx_form_id = event.detail.formId;
 
         requestSavePerfect(that, vals);
-    } else if (dataset.types === 'school') {//选择学校
+    } else if (dataset.types === 'school') { //选择学校
         let schoolList = that.data.schoolList;
         that.setData({
             schoolIdx: event.detail.value,
             collegeList: schoolList[event.detail.value].academy,
             collegeIdx: 0
         })
-    } else if (dataset.types === 'college') {//选择学院
+    } else if (dataset.types === 'college') { //选择学院
         that.setData({
             collegeIdx: event.detail.value
         })
@@ -566,7 +566,7 @@ function requestLogin(that, vals) {
             let userInfo = getInfo('userInfo');
             let showPerfect = that.data.showPerfect;
             let loginRegistTk = 'hide';
-            if (isNull(userInfo.name)) {//未完善资料
+            if (isNull(userInfo.name)) { //未完善资料
                 showPerfect[0] = 'show';
                 showPerfect[that.data.identity] = 'show';
                 loginRegistTk = 'show';
@@ -788,6 +788,23 @@ function requestGetCache(that, vals, func) {
     })
 }
 
+// 调用支付
+function requestPay(info, func) {
+    wx.requestPayment({
+        timeStamp: info.timeStamp,
+        nonceStr: info.nonceStr,
+        package: info.package,
+        signType: info.signType,
+        paySign: info.paySign,
+        success(res) {
+            func('success', res);
+        },
+        fail(err) {
+            func('fail', err);
+        }
+    })
+}
+
 
 
 
@@ -820,5 +837,6 @@ module.exports = {
     requestGetSend,
     requestGetImgSend,
     requestCache,
-    requestGetCache
+    requestGetCache,
+    requestPay
 };

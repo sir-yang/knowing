@@ -211,7 +211,7 @@ Page({
                     hasNext: handle.hasNext
                 })
             } else {
-                common.showClickModal(res.mmsg);
+                common.showClickModal(res.msg);
             }
         })
     },

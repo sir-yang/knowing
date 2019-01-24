@@ -72,16 +72,17 @@ Page({
         let token = common.getAccessToken();
         if (token) {
             that.requestGetCate();
-            that.indexShowLoad();
             common.requestGetCollege(that);
         } else {
             getApp().globalData.tokenUpdated = function () {
                 console.log('update success');
                 that.requestGetCate();
-                that.indexShowLoad();
                 common.requestGetCollege(that);
             };
-        }        
+        }   
+
+        // if (!that.state.pageOnShow) return;
+        // let userInfo = common.getStorage('userInfo'); 
     },
 
     // 界面显示执行
@@ -129,6 +130,10 @@ Page({
                     loginRegistTk,
                     showLogin,
                     showPerfect
+                })
+            } else {
+                wx.redirectTo({
+                    url: '/pages/launch/launch'
                 })
             }
         });
@@ -320,7 +325,7 @@ Page({
                     })
                 },
                 fail(err) {
-                    common.showClickModal(res.errMsg);
+                    common.showClickModal(err.errMsg);
                 }
             })
         }
@@ -387,6 +392,7 @@ Page({
                 that.setData({
                     typeTabArr: res.results
                 })
+                that.indexShowLoad();
             } else {
                 common.showClickModal(res.msg);
             }
@@ -484,7 +490,23 @@ Page({
             wx.hideLoading();
             console.log(res);
             if (res.result === 'success') {
-
+                wx.hideLoading();
+                common.requestPay(res.results, (status, res_1) => {
+                    if (status == 'success') {
+                        wx.showModal({
+                            title: '提示',
+                            content: '支付成功',
+                            showCancel: false,
+                            success() {
+                                wx.navigateTo({
+                                    url: '/pages/wendaDetail/wendaDetail?id' + that.state.shareId
+                                })
+                            }
+                        })
+                    } else {
+                        common.showClickModal(res_1.errMsg);
+                    }
+                })
             } else {
                 common.showClickModal(res.msg);
             }
