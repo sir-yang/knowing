@@ -195,7 +195,7 @@ page {
 }
 
 .null-row {
-    min-height: 500rpx;
+    min-height: 400rpx;
     margin-top: 130rpx;
     text-align: center;
     font-size: 28rpx;

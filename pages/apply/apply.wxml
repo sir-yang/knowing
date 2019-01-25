@@ -3,7 +3,7 @@
         <view class='info-item-box'>
             <view class='flex_between flex_items'>
                 <view class='pos'>姓名</view>
-                <input type='text' name="name" maxlength='10' placeholder='请输入姓名' />
+                <input type='text' name="name" value='{{userInfo.name}}' disabled maxlength='10' placeholder='请输入姓名' />
             </view>
             <!-- <view class='flex_between flex_items'>
                 <view class='pos'>单位</view>
@@ -11,7 +11,7 @@
             </view> -->
             <view class='flex_between flex_items'>
                 <view class='pos'>手机号</view>
-                <input type='number' name="phone" value='{{userInfo.phone}}' maxlength='15' placeholder='请输入手机号' />
+                <input type='number' name="phone" value='{{userInfo.phone}}' disabled maxlength='15' placeholder='请输入手机号' />
             </view>
         </view>
 

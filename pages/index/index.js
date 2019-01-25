@@ -90,10 +90,18 @@ Page({
         let that = this;
         common.getPersonInfo().then((userInfo) => {
             if (userInfo) {
+                if (!userInfo.avatarUrl && !userInfo.nickName) {
+                    wx.redirectTo({
+                        url: '/pages/launch/launch'
+                    })
+                    return;
+                }
                 let role = 2;
                 if (userInfo.status != 5 && userInfo.status != 6 && userInfo.status != 8) {
+                    console.log(1212);
                     role = 1;
                 }
+                console.log(11, role);
                 // 判断是否需要登录
                 let loginRegistTk = that.data.loginRegistTk;
                 let showLogin = that.data.showLogin;
@@ -106,6 +114,12 @@ Page({
                     if (wx.hideTabBar()) {
                         wx.hideTabBar({});
                     }
+                    that.setData({
+                        role,
+                        loginRegistTk,
+                        showLogin,
+                        showPerfect
+                    })
                     // 获取图片验证码
                     common.requestGetImgSend(that);
                 } else if (!userInfo.name) {
@@ -116,21 +130,23 @@ Page({
                     loginRegistTk = 'show';
                     showPerfect[0] = 'show';
                     showPerfect[userInfo.type] = 'show';
+                    that.setData({
+                        role,
+                        loginRegistTk,
+                        showLogin,
+                        showPerfect
+                    })
                 } else { //已登录 调用列表
                     wx.showLoading({
                         title: '加载中...',
                         mask: true
                     });
+                    that.setData({
+                        role
+                    })
                     this.state.offset = 0;
                     that.requestList(0);
                 }
-
-                that.setData({
-                    role,
-                    loginRegistTk,
-                    showLogin,
-                    showPerfect
-                })
             } else {
                 wx.redirectTo({
                     url: '/pages/launch/launch'
@@ -214,10 +230,15 @@ Page({
             that.requestList(0);
         } else if (dataset.types === 'detail') { //详情
             let index = dataset.index;
+            if (that.data.role == 2) return;
             if (list[index].around == 1) {
-                wx.navigateTo({
-                    url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
-                })
+                if (list[index].status == 3 || list[index].status == 5) {
+                    wx.navigateTo({
+                        url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
+                    })
+                } else if (list[index].status == 1) {
+                    common.showClickModal('问题暂未回答');
+                }
             } else {
                 that.state.shareId = list[index].id;
                 wx.showActionSheet({
@@ -241,6 +262,7 @@ Page({
                 })
             }
         } else if (dataset.types === 'onlookers') { //围观弹框
+            if (list[dataset.index].around == 0) return;
             that.state.shareId = list[dataset.index].id;
             wx.showActionSheet({
                 itemList: ["分享围观", "付费围观"],
@@ -262,9 +284,15 @@ Page({
             })
         } else if (dataset.types === 'reply') { //去回答
             let index = dataset.index;
-            wx.navigateTo({
-                url: '/pages/reply/reply?id=' + list[index].id
-            })
+            if (list[index].status == 1) {
+                wx.navigateTo({
+                    url: '/pages/reply/reply?id=' + list[index].id
+                })
+            } else if (list[index].status == 2) {
+                common.showClickModal('问题已被他人锁定');
+            } else {
+                common.showClickModal('问题已被他人回答');
+            }
         } else if (dataset.types === 'closeTk') { //关闭围观弹框
             wx.showTabBar({
                 success() {
@@ -499,7 +527,7 @@ Page({
                             showCancel: false,
                             success() {
                                 wx.navigateTo({
-                                    url: '/pages/wendaDetail/wendaDetail?id' + that.state.shareId
+                                    url: '/pages/wendaDetail/wendaDetail?id=' + that.state.shareId
                                 })
                             }
                         })

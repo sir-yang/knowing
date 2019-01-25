@@ -35,7 +35,7 @@
                 <view class='flex_start flex_items mt5'>
                     <view class='f18 c9 mr10'>{{currentTime}}</view>
                     <progress class='flex1' percent='{{percent}}' stroke-width="2" activeColor="#2889e2" backgroundColor="#edeaff"></progress>
-                    <view class='f18 c9 ml10'>{{duration}}</view>
+                    <view class='f18 c9 ml10'>{{details.audio_times ? details.audio_times : "00:00"}}</view>
                 </view>
             </view>
         </view>

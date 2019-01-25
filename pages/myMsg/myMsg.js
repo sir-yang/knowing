@@ -72,10 +72,20 @@ Page({
 
     // 查看详情
     viewDetail(event) {
-        let id = event.currentTarget.dataset.id;
-        // wx.navigateTo({
-        //     url: '/pages/systemMsgDetail/systemMsgDetail?id=' + id + '&page=my'
-        // })
+        let index = event.currentTarget.dataset.index;
+        let list = this.data.list;
+        let id = list[index].objId;
+        let url = '';
+        if (list[index].type === 1 || list[index].type === 6) { //评论、点赞
+            url = '/pages/enjoyDetail/enjoyDetail?id=' + id;
+        } else if (list[index].type === 3 || list[index].type === 4) { //回答、围观
+            url = '/pages/wendaDetail/wendaDetail?id=' + id;
+        } else if (list[index].type === 5) { //关注
+            url = '/pages/attentionList/attentionList?status=1';
+        }
+        wx.navigateTo({
+            url
+        })
     },
 
     // 获取消息列表

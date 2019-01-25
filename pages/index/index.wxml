@@ -40,7 +40,7 @@
 
     <view class='list-box pb20'>
         <!-- 普通用户 -->
-        <view wx:for="{{list}}" wx:key="" class='list-item'>
+        <view wx:for="{{list}}" wx:key="" class='list-item' bindtap='questionAnswerEvent' data-types='detail' data-index='{{index}}'>
             <view class='flex_start flex_items'>
                 <view class='flex1 flex_start flex_items'>
                     <image class='list-item-head' src='{{item.user.avatarUrl}}'></image>
@@ -57,7 +57,7 @@
                 <view wx:if="{{role == 1}}" class='f24 c9'>{{item.aroundNum}}人已围观</view>
                 <view class='money-box flex1 flex_end flex_items'>
                     <image src='/images/money_icon.png'></image>
-                    <view wx:if="{{role == 1}}" catchtap='questionAnswerEvent' data-types='onlookers' data-index='{{index}}'>围观金额 {{item.aroundMoney}}元</view>
+                    <view wx:if="{{role == 1}}">围观金额 {{item.aroundMoney}}元</view>
                     <view wx:else>提问金额 {{item.askMoney}}元</view>
                 </view>
             </view>
@@ -69,7 +69,7 @@
                     <view class='f26 c3'>{{item.answers.name}}</view>
                     <view class='f24 c6'>{{item.answers.keyWords}}</view>
                 </view>
-                <view class='f24 cmain self_end' catchtap='questionAnswerEvent' data-types='detail' data-index='{{index}}'>查看回答详情</view>
+                <view class='f24 cmain self_end'>查看回答详情</view>
             </view>
         </view>
 

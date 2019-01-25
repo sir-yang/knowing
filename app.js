@@ -44,8 +44,6 @@ App({
             })
         }
 
-
-
         wx.pro.checkSession().then(() => {
             let token = common.getAccessToken();
             if (!token) {

@@ -1,5 +1,5 @@
 <view wx:if="{{requestStatus}}" class='plr20'>
-    <view wx:for="{{list}}" wx:key="" class='msg-item' bindtap='viewDetail' data-id='{{item.id}}'>
+    <view wx:for="{{list}}" wx:key="" class='msg-item' bindtap='viewDetail' data-index='{{index}}'>
         <view class='f28 c6'>{{item.addTime}}</view>
         <view class='f26 c3 mt10'>{{item.content}}</view>
     </view>

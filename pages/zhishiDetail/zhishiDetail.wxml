@@ -80,6 +80,8 @@
                         </view>
                     </view>
                 </view>
+                <!-- 无内容 -->
+                <view wx:if="{{list.length === 0}}" class='null-row'>暂无分享记录</view>
             </block>
 
             <!-- ta的课程 -->

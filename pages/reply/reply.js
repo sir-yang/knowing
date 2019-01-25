@@ -215,20 +215,6 @@ Page({
         })
     },
 
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function() {
-
-    },
-
     // 事件
     replyEvent(event) {
         let that = this;
@@ -300,7 +286,7 @@ Page({
         } else if (dataset.types === 'submit') { //提交
             let vals = that.getSubmitVal();
             if (!vals) return;
-            data.id = that.state.options.id;
+            vals.id = that.state.options.id;
             vals.wx_form_id = event.detail.formId;
             that.requestSubmit(vals);
         } else if (dataset.types === 'moneyIpt') { //监听输入金额
@@ -432,7 +418,25 @@ Page({
             id: that.state.options.id
         }
         util.httpRequest(url, data).then((res) => {
-            // console.log(res);
+            if (res.result === 'success') {
+                
+            } else {
+                if (res.err_code === 10011) {
+                    wx.showModal({
+                        title: '提示',
+                        content: res.msg,
+                        success(res) {
+                            if (res.confirm) {
+                                wx.navigateTo({
+                                    url: '/pages/wendaDetail/wendaDetail?id=',
+                                })
+                            }
+                        }
+                    })
+                } else {
+                    common.showClickModal(res.msg);
+                }
+            }
         });
     },
 

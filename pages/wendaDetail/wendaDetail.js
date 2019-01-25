@@ -13,8 +13,7 @@ Page({
         details: '',
         playing: false, //播放状态
         percent: 0,
-        currentTime: '00:00',
-        duration: '00:00'
+        currentTime: '00:00'
     },
 
     state: {
@@ -89,27 +88,6 @@ Page({
         })
     },
 
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function () {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
-
-    },
-
     // 事件
     detailEvent(event) {
         let dataset = event.currentTarget.dataset;
@@ -140,8 +118,7 @@ Page({
                 }
                 that.setData({
                     requestStatus: true,
-                    details: res.results,
-                    duration: res.results.audio_times
+                    details: res.results
                 })
             } else {
                 common.showClickModal(res.msg);
