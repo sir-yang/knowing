@@ -208,7 +208,7 @@ Page({
                             }
                         })
                     } else {
-                        common.showClickModal(res_1.errMsg);
+                        common.showClickModal('支付失败');
                     }
                 })
             } else {

@@ -61,7 +61,7 @@
 
             <!-- ta的分享 -->
             <block wx:if="{{tabIndex == 0}}">
-                <view wx:for="{{list}}" wx:key="" class='share-item-box}' bindtap='detailEvent' data-types='wendaDetail' data-index='{{index}}'>
+                <view wx:for="{{list}}" wx:key="" class='share-item-box}' bindtap='detailEvent' data-types='zhixiang' data-index='{{index}}'>
                     <view class='f24 c3'>{{item.content}}</view>
                     <view class='img-box mt20 mb10 flex_warp'>
                         <image wx:for="{{item.img}}" wx:key="" wx:for-item="imgItem" wx:for-index="idx" src='{{imgItem.thumb_small_url}}' catchtap='detailEvent' data-types='seeImg' data-index='{{index}}' data-idx='{{idx}}'></image>
@@ -105,7 +105,7 @@
                             <image class='head-icon' src='{{item.user.avatarUrl}}'></image>
                             <view class='f28 c3'>{{item.user.name}}</view>
                         </view>
-                        <view class='f26 cmain' catchtap='detailEvent' data-types='detail' data-index='{{index}}'>查看回答详情</view>
+                        <view class='f26 cmain' bindtap='detailEvent' data-types='wenda' data-index='{{index}}'>查看回答详情</view>
                     </view>
                     <view class='mt20 f24 c3'>{{item.question}}</view>
                     <view class='img-box mt20 flex_warp'>
@@ -138,4 +138,14 @@
         <image wx:for="{{starImg}}" wx:key="" src='{{item}}' bindtap='detailEvent' data-types='star' data-index='{{index}}'></image>
     </view>
     <view class='evaluation-btn' bindtap='detailEvent' data-types='evaluate'>评价</view>
+</view>
+
+<!-- 海报 -->
+<view class='tankuang {{posterTk}}'></view>
+<view class='poster-modal-content {{posterTk}}'>
+    <view class='poster-img'>
+        <image src='{{posterUrl}}'></image>
+    </view>
+    <button wx:if="{{needAuth}}" class='save-photo-btn' open-type='openSetting' bindopensetting="openSetBack">保存图片</button>
+    <view wx:else class='save-photo-btn' bindtap='detailEvent' data-types='savaImg'>保存图片</view>
 </view>

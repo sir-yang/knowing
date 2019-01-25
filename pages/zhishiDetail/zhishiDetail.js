@@ -18,7 +18,10 @@ Page({
             "/images/star_icon.png",
             "/images/star_icon.png",
         ],
-        list: []
+        list: [],
+        posterTk: 'hide', //海报弹框
+        posterUrl: '', //海报路径
+        needAuth: true //保存图片授权
     },
 
     state: {
@@ -50,20 +53,6 @@ Page({
                 that.requestGetDetail(options);
             };
         }
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
-
     },
 
     /**
@@ -106,13 +95,6 @@ Page({
             this.requestAnswerList(0);
         }
         this.state.isOnReachBottom = false;
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function() {
-
     },
 
     // 事件
@@ -174,12 +156,37 @@ Page({
             })
             // 调用评分
             this.requestValuation();
-        } else if (dataset.types === 'wendaDetail') { //问答详情
+        } else if (dataset.types === 'wenda') { //问答详情
             let list = this.data.list;
             let index = dataset.index;
-            wx.navigateTo({
-                url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
-            })
+
+            if (list[index].around == 1) {
+                wx.navigateTo({
+                    url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
+                })
+            } else {
+                let that = this;
+                that.state.shareId = list[index].id;
+                wx.showActionSheet({
+                    itemList: ["分享围观", "付费围观"],
+                    success(res) {
+                        console.log(res.tapIndex);
+                        if (res.tapIndex == 0) {
+                            that.getIsAuth();
+                            that.requestPoster();
+                        } else {
+                            wx.showTabBar({
+                                success() {
+                                    that.setData({
+                                        onlookersTk: 'hide'
+                                    })
+                                }
+                            })
+                            that.requestPay();
+                        }
+                    }
+                })
+            }
         } else if (dataset.types === 'seeImg') { //查看大图
             let list = this.data.list;
             let index = dataset.index;
@@ -191,7 +198,7 @@ Page({
             }
         } else if (dataset.types === 'courses') {
             wx.navigateTo({
-                url: '/pages/coursesDetail/coursesDetail?id='+dataset.id
+                url: '/pages/coursesDetail/coursesDetail?id=' + dataset.id
             })
         } else if (dataset.types === 'question') { //提问
             wx.navigateTo({
@@ -209,13 +216,139 @@ Page({
                 mask: true
             })
             this.requestLike(list, index, data);
-        } else if (dataset.types === 'detail') { //回答详情
+        } else if (dataset.types === 'zhixiang') { //知享详情
             let list = this.data.list;
             let index = dataset.index;
             wx.navigateTo({
-                url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
+                url: '/pages/enjoyDetail/enjoyDetail?id=' + list[index].id
+            })
+        } else if (dataset.types === 'savaImg') { //保存海报
+            let that = this;
+            wx.getImageInfo({
+                src: that.data.posterUrl,
+                success(res) {
+                    wx.saveImageToPhotosAlbum({
+                        filePath: res.path,
+                        success() {
+                            wx.showToast({
+                                title: '保存成功',
+                                icon: 'none',
+                                success() {
+                                    that.setData({
+                                        posterTk: 'hide'
+                                    })
+                                }
+                            })
+                        }
+                    })
+                },
+                fail(err) {
+                    common.showClickModal(err.errMsg);
+                }
             })
         }
+    },
+
+    // 授权判断
+    getIsAuth() {
+        let that = this;
+        wx.getSetting({
+            success(res) {
+                if (!res.authSetting['scope.writePhotosAlbum']) {
+                    wx.authorize({
+                        scope: 'scope.writePhotosAlbum',
+                        success(suc) {
+                            that.setData({
+                                needAuth: false
+                            })
+                        },
+                        fail() {
+                            that.setData({
+                                needAuth: true
+                            })
+                        }
+                    })
+                } else {
+                    that.setData({
+                        needAuth: false
+                    })
+                }
+            }
+        })
+    },
+
+    // 权限设置回调
+    openSetBack(event) {
+        if (event.detail.authSetting['scope.writePhotosAlbum']) {
+            this.setData({
+                needAuth: false
+            })
+        } else {
+            this.setData({
+                needAuth: true
+            })
+        }
+    },
+
+    // 获取海报
+    requestPoster() {
+        let that = this;
+        let url = 'api/Share/share';
+        wx.showLoading({
+            title: '海报生成中...',
+            mask: true
+        })
+        util.httpRequest(url, {
+            id: that.state.shareId
+        }).then((res) => {
+            wx.hideLoading();
+            if (res.result === 'success') {
+                // 隐藏底部导航 显示显示海报
+                that.setData({
+                    posterTk: 'show',
+                    posterUrl: res.results
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        });
+    },
+
+    // 调用支付围观
+    requestPay() {
+        let that = this;
+        let url = 'api/Answer/around';
+        wx.showLoading({
+            title: '',
+            mask: true
+        })
+        util.httpRequest(url, {
+            id: that.state.shareId
+        }, 'POST').then((res) => {
+            wx.hideLoading();
+            console.log(res);
+            if (res.result === 'success') {
+                wx.hideLoading();
+                common.requestPay(res.results, (status, res_1) => {
+                    if (status == 'success') {
+                        wx.showModal({
+                            title: '提示',
+                            content: '支付成功',
+                            showCancel: false,
+                            success() {
+                                wx.navigateTo({
+                                    url: '/pages/wendaDetail/wendaDetail?id=' + that.state.shareId
+                                })
+                            }
+                        })
+                    } else {
+                        common.showClickModal('支付失败');
+                    }
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
     },
 
 

@@ -43,13 +43,6 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
-    },
-
-    /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
@@ -112,6 +105,11 @@ Page({
             let index = dataset.index;
             let idx = dataset.idx;
             common.seeBigImg(list[index].qImg[idx].original_url, list[index].qImg, 2);
+        } else if (dataset.types === 'detail') { //详情
+            let index = dataset.index;
+            wx.navigateTo({
+                url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
+            })
         }
     },
 

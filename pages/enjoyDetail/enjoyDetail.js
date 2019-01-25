@@ -1,7 +1,7 @@
 let common = getApp().globalData.commonFun;
 let util = getApp().globalData.utilFun;
 
-const innerAudioContext = wx.createInnerAudioContext()
+const innerAudioContext = wx.createInnerAudioContext();
 
 Page({
 
@@ -14,7 +14,6 @@ Page({
         playing: false, //播放状态
         percent: 0,
         currentTime: '00:00',
-        duration: '00:00',
         contentVal: '',
         iptFocus: false
     },
@@ -27,7 +26,7 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
         let that = this;
         that.state.options = options;
         wx.showLoading({
@@ -39,7 +38,7 @@ Page({
         if (token) {
             that.requestGetDetail();
         } else {
-            getApp().globalData.tokenUpdated = function () {
+            getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
                 that.requestGetDetail();
             };
@@ -49,7 +48,7 @@ Page({
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function () {
+    onReady: function() {
         let that = this;
         // 播放
         innerAudioContext.onPlay(() => {
@@ -95,7 +94,7 @@ Page({
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function () {
+    onShareAppMessage: function() {
 
     },
 
@@ -124,18 +123,35 @@ Page({
             let that = this;
             let userInfo = common.getStorage('userInfo');
             let itemList = ["回复", "删除"];
-            if (userInfo.id != dataset.uid) {
-                itemList = ["回复"];
+            if (userInfo.id != details.user.id) {
+                if (userInfo.id == dataset.uid) {
+                    itemList = ["删除"];
+                } else {
+                    itemList = ["回复"];
+                }
             }
+
             wx.showActionSheet({
                 itemList,
                 success(res) {
                     console.log(res.tapIndex);
                     if (res.tapIndex == 0) {
-                        that.state.pid = dataset.pid;
-                        that.setData({
-                            iptFocus: true
-                        })
+                        if (userInfo.id != details.user.id) {
+                            if (userInfo.id == dataset.uid) {
+                                // 删除评论
+                                that.requestDelComment(dataset);
+                            } else {
+                                that.state.pid = dataset.pid;
+                                that.setData({
+                                    iptFocus: true
+                                })
+                            }
+                        } else {
+                            that.state.pid = dataset.pid;
+                            that.setData({
+                                iptFocus: true
+                            })
+                        }                        
                     } else {
                         // 删除评论
                         that.requestDelComment(dataset);
@@ -170,8 +186,7 @@ Page({
                 }
                 that.setData({
                     requestStatus: true,
-                    details: res.results,
-                    // duration: res.results.audio_times
+                    details: res.results
                 })
             } else {
                 common.showClickModal(res.msg);
@@ -217,7 +232,7 @@ Page({
         }
         // 回复需传
         if (that.state.pid) {
-            data.pid = that.state.pid; 
+            data.pid = that.state.pid;
         }
         wx.showLoading({
             title: '',

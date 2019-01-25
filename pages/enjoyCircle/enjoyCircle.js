@@ -1,5 +1,7 @@
 let common = getApp().globalData.commonFun;
 let util = getApp().globalData.utilFun;
+
+const innerAudioContext = wx.createInnerAudioContext();
 Page({
 
     /**
@@ -14,7 +16,10 @@ Page({
         list: [],
         showMore: true,
         schoolList: [],
-        schoolTab: 0 //顶部学校索引
+        schoolTab: 0, //顶部学校索引
+        playing: false, //播放状态
+        percent: 0,
+        playAudioIdx: -1
     },
 
     state: {
@@ -24,6 +29,7 @@ Page({
         pageOnShow: false,
         isOnReachBottom: true,
         isonPullDownRefresh: false,
+        playId: 0 //播放ID
     },
 
     /**
@@ -51,6 +57,54 @@ Page({
         let userInfo = common.getStorage('userInfo');
         that.setData({
             userInfo
+        })
+    },
+
+    /**
+     * 生命周期函数--监听页面初次渲染完成
+     */
+    onReady: function () {
+        let that = this;
+        // 播放
+        innerAudioContext.onPlay(() => {
+            console.log('开始播放');
+            that.setData({
+                playing: true
+            });
+        })
+        innerAudioContext.onPause((res) => {
+            console.log('监听暂停', res);
+            that.setData({
+                playing: false
+            });
+        })
+
+        innerAudioContext.onStop((res) => {
+            console.log('监听停止', res);
+            that.setData({
+                playing: false,
+                playAudioIdx: -1
+            });
+        })
+        // 监听结束
+        innerAudioContext.onEnded((res) => {
+            console.log('监听结束', res);
+            that.setData({
+                playing: false,
+                playAudioIdx: -1
+            });
+        })
+        // 监听进度
+        innerAudioContext.onTimeUpdate((res) => {
+            let percent = parseInt((parseInt(innerAudioContext.currentTime) / parseInt(innerAudioContext.duration)) * 100);
+            let currentTime = util.changeTimeFormat(parseInt(innerAudioContext.currentTime));
+            that.setData({
+                percent,
+                currentTime
+            })
+        });
+        innerAudioContext.onError((res) => {
+            common.showClickModal(res.errMsg);
         })
     },
 
@@ -97,62 +151,132 @@ Page({
         let list = this.data.list;
         if (dataset.types === 'types') {
             if (dataset.index == this.data.typeIndex) return;
-            this.setData({
-                typeIndex: dataset.index
-            })
+            if (this.data.typeIndex == 1) {
+                if (this.data.playing) { //当前有播放 停止播放
+                    innerAudioContext.stop();
+                    this.state.playId = 0;
+                    this.setData({
+                        playAudioIdx: -1,
+                        playing: false,
+                        typeIndex: dataset.index,
+                        searchVal: '',
+                        list: []
+                    })
+                } else {
+                    this.setData({
+                        typeIndex: dataset.index,
+                        searchVal: '',
+                        list: []
+                    })
+                }
+            } else {
+                this.setData({
+                    typeIndex: dataset.index,
+                    searchVal: '',
+                    list: []
+                })
+            }
             this.state.offset = 0;
             this.requestGetList(0);
         } else if (dataset.types === 'school') {//学校切换
             this.setData({
                 schoolTab: event.detail.value
             })
-        } else if (dataset.types === 'tab') {
+        } else if (dataset.types === 'tab') { //分类切换
             if (dataset.index == this.data.tabIndex) return;
-            this.setData({
-                searchVal: '',
-                tabIndex: dataset.index,
-                list: []
-            })
+            if (this.data.typeIndex == 1) {
+                if (this.data.playing) { //当前有播放 停止播放
+                    innerAudioContext.stop();
+                    this.state.playId = 0;
+                    this.setData({
+                        playAudioIdx: -1,
+                        playing: false,
+                        searchVal: '',
+                        tabIndex: dataset.index,
+                        list: []
+                    })
+                } else {
+                    this.setData({
+                        searchVal: '',
+                        tabIndex: dataset.index,
+                        list: []
+                    })
+                }
+            } else {
+                this.setData({
+                    searchVal: '',
+                    tabIndex: dataset.index,
+                    list: []
+                })
+            }
+
             this.state.offset = 0;
             this.requestGetList(0);
-        } else if (dataset.types === 'ipt') {
+        } else if (dataset.types === 'ipt') { //监听输入
             this.setData({
                 searchVal: event.detail.value
             })
-        } else if (dataset.types === 'search') {
+        } else if (dataset.types === 'search') { //搜索
+            if (this.data.playing) { //当前有播放 停止播放
+                this.state.playId = 0;
+                this.setData({
+                    playAudioIdx: -1,
+                    playing: false,
+                    list: []
+                })
+                innerAudioContext.stop();
+            }
             this.state.offset = 0;
             this.requestGetList(0);
-        } else if (dataset.types === 'message') {
+        } else if (dataset.types === 'message') { //消息
             wx.navigateTo({
                 url: '/pages/message/message'
             })
-        } else if (dataset.types === 'publish') {
+        } else if (dataset.types === 'publish') { //发布
             wx.navigateTo({
                 url: '/pages/publish/publish'
             })
-        } else if (dataset.types === 'moreTab') {
+        } else if (dataset.types === 'moreTab') { //更多分类
             this.setData({
                 showMore: !this.data.showMore
             })
-        } else if (dataset.types === 'seeImg') {
+        } else if (dataset.types === 'seeImg') { //查看大图
             let index = dataset.index;
             let idx = dataset.idx;
             common.seeBigImg(list[index].img[idx].original_url, list[index].img, 2);
-        } else if (dataset.types === 'detail') {
+        } else if (dataset.types === 'detail') { //详情
             let id = dataset.id;
             wx.navigateTo({
                 url: '/pages/enjoyDetail/enjoyDetail?id=' + id
             })
-        } else if (dataset.types === 'like') {
+        } else if (dataset.types === 'like') { //点赞
             let index = dataset.index;
+            let userInfo = this.data.userInfo;
             wx.showLoading({
                 title: '',
                 mask: true
             })
+            if (userInfo.id == list[index].uid) return;
             this.requestLike(list, index);
-        } else if (dataset.types === 'report') {
+        } else if (dataset.types === 'report') { //举报
             let index = dataset.index;
             this.requestReport(list[index].id);
+        } else if (dataset.types === 'play') { //语音播放
+            let index = dataset.index;
+            if (this.state.playId == list[index].id) { //
+                if (this.data.playing) {
+                    innerAudioContext.pause();
+                } else {
+                    innerAudioContext.play();
+                } 
+            } else {
+                innerAudioContext.src = list[index].audio;
+                innerAudioContext.play();
+                this.state.playId = list[index].id;
+                this.setData({
+                    playAudioIdx: index
+                })
+            }
         }
     },
 
@@ -190,6 +314,12 @@ Page({
         if (that.data.tabIndex != -1) {
             let typeTabArr = that.data.typeTabArr;
             data.type = typeTabArr[that.data.tabIndex].id
+        }
+        if (that.state.pageOnShow) {
+            wx.showLoading({
+                title: '',
+                mask: true
+            })
         }
         util.httpRequest(url, data).then((res) => {
             wx.hideLoading();

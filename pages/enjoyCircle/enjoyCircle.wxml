@@ -47,13 +47,13 @@
         </view>
 
         <view wx:if="{{item.audio}}" class='audio-box flex_start flex_items'>
-            <image class='audio-img' src='/images/audio_icon.png'></image>
+            <image class='audio-img' catchtap='enjoyEvent' data-types='play' data-index='{{index}}' src='/images/audio_icon.png'></image>
             <view class='flex1'>
-                <view class='f20 c3'>知士回答.mp3</view>
+                <view class='f20 c3'>分享语音.mp3</view>
                 <view class='flex_start flex_items mt5'>
-                    <view class='f18 c9 mr10'>{{item.currentTime}}</view>
-                    <progress class='flex1' percent='{{item.percent}}' stroke-width="2" activeColor="#2889e2" backgroundColor="#edeaff"></progress>
-                    <view class='f18 c9 ml10'>02:38</view>
+                    <view class='f18 c9 mr10'>{{playAudioIdx == index ? currentTime : "00:00"}}</view>
+                    <progress class='flex1' percent='{{playAudioIdx == index ? percent : 0}}' stroke-width="2" activeColor="#2889e2" backgroundColor="#edeaff"></progress>
+                    <view class='f18 c9 ml10'>{{item.audio_times ? item.audio_times : "00:00"}}</view>
                 </view>
             </view>
         </view>
@@ -71,7 +71,7 @@
             <view class='flex_end'>
                 <view class='flex_start flex_items' catchtap='enjoyEvent' data-types='like' data-index='{{index}}'>
                     <view class='f24 c9'>{{item.likeNum}}</view>
-                    <image class='zan-icon' src='/images/icon_3.png'></image>
+                    <image class='zan-icon' src='/images/{{item.zan == 0 ? "zan_icon" : "icon_3"}}.png'></image>
                 </view>
                 <view class='flex_start flex_items com-box'>
                     <view class='f24 c9'>{{item.comments}}</view>

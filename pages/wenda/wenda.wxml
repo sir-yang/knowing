@@ -33,7 +33,7 @@
                     <view class='f26 c3'>{{item.answers.name}}</view>
                     <view class='flex_between flex_items mt5'>
                         <view class='f24 c6'>{{item.answers.keyWords}}</view>
-                        <view class='f24 cmain'>查看回答详情</view>
+                        <view class='f24 cmain' bindtap='wendaEvent' data-types='detail' data-index='{{index}}'>查看回答详情</view>
                     </view>
                 </view>
             </view>
@@ -73,7 +73,7 @@
                     <view class='f26 c3'>{{item.answers.name}}</view>
                     <view class='flex_between flex_items mt5'>
                         <view class='f24 c6'>{{item.answers.keyWords}}</view>
-                        <view class='f24 cmain'>查看回答详情</view>
+                        <view class='f24 cmain' bindtap='wendaEvent' data-types='detail' data-index='{{index}}'>查看回答详情</view>
                     </view>
                 </view>
             </view>

@@ -98,10 +98,9 @@ Page({
                 }
                 let role = 2;
                 if (userInfo.status != 5 && userInfo.status != 6 && userInfo.status != 8) {
-                    console.log(1212);
                     role = 1;
                 }
-                console.log(11, role);
+
                 // 判断是否需要登录
                 let loginRegistTk = that.data.loginRegistTk;
                 let showLogin = that.data.showLogin;
@@ -320,19 +319,6 @@ Page({
             wx.navigateTo({
                 url: '/pages/message/message'
             })
-        } else if (dataset.types === 'share') { //分享海报
-            // 授权判断
-            that.getIsAuth();
-            that.requestPoster();
-        } else if (dataset.types === 'pay') { //付费
-            wx.showTabBar({
-                success() {
-                    that.setData({
-                        onlookersTk: 'hide'
-                    })
-                }
-            })
-            that.requestPay();
         } else if (dataset.types === 'savaImg') { //保存海报
             wx.getImageInfo({
                 src: that.data.posterUrl,
@@ -532,7 +518,7 @@ Page({
                             }
                         })
                     } else {
-                        common.showClickModal(res_1.errMsg);
+                        common.showClickModal('支付失败');
                     }
                 })
             } else {

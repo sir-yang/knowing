@@ -70,7 +70,9 @@ Page({
     // 获取暂存数据
     getCache() {
         let that = this;
-        common.requestGetCache(that, { type: 2 }, (da) => {
+        common.requestGetCache(that, {
+            type: 2
+        }, (da) => {
             if (da) {
                 if (da.status == 1) {
                     let replyData = da.content.data;
@@ -129,7 +131,7 @@ Page({
             console.log('recorder stop', res)
             that.state.audio = res.tempFilePath;
             that.state.audio_duration = parseInt(res.duration / 1000);
-            let duration = util.changeTimeFormat(parseInt(res.duration/1000));
+            let duration = util.changeTimeFormat(parseInt(res.duration / 1000));
             that.setData({
                 status: false,
                 aAudio: res.tempFilePath,
@@ -309,7 +311,7 @@ Page({
                         confirmText: '是',
                         success(res) {
                             if (res.confirm) {
-                                if (that.data.playing) {//停止播放录音
+                                if (that.data.playing) { //停止播放录音
                                     innerAudioContext.stop();
                                 } else {
                                     recorderManager.start(options);
@@ -419,16 +421,17 @@ Page({
         }
         util.httpRequest(url, data).then((res) => {
             if (res.result === 'success') {
-                
+
             } else {
-                if (res.err_code === 10011) {
+                if (res.err_code === 20001) {
+                    let id = res.id;
                     wx.showModal({
                         title: '提示',
                         content: res.msg,
                         success(res) {
                             if (res.confirm) {
                                 wx.navigateTo({
-                                    url: '/pages/wendaDetail/wendaDetail?id=',
+                                    url: '/pages/wendaDetail/wendaDetail?id=' + id
                                 })
                             }
                         }
@@ -444,7 +447,7 @@ Page({
     requestSubmit(vals) {
         let that = this;
         let url = 'api/Answer/save';
-        if (vals.hasOwnProperty('aAudio')) {//判断是否有语音 有则执行上传
+        if (vals.hasOwnProperty('aAudio')) { //判断是否有语音 有则执行上传
             that.uploadAudio((aAudio) => {
                 vals.aAudio = aAudio;
             })

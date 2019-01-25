@@ -11,11 +11,11 @@
         <view wx:if="{{details.audio}}" class='audio-box flex_start flex_items'>
             <image class='audio-img' src='/images/audio_icon.png' bindtap='detailEvent' data-types='play'></image>
             <view class='flex1'>
-                <view class='f20 c3'>知士回答.mp3</view>
+                <view class='f20 c3'>分享语音.mp3</view>
                 <view class='flex_start flex_items mt5'>
                     <view class='f18 c9 mr10'>{{currentTime}}</view>
                     <progress class='flex1' percent='{{percent}}' stroke-width="2" activeColor="#2889e2" backgroundColor="#edeaff"></progress>
-                    <view class='f18 c9 ml10'>{{duration}}</view>
+                    <view class='f18 c9 ml10'>{{details.audio_times ? details.audio_times : "00:00"}}</view>
                 </view>
             </view>
         </view>
@@ -32,7 +32,7 @@
             <view class='flex_end'>
                 <view class='flex_start flex_items' catchtap='detailEvent' data-types='like' data-index='{{index}}'>
                     <view class='f24 c9'>{{details.likeNum}}</view>
-                    <image class='zan-icon' src='/images/icon_3.png'></image>
+                    <image class='zan-icon' src='/images/{{details.zan == 0 ? "zan_icon" : "icon_3"}}.png'></image>
                 </view>
                 <view class='flex_start flex_items com-box'>
                     <view class='f24 c9'>{{details.comments}}</view>
