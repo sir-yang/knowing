@@ -41,7 +41,7 @@
         </view>
 
         <!-- 详情 -->
-        <view class='text-detail-box'>
+        <view wx:if="{{details.answer}}" class='text-detail-box'>
             <text>{{details.answer}}</text>
         </view>
 

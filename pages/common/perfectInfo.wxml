@@ -42,7 +42,7 @@
         <view class='input-box flex_start flex_items'>
             <label>在读学位</label>
             <picker bindchange="loginRegistEvent" data-types='education' value="{{educationIdx}}" range="{{educationList}}">
-                <input class='rt-ipt {{educationIdx == -1 ? "c9" : "c3"}}' type='text' name="education" value='{{educationIdx == -1 ? "请选择学位" : educationList[educationIdx]}}' disabled />
+                <input class='rt-ipt c3' type='text' name="education" value='{{educationIdx == -1 ? "" : educationList[educationIdx]}}' disabled placeholder-class='c9' placeholder="请选择学位" />
             </picker>
         </view>
 
@@ -79,7 +79,9 @@
         </view>
         <view class='input-box flex_start flex_items'>
             <label>最高学位</label>
-            <input class='rt-ipt' type='text' name="education" placeholder-class='c9' placeholder='请选择最高学位' />
+            <picker bindchange="loginRegistEvent" data-types='education' value="{{educationIdx}}" range="{{educationList}}">
+                <input class='rt-ipt c3' type='text' name="education" value='{{educationIdx == -1 ? "" : educationList[educationIdx]}}' placeholder-class='c9' disabled placeholder='请选择最高学位' />
+            </picker>
         </view>
 
         <button form-type='submit' class='modal-btn'>提交注册</button>
@@ -111,7 +113,9 @@
         </view>
         <view class='input-box flex_start flex_items'>
             <label>最高学位</label>
-            <input class='rt-ipt' type='text' name="education" placeholder-class='c9' placeholder='请选择最高学位' />
+            <picker bindchange="loginRegistEvent" data-types='education' value="{{educationIdx}}" range="{{educationList}}">
+                <input class='rt-ipt c3' type='text' name="education" value='{{educationIdx == -1 ? "" : educationList[educationIdx]}}' placeholder-class='c9' disabled placeholder='请选择最高学位' />
+            </picker>
         </view>
 
         <button form-type='submit' class='modal-btn'>提交注册</button>

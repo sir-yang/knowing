@@ -181,8 +181,8 @@ Page({
         }).then((res) => {
             wx.hideLoading();
             if (res.result === 'success') {
-                if (res.results.aAudio) {
-                    innerAudioContext.src = res.results.aAudio;
+                if (res.results.audio) {
+                    innerAudioContext.src = res.results.audio;
                 }
                 that.setData({
                     requestStatus: true,
