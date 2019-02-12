@@ -91,6 +91,13 @@ Page({
         })
     },
 
+    onUnload() {
+        let opt = this.state.options;
+        if (opt.hasOwnProperty('index')) {
+            getApp().globalData.enjoyUpdateCallback(opt.index);
+        }
+    },
+
     /**
      * 用户点击右上角分享
      */

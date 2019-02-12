@@ -37,7 +37,7 @@
         </view>
     </view>
 
-    <view wx:for="{{list}}" wx:key="" class='enjoy-item-box' bindtap='enjoyEvent' data-types='detail' data-id='{{item.id}}'>
+    <view wx:for="{{list}}" wx:key="" class='enjoy-item-box' bindtap='enjoyEvent' data-types='detail' data-index='{{index}}' data-id='{{item.id}}'>
         <view class='flex_start flex_items'>
             <image class='head-img flex_shrink' src='{{item.user.avatarUrl}}'></image>
             <view class='f28 c3 ml20 mr30 flex_shrink'>{{item.user.name}}</view>

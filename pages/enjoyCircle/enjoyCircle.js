@@ -54,24 +54,8 @@ Page({
                 common.requestGetCollege(that);
             };
         }
-        
-        // let userInfo = common.getStorage('userInfo');
-        // that.setData({
-        //     userInfo
-        // })
     },
 
-    onShow() {
-        this.getUserInfo()
-    },
-    getUserInfo() {
-        let that = this;
-        common.getPersonInfo().then((res) => {
-            that.setData({
-                userInfo: res
-            })
-        })
-    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
@@ -120,6 +104,14 @@ Page({
         })
     },
 
+    onShow() {
+        let that = this;
+        that.getUserInfo();
+        getApp().globalData.enjoyUpdateCallback = function (index) {
+            that.requestGetDetail(index);
+        };
+    },
+
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
@@ -132,6 +124,15 @@ Page({
         this.state.offset = 0;
         this.state.hasmore = true;
         this.requestGetList(0);
+    },
+
+    getUserInfo() {
+        let that = this;
+        common.getPersonInfo().then((res) => {
+            that.setData({
+                userInfo: res
+            })
+        })
     },
 
     /**
@@ -259,7 +260,7 @@ Page({
         } else if (dataset.types === 'detail') { //详情
             let id = dataset.id;
             wx.navigateTo({
-                url: '/pages/enjoyDetail/enjoyDetail?id=' + id
+                url: '/pages/enjoyDetail/enjoyDetail?id=' + id + '&index=' + dataset.index
             })
         } else if (dataset.types === 'like') { //点赞
             let index = dataset.index;
@@ -356,6 +357,31 @@ Page({
                 common.showClickModal(res.msg);
             }
         })
+    },
+
+    // 获取详情 更新
+    requestGetDetail(index) {
+        let that = this;
+        let list = that.data.list;
+        let url = 'api/share/getPage';
+        console.log(12,index);
+
+        if (list[index]) {
+            util.httpRequest(url, {
+                id: list[index].id
+            }).then((res) => {
+                if (res.result === 'success') {
+                    list[index].comments = res.results.comments;
+                    list[index].likeNum = res.results.likeNum;
+                    list[index].zan = res.results.zan;
+                    that.setData({
+                        list
+                    })
+                } else {
+                    common.showClickModal(res.msg);
+                }
+            })
+        }
     },
 
     // 点赞/取消点赞
