@@ -46,6 +46,7 @@ Page({
     },
 
     state: {
+        inviteId: '',
         hasmore: true,
         offset: 0, //从第几条数据开始查询
         limit: 10, //每页条数
@@ -58,6 +59,10 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+        this.state.options = options;
+        if (options.hasOwnProperty('inviteId')) {
+            this.state.inviteId = options.inviteId;
+        }
         // wx.showLoading({
         //     title: '请稍后...',
         //     mask: true
@@ -79,20 +84,21 @@ Page({
                 that.requestGetCate();
                 common.requestGetCollege(that);
             };
-        }   
-
-        // if (!that.state.pageOnShow) return;
-        // let userInfo = common.getStorage('userInfo'); 
+        }
     },
 
     // 界面显示执行
     indexShowLoad() {
         let that = this;
         common.getPersonInfo().then((userInfo) => {
+            let pathUrl = '/pages/launch/launch';
+            if (that.state.inviteId) {
+                pathUrl: '/pages/launch/launch?inviteId=' + that.state.inviteId
+            }
             if (userInfo) {
                 if (!userInfo.avatarUrl && !userInfo.nickName) {
                     wx.redirectTo({
-                        url: '/pages/launch/launch'
+                        url: pathUrl
                     })
                     return;
                 }
@@ -148,7 +154,7 @@ Page({
                 }
             } else {
                 wx.redirectTo({
-                    url: '/pages/launch/launch'
+                    url: pathUrl
                 })
             }
         });
@@ -190,7 +196,6 @@ Page({
     onShareAppMessage: function() {
 
     },
-
 
     // 事件处理
     questionAnswerEvent(event) {
@@ -309,10 +314,6 @@ Page({
                 searchVal: event.detail.value
             })
         } else if (dataset.types === 'search') { //搜索
-            // if (that.data.searchVal == "") {
-            //     common.showTimeToast('请输入搜索关键词');
-            //     return;
-            // }
             that.state.offset = 0;
             that.requestList(0);
         } else if (dataset.types === 'message') {

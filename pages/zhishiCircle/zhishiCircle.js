@@ -59,10 +59,6 @@ Page({
      */
     onPullDownRefresh: function() {
         this.state.isonPullDownRefresh = true;
-        wx.showLoading({
-            title: '加载中...',
-            mask: true
-        });
         this.state.offset = 0;
         this.state.hasmore = true;
         this.requestList(0);
@@ -75,20 +71,9 @@ Page({
         if (this.state.isonPullDownRefresh) return;
         if (!this.state.isOnReachBottom) return;
         if (!this.state.hasmore) return;
-        // wx.showLoading({
-        //     title: '',
-        //     mask: true
-        // });
         this.state.offset = this.state.offset + this.state.limit;
         this.requestList(this.state.offset);
         this.state.isOnReachBottom = false;
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function() {
-
     },
 
     // 点击事件

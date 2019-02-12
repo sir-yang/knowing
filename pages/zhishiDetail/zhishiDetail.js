@@ -55,6 +55,19 @@ Page({
         }
     },
 
+    onShow() {
+        if (!this.state.pageOnShow) return; 
+        let tabIndex = this.data.tabIndex;
+        this.state.offset = 0;
+        if (tabIndex == 0) {
+            this.requestGetShareList(0);
+        } else if (tabIndex == 1) {
+            this.requestGetCourses(0);
+        } else {
+            this.requestAnswerList(0);
+        }
+    },
+
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
@@ -208,7 +221,7 @@ Page({
             let list = this.data.list;
             let index = dataset.index;
             let data = {
-                id: this.state.options.id,
+                id: list[index].id,
                 status: list[index].zan == 1 ? 1 : 2
             }
             wx.showLoading({

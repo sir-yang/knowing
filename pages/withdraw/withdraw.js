@@ -27,20 +27,6 @@ Page({
         this.requestGetAccount();
     },
 
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function () {
-
-    },
-
     // 事件
     withdrawEvent(event) {
         let dataset = event.currentTarget.dataset;
@@ -85,14 +71,18 @@ Page({
             this.state.imgArr = [];
         }  else if (dataset.types === 'submit') {
             let vals = event.detail.value;
-            if (common.isNull(vals.money) || isNaN(vals.money)) {
+            if (!vals.money || vals.money == "" || isNaN(vals.money)) {
                 common.showTimeToast('请输入正确金额');
+                return false;
+            }
+            if (Number(vals.money) <= 0) {
+                common.showTimeToast('提现金额必须大于0');
                 return false;
             }
             vals.type = this.data.wattleType == 0 ? 1 : 2;
             let imgUrl = this.data.imgUrl;
             if (this.data.wattleType == 1) {
-                if (common.isNull(imgUrl)) {
+                if (!imgUrl || imgUrl == "") {
                     common.showTimeToast('请上传收款码');
                     return false;
                 }
@@ -132,10 +122,21 @@ Page({
     requestWithdraw(vals) {
         let that = this;
         let url = 'api/Account/deposit';
+        wx.showLoading({
+            title: '提交中...',
+            mask: true
+        })
         util.httpRequest(url, vals, 'POST').then((res) => {
             wx.hideLoading();
             if (res.result === 'success') {
-                
+                wx.showModal({
+                    title: '提示',
+                    content: res.msg,
+                    showCancel: false,
+                    success() {
+                        wx.navigateBack({})
+                    }
+                })
             } else {
                 common.showClickModal(res.msg);
             }

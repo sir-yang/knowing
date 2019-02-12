@@ -3,7 +3,7 @@
         <view class='withdraw-box'>
             <view class='flex_start flex_items'>
                 <view class='f30 c0 bold'>￥</view>
-                <input type='number' class='money flex1' name="money" value='{{moneyVal}}' placeholder-class='f30' placeholder='请输入提现金额' />
+                <input type='text' class='money flex1' name="money" value='{{moneyVal}}' placeholder-class='f30' placeholder='请输入提现金额' />
             </view>
             <view class='flex_between flex_items ptb30 bte9s'>
                 <view class='f26 c3'>账户余额：￥{{account.remainMoney}}</view>

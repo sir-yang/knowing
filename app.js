@@ -7,7 +7,7 @@ App({
     checkToken: false,
     onLaunch(_options) {
         this.checkToken = true;
-        wx.setStorageSync("serverurl", "http://shuzhi.loaderwang.cn/");
+        wx.setStorageSync("serverurl", "https://shuzhi.loaderwang.cn/");
         if (wx.getStorageSync('loadStatus') != false) {//首次进入
             wx.setStorageSync("loadStatus", true); 
         }

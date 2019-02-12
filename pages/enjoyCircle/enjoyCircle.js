@@ -63,7 +63,7 @@ Page({
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function () {
+    onReady: function() {
         let that = this;
         // 播放
         innerAudioContext.onPlay(() => {
@@ -108,6 +108,12 @@ Page({
         })
     },
 
+    onShow() {
+        if (!this.state.pageOnShow) return;
+        this.state.offset = 0;
+        this.requestGetList(0);
+    },
+
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
@@ -136,13 +142,6 @@ Page({
         this.state.offset = this.state.offset + this.state.limit;
         this.requestGetList(this.state.offset);
         this.state.isOnReachBottom = false;
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function() {
-
     },
 
     // 事件
@@ -178,7 +177,7 @@ Page({
             }
             this.state.offset = 0;
             this.requestGetList(0);
-        } else if (dataset.types === 'school') {//学校切换
+        } else if (dataset.types === 'school') { //学校切换
             this.setData({
                 schoolTab: event.detail.value
             })
@@ -268,7 +267,7 @@ Page({
                     innerAudioContext.pause();
                 } else {
                     innerAudioContext.play();
-                } 
+                }
             } else {
                 innerAudioContext.src = list[index].audio;
                 innerAudioContext.play();
@@ -390,7 +389,7 @@ Page({
             wx.hideLoading();
             if (res.result === 'success') {
 
-            } else { 
+            } else {
                 common.showClickModal(res.msg);
             }
         })

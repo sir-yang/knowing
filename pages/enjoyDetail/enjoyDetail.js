@@ -91,11 +91,11 @@ Page({
         })
     },
 
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function() {
-
+    // 页面卸载
+    onUnload() {
+        if (this.data.playing) {
+            innerAudioContext.stop();
+        }
     },
 
     // 事件
@@ -151,7 +151,7 @@ Page({
                             that.setData({
                                 iptFocus: true
                             })
-                        }                        
+                        }
                     } else {
                         // 删除评论
                         that.requestDelComment(dataset);

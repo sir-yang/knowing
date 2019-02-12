@@ -71,7 +71,7 @@
                         <view class='flex_end'>
                             <view class='flex_start flex_items' catchtap='detailEvent' data-types='like' data-index='{{index}}'>
                                 <view class='f24 c9'>{{item.likeNum}}</view>
-                                <image class='zan-icon' src='/images/icon_3.png'></image>
+                                <image class='zan-icon' src='/images/{{item.zan == 0 ? "zan_icon" : "icon_3"}}.png'></image>
                             </view>
                             <view class='flex_start flex_items com-box'>
                                 <view class='f24 c9'>{{item.comments}}</view>
