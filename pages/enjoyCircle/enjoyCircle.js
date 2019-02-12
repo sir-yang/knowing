@@ -54,12 +54,24 @@ Page({
                 common.requestGetCollege(that);
             };
         }
-        let userInfo = common.getStorage('userInfo');
-        that.setData({
-            userInfo
-        })
+        
+        // let userInfo = common.getStorage('userInfo');
+        // that.setData({
+        //     userInfo
+        // })
     },
 
+    onShow() {
+        this.getUserInfo()
+    },
+    getUserInfo() {
+        let that = this;
+        common.getPersonInfo().then((res) => {
+            that.setData({
+                userInfo: res
+            })
+        })
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
@@ -108,12 +120,6 @@ Page({
         })
     },
 
-    onShow() {
-        if (!this.state.pageOnShow) return;
-        this.state.offset = 0;
-        this.requestGetList(0);
-    },
-
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
@@ -142,6 +148,13 @@ Page({
         this.state.offset = this.state.offset + this.state.limit;
         this.requestGetList(this.state.offset);
         this.state.isOnReachBottom = false;
+    },
+
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function() {
+
     },
 
     // 事件

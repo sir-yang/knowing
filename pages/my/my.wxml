@@ -4,7 +4,8 @@
         <view class='flex_start'>
             <image class='head-img flex_shrink' src='{{userInfo.avatarUrl}}'></image>
             <view>
-                <view class='f28 c3 mt5'>{{userInfo.name}}</view>
+                <view wx:if='{{userInfo.status <=2 }}' class='f28 c3 mt5'>{{userInfo.nickName}}</view>
+                <view wx:else class='f28 c3 mt5'>{{userInfo.name}}</view>
                 <view wx:if="{{userInfo.status == 1}}" class='f24 c6 mt10'>求知者</view>
                 <view wx:elif="{{userInfo.status == 2}}" class='f24 c6 mt10'>知了</view>
                 <view wx:elif="{{userInfo.status == 3}}" class='f24 c6 mt10'>课程知士</view>
@@ -54,7 +55,7 @@
     <view class='flex_warp mt10 pb10'>
         <view class='features-item-box flex_column flex_center flex_items' bindtap='myEvent' data-types='wenda'>
             <image src='/images/my_icon_1.png'></image>
-            <view class='text {{userInfo.ask_msg == 0 ? "msg" : ""}}'>我的问答</view>
+            <view class='text {{userInfo.ask_msg == 1 ? "msg" : ""}}'>我的问答</view>
         </view>
         <!-- <view class='features-item-box flex_column flex_center flex_items'>
             <image src='/images/my_icon_2.png'></image>
@@ -71,6 +72,10 @@
         <view class='features-item-box flex_column flex_center flex_items' bindtap='myEvent' data-types='apply'>
             <image src='/images/my_icon_5.png'></image>
             <view class='text'>申请</view>
+        </view>
+        <view class='features-item-box flex_column flex_center flex_items' bindtap='myEvent' data-types='invite'>
+            <image src='/images/my_icon_7.png'></image>
+            <view class='text'>邀请好友</view>
         </view>
         <view class='features-item-box flex_column flex_center flex_items' bindtap='myEvent' data-types='set'>
             <image src='/images/my_icon_6.png'></image>

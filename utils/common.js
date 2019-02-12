@@ -602,13 +602,13 @@ function requestRegist(that, vals) {
     util.httpRequest(url, vals, 'POST').then((res) => {
         wx.hideLoading();
         if (res.result === 'success') {
-            requestGetImgSend(that);
+            let showPerfect = that.data.showPerfect;
+            showPerfect[0] = 'show';
+            showPerfect[that.data.identity] = 'show';
             that.setData({
                 showRegist: 'hide',
-                showLogin: 'show',
-                phoneVal: '',
-                passwordVal: '',
-                codeVal: '',
+                loginRegistTk: 'show',
+                showPerfect
             })
         } else {
             showClickModal(res.msg);
@@ -623,9 +623,12 @@ function requestForGet(that, vals) {
         title: '提交中...',
         mask: true
     })
+    let userInfo = getInfo('userInfo');
+    vals.id = userInfo.id;
     util.httpRequest(url, vals, 'POST').then((res) => {
         wx.hideLoading();
         if (res.result === 'success') {
+            requestGetImgSend(that);
             that.setData({
                 showForget: 'hide',
                 showLogin: 'show',
@@ -663,8 +666,11 @@ function requestSavePerfect(that, vals) {
     util.httpRequest(url, vals, 'POST').then((res) => {
         wx.hideLoading();
         if (res.result === 'success') {
-            // 重新获取列表
-            that.requestList(0);
+            // 重新获取用户信息
+            getPersonInfo().then(() => {
+                // 重新获取列表
+                that.requestList(0);
+            })
 
             let showPerfect = that.data.showPerfect;
             showPerfect[0] = 'hide';
@@ -697,7 +703,8 @@ function requestGetMoney(that) {
     util.httpRequest(url).then((res) => {
         if (res.result === 'success') {
             that.setData({
-                moneyData: res.results
+                moneyData: res.results.money,
+                getMoney: res.results
             })
         } else {
             showClickModal(res.msg);

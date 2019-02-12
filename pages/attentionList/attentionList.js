@@ -41,6 +41,20 @@ Page({
     },
 
     /**
+     * 生命周期函数--监听页面初次渲染完成
+     */
+    onReady: function() {
+
+    },
+
+    /**
+     * 生命周期函数--监听页面显示
+     */
+    onShow: function() {
+
+    },
+
+    /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
@@ -73,11 +87,15 @@ Page({
     // 获取关注列表
     requestGetList(offset) {
         let that = this;
+        let op = that.state.options;
         let url = 'api/SelfCenter/getInfo';
         let data = {
             offset,
             limit: that.state.limit,
-            status: that.state.options.status
+            status: op.status
+        }
+        if (op.hasOwnProperty("uid")){
+            data["uid"] = op.uid;
         }
         util.httpRequest(url, data).then((res) => {
             wx.hideLoading();
@@ -105,11 +123,14 @@ Page({
             id: list[index].id,
             status: 2
         }
+
         wx.showModal({
             title: '提示',
-            content: '确定取消关注？',
-            success(suc) {
-                if (suc.confirm) {
+            content: "确定取消关注",
+            showCancel: true,
+            success(_res) {
+                console.log(_res)
+                if (_res.confirm) {
                     wx.showLoading({
                         title: '',
                         mask: true
@@ -127,6 +148,6 @@ Page({
                     })
                 }
             }
-        })
+        });
     }
 })

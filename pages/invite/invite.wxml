@@ -2,7 +2,7 @@
     <view class='invite-top'>
         <image src='/images/invite_top_bg.png'></image>
         <view class='tit'>知享券</view>
-        <view class='text'>孰知分享，享你所享</view>
+        <view class='text'>孰知分享，享你所想</view>
     </view>
 
     <view class='f30 c6 txt_center'>分享送给好友一张知享券</view>

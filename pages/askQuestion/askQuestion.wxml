@@ -21,7 +21,7 @@
     </view>
 
     <view class='onlookers-money-box'>
-        <view class='tit'>设置围观金额</view>
+        <view class='tit'>选择提问金额</view>
         <view class='flex_warp'>
             <view wx:for="{{moneyData}}" wx:key="" class='onlookers-money-item {{moneyIndex == index ? "on" : ""}}' bindtap='askQuestionEvent' data-types='money' data-index='{{index}}'>
                 <view>{{item}}元</view>

@@ -71,8 +71,8 @@ Page({
             this.state.imgArr = [];
         }  else if (dataset.types === 'submit') {
             let vals = event.detail.value;
-            if (!vals.money || vals.money == "" || isNaN(vals.money)) {
-                common.showTimeToast('请输入正确金额');
+            if (!vals.money || vals.money == "") {
+                common.showTimeToast('请输入提现金额');
                 return false;
             }
             if (Number(vals.money) <= 0) {
@@ -120,27 +120,32 @@ Page({
 
     // 提现
     requestWithdraw(vals) {
-        let that = this;
-        let url = 'api/Account/deposit';
-        wx.showLoading({
-            title: '提交中...',
-            mask: true
-        })
-        util.httpRequest(url, vals, 'POST').then((res) => {
-            wx.hideLoading();
-            if (res.result === 'success') {
-                wx.showModal({
-                    title: '提示',
-                    content: res.msg,
-                    showCancel: false,
-                    success() {
-                        wx.navigateBack({})
-                    }
-                })
-            } else {
-                common.showClickModal(res.msg);
+        wx.showModal({
+            title: '提示',
+            content: "确定提现",
+            showCancel: true,
+            success(_res) {
+                console.log(_res)
+                if (_res.confirm) {
+                    let url = 'api/Account/deposit';
+                    util.httpRequest(url, vals, 'POST').then((res) => {
+                        wx.hideLoading();
+                        if (res.result === 'success') {
+                            wx.showModal({
+                                title: '提示',
+                                content: res.msg,
+                                showCancel: false,
+                                success(_res) {
+                                    wx.navigateBack({})
+                                }
+                            });
+                        } else {
+                            common.showClickModal(res.msg);
+                        }
+                    })
+                }
             }
-        })
+        });
     }
 
 })

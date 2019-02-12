@@ -17,7 +17,7 @@
             </view>
         </view>
 
-        <view class='flex_start mtb30'>
+        <view wx:if='{{details.status == 3 || details.status == 5}}' class='flex_start mtb30'>
             <image class='detail-head' src='{{details.answers.avatarUrl}}'></image>
             <view class='flex1'>
                 <view class='flex_between'>
@@ -50,4 +50,12 @@
         </view>
 
     </view>
+
+    <view class='footer-tab-box'>
+        <view class='flex_start'>
+            <view bindtap='btn1' class='footer-left-btn'>放弃回答</view>
+            <view bindtap='btn2' class='submit-btn'>继续回答</view>
+        </view>
+    </view>
+
 </view>

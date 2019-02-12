@@ -1,8 +1,8 @@
 <view wx:if="{{requestStatus}}" class='p20'>
     <view class='enjoy-item-box'>
         <view class='flex_start flex_items'>
-            <image class='head-img' src='{{details.user.avatarUrl}}'></image>
-            <view class='f28 c3 ml20 mr30'>{{details.user.name ? details.user.name : details.user.nickName}}</view>
+            <image class='head-img flex_shrink' src='{{details.user.avatarUrl}}'></image>
+            <view class='f28 c3 ml20 mr30 flex_shrink'>{{details.user.name ? details.user.name : details.user.nickName}}</view>
             <view class='f24 c6'>{{details.user.keyWords}}</view>
             <!-- 分享论坛 -->
             <view wx:if="{{typeIndex == 1}}" class='report' catchtap='enjoyEvent' data-types='report' data-index='{{index}}'>举报</view>

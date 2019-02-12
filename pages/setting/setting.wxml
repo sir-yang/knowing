@@ -12,10 +12,10 @@
             <view>关于孰知</view>
             <image class='more-right-icon' src='/images/more_right_icon.png'></image>
         </view>
-        <view class='flex_between flex_items' bindtap='settingEvent' data-types='invite'>
+        <!-- <view class='flex_between flex_items' bindtap='settingEvent' data-types='invite'>
             <view>邀请好友</view>
             <image class='more-right-icon' src='/images/more_right_icon.png'></image>
-        </view>
+        </view> -->
         <view class='flex_between flex_items' bindtap='settingEvent' data-types='sign'>
             <view>退出登录</view>
             <image class='more-right-icon' src='/images/more_right_icon.png'></image>

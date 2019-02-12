@@ -31,6 +31,6 @@
             </view>
         </view>
 
-        <button form-type='submit' class='save-info-btn'>保存</button>
+        <button form-type='submit' class='save-info-btn'>提交</button>
     </form>
 </view>

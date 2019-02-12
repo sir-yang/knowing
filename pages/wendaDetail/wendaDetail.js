@@ -23,7 +23,7 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
         let that = this;
         that.state.options = options;
         wx.showLoading({
@@ -35,17 +35,54 @@ Page({
         if (token) {
             that.requestGetDetail();
         } else {
-            getApp().globalData.tokenUpdated = function () {
+            getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
                 that.requestGetDetail();
             };
         }
     },
+    /**
+     * 放弃回答
+     */
+    btn1() {
+        let url = "api/answer/refuse";
+        wx.showLoading({
+            title: '',
+            mask: true
+        })
+        let val = {
+            id: this.data.details.id
+        }
+        util.httpRequest(url, val, "POST").then((res) => {
+            wx.hideLoading();
+            if (res.result === "success") {
+                wx.showModal({
+                    title: '提示',
+                    content: res.msg,
+                    showCancel: false,
+                    success(_res) {
+                        wx.switchTab({
+                            url: '/pages/index/index',
+                        })
+                    }
+                });
+            } else {
+                common.showClickModal(res.msg)
+            }
+        })
+    },
+
+    /**
+     * 继续回答
+     */
+    btn2() {
+        wx.navigateBack({})
+    },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function () {
+    onReady: function() {
         let that = this;
         // 播放
         innerAudioContext.onPlay(() => {

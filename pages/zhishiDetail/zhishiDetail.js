@@ -46,26 +46,23 @@ Page({
         let that = this;
         let token = common.getAccessToken();
         if (token) {
+            that.getUserInfo();
             that.requestGetDetail(options);
         } else {
             getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
+                that.getUserInfo();
                 that.requestGetDetail(options);
             };
         }
     },
-
-    onShow() {
-        if (!this.state.pageOnShow) return; 
-        let tabIndex = this.data.tabIndex;
-        this.state.offset = 0;
-        if (tabIndex == 0) {
-            this.requestGetShareList(0);
-        } else if (tabIndex == 1) {
-            this.requestGetCourses(0);
-        } else {
-            this.requestAnswerList(0);
-        }
+    getUserInfo() {
+        let that = this;
+        common.getPersonInfo().then((res) => {
+            that.setData({
+                userInfo: res
+            })
+        })
     },
 
     /**
@@ -82,9 +79,9 @@ Page({
         if (this.data.tabIndex == 0) {
             this.requestGetShareList(0);
         } else if (this.data.tabIndex == 1) {
-            this.requestGetCourses(0);
-        } else {
             this.requestAnswerList(0);
+        } else {
+            this.requestGetCourses(0);
         }
     },
 
@@ -103,9 +100,9 @@ Page({
         if (this.data.tabIndex == 0) {
             this.requestGetShareList(0);
         } else if (this.data.tabIndex == 1) {
-            this.requestGetCourses(0);
-        } else {
             this.requestAnswerList(0);
+        } else {
+            this.requestGetCourses(0);
         }
         this.state.isOnReachBottom = false;
     },
@@ -127,17 +124,25 @@ Page({
             if (dataset.index == 0) {
                 this.requestGetShareList(0);
             } else if (dataset.index == 1) {
-                this.requestGetCourses(0);
-            } else {
                 this.requestAnswerList(0);
+            } else {
+                this.requestGetCourses(0);
             }
         } else if (dataset.types === 'attention') { //关注
             this.requestAttention();
         } else if (dataset.types === 'letters') { //私信
-            wx.navigateTo({
-                url: '/pages/privateMsgDetail/privateMsgDetail?uid=' + this.state.options.id
-            })
+            if (Number(this.data.details.attention) === 0) {
+                wx.navigateTo({
+                    url: '/pages/privateMsgDetail/privateMsgDetail?uid=' + this.state.options.id
+                })
+            } else {
+                common.showClickModal("关注后才能发起私信")
+            }
         } else if (dataset.types === 'showEvaluate') { //显示评价框
+            if (Number(this.data.userInfo.id) === (this.data.details.id)) {
+                common.showTimeToast('不能评论自己');
+                return false;
+            }
             let details = this.data.details;
             if (details.valuation == 0) return;
             this.setData({
@@ -218,6 +223,10 @@ Page({
                 url: '/pages/askQuestion/askQuestion'
             })
         } else if (dataset.types === 'like') { //点赞
+            if (Number(this.data.userInfo.id) === (this.data.details.id)) {
+                common.showTimeToast('不能给自己点赞');
+                return false;
+            }
             let list = this.data.list;
             let index = dataset.index;
             let data = {
@@ -261,7 +270,22 @@ Page({
             })
         }
     },
-
+    /**
+     * 跳转粉丝列表
+     */
+    fensi() {
+        wx.navigateTo({
+            url: '/pages/attentionList/attentionList?status=1&uid=' + this.data.details.id,
+        })
+    },
+    /**
+     * 跳转关注列表
+     */
+    guanzhu() {
+        wx.navigateTo({
+            url: '/pages/attentionList/attentionList?status=2&uid=' + this.data.details.id,
+        })
+    },
     // 授权判断
     getIsAuth() {
         let that = this;

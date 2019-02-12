@@ -15,7 +15,7 @@
                 <image class='flex_shrink' bindtap='publishEvent' data-types='play' src='/images/audio_icon.png'></image>
                 <view class='flex1'>
                     <view class='flex_between flex_items mb10'>
-                        <view class='f20 c3'>知士回答.mp3</view>
+                        <view class='f20 c3'>分享音频</view>
                         <view class='f20 color-red' catchtap='publishEvent' data-types='delAudio'>删除</view>
                     </view>
                     <view class='flex_start flex_items'>
@@ -71,10 +71,10 @@
         </form>
     </view>
 </view>
-
-<view class='tankuang {{tutorTk}}'></view>
+<view style='width:100%;height:300rpx' class='{{tutorTk}}'></view>
+<view class='tankuang {{tutorTk}}' bindtap='publishEvent' data-types='closeTk'></view>
 <view class='checkbox-box {{tutorTk}}'>
-    <view class='closeTk' bindtap='publishEvent' data-types='closeTk'>X</view>
+    <!-- <view class='closeTk' bindtap='publishEvent' data-types='closeTk'>X</view> -->
     <view class='checkbox-content-box'>
         <view class='flex_warp'>
             <view class='flex_start flex_items' wx:for="{{checkList}}" wx:key="" bindtap='publishEvent' data-types='tutor' data-index='{{index}}'>

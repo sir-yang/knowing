@@ -292,8 +292,13 @@ Page({
             vals.wx_form_id = event.detail.formId;
             that.requestSubmit(vals);
         } else if (dataset.types === 'moneyIpt') { //监听输入金额
+            let m = event.detail.value
+            if (m > this.data.getMoney.around_money) {
+                common.showClickModal("围观金额不能大于" + this.data.getMoney.around_money);
+                m = this.data.getMoney.around_money
+            }
             that.setData({
-                moneyVal: event.detail.value
+                moneyVal: m
             })
         } else if (dataset.types === 'recorder') { //开始/停止录音
             if (that.data.status) { //停止录音
@@ -433,6 +438,8 @@ Page({
                                 wx.navigateTo({
                                     url: '/pages/wendaDetail/wendaDetail?id=' + id
                                 })
+                            } else {
+                                wx.navigateBack({})
                             }
                         }
                     })

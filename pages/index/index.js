@@ -46,7 +46,6 @@ Page({
     },
 
     state: {
-        inviteId: '',
         hasmore: true,
         offset: 0, //从第几条数据开始查询
         limit: 10, //每页条数
@@ -59,10 +58,6 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        this.state.options = options;
-        if (options.hasOwnProperty('inviteId')) {
-            this.state.inviteId = options.inviteId;
-        }
         // wx.showLoading({
         //     title: '请稍后...',
         //     mask: true
@@ -79,26 +74,25 @@ Page({
             that.requestGetCate();
             common.requestGetCollege(that);
         } else {
-            getApp().globalData.tokenUpdated = function () {
+            getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
                 that.requestGetCate();
                 common.requestGetCollege(that);
             };
         }
+
+        // if (!that.state.pageOnShow) return;
+        // let userInfo = common.getStorage('userInfo'); 
     },
 
     // 界面显示执行
     indexShowLoad() {
         let that = this;
         common.getPersonInfo().then((userInfo) => {
-            let pathUrl = '/pages/launch/launch';
-            if (that.state.inviteId) {
-                pathUrl: '/pages/launch/launch?inviteId=' + that.state.inviteId
-            }
             if (userInfo) {
                 if (!userInfo.avatarUrl && !userInfo.nickName) {
                     wx.redirectTo({
-                        url: pathUrl
+                        url: '/pages/launch/launch'
                     })
                     return;
                 }
@@ -112,7 +106,7 @@ Page({
                 let showLogin = that.data.showLogin;
                 let showPerfect = that.data.showPerfect;
 
-                if (userInfo.statusId == 0) {//未登录
+                if (userInfo.statusId == 0) { //未登录
                     loginRegistTk = 'show';
                     showLogin = 'show';
                     // 隐藏底部导航
@@ -154,7 +148,7 @@ Page({
                 }
             } else {
                 wx.redirectTo({
-                    url: pathUrl
+                    url: '/pages/launch/launch'
                 })
             }
         });
@@ -197,6 +191,7 @@ Page({
 
     },
 
+
     // 事件处理
     questionAnswerEvent(event) {
         let that = this;
@@ -210,7 +205,7 @@ Page({
             })
             this.state.offset = 0;
             this.requestList(0);
-        } else if (dataset.types === 'school') {//学校切换
+        } else if (dataset.types === 'school') { //学校切换
             that.setData({
                 schoolTab: event.detail.value
             })
@@ -289,9 +284,19 @@ Page({
         } else if (dataset.types === 'reply') { //去回答
             let index = dataset.index;
             if (list[index].status == 1) {
-                wx.navigateTo({
-                    url: '/pages/reply/reply?id=' + list[index].id
-                })
+                wx.showModal({
+                    title: '提示',
+                    content: "确定回答",
+                    showCancel: true,
+                    success(_res) {
+                        console.log(_res)
+                        if (_res.confirm) {
+                            wx.navigateTo({
+                                url: '/pages/reply/reply?id=' + list[index].id
+                            })
+                        }
+                    }
+                });
             } else if (list[index].status == 2) {
                 common.showClickModal('问题已被他人锁定');
             } else {
@@ -314,6 +319,10 @@ Page({
                 searchVal: event.detail.value
             })
         } else if (dataset.types === 'search') { //搜索
+            // if (that.data.searchVal == "") {
+            //     common.showTimeToast('请输入搜索关键词');
+            //     return;
+            // }
             that.state.offset = 0;
             that.requestList(0);
         } else if (dataset.types === 'message') {
@@ -422,7 +431,7 @@ Page({
             common.showClickModal('请先添加问答分类');
             return false;
         }
-        
+
         let url = 'api/Answer/getPage';
         let data = {
             offset,

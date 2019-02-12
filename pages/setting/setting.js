@@ -40,22 +40,31 @@ Page({
 
     // 调用登出
     requestSignOut() {
-        let that = this;
-        let url = 'api/Login/loginOut';
-        util.httpRequest(url).then((res) => {
-            if (res.result === 'success') {
-                wx.showToast({
-                    title: res.msg,
-                    icon: 'none',
-                    success() {
-                        wx.switchTab({
-                            url: '/pages/index/index'
-                        })
-                    }
-                })
-            } else {
-                common.showClickModal(res.msg);
+        wx.showModal({
+            title: '提示',
+            content: "确定退出登录",
+            showCancel: true,
+            success(_res) {
+                console.log(_res)
+                if (_res.confirm) {
+                    let url = 'api/Login/loginOut';
+                    util.httpRequest(url).then((res) => {
+                        if (res.result === 'success') {
+                            wx.showToast({
+                                title: res.msg,
+                                icon: 'none',
+                                success() {
+                                    wx.switchTab({
+                                        url: '/pages/index/index'
+                                    })
+                                }
+                            })
+                        } else {
+                            common.showClickModal(res.msg);
+                        }
+                    })
+                }
             }
-        })
+        });
     }
 })

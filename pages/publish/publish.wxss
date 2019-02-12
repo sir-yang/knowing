@@ -74,15 +74,15 @@
 
 .checkbox-box {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 650rpx;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     padding: 30rpx;
-    border-radius: 10rpx;
     background: #fff;
     z-index: 500;
     box-sizing: border-box;
+    max-height: 500rpx;
+    overflow-y: auto;
 }
 
 .checkbox-box .closeTk {

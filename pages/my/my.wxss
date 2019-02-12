@@ -79,10 +79,10 @@ page {
     display: block;
     content: '';
     position: absolute;
-    right: -10rpx;
+    right: -12rpx;
     top: 15rpx;
-    width: 6rpx;
-    height: 6rpx;
+    width: 10rpx;
+    height: 10rpx;
     background: #fc2502;
     border-radius: 50%;
 }

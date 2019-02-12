@@ -91,11 +91,11 @@ Page({
         })
     },
 
-    // 页面卸载
-    onUnload() {
-        if (this.data.playing) {
-            innerAudioContext.stop();
-        }
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function() {
+
     },
 
     // 事件
@@ -151,7 +151,7 @@ Page({
                             that.setData({
                                 iptFocus: true
                             })
-                        }
+                        }                        
                     } else {
                         // 删除评论
                         that.requestDelComment(dataset);
@@ -164,6 +164,10 @@ Page({
                 contentVal: event.detail.value
             })
         } else if (dataset.types === 'submit') {
+            if (Number(common.getStorage("userInfo").id) === (this.data.details.uid)){
+                common.showTimeToast('不能评论自己');
+                return false;
+            }
             if (common.isNull(this.data.contentVal)) {
                 common.showTimeToast('请输入评论内容');
                 return false;

@@ -67,6 +67,8 @@ Page({
             url = '/pages/setting/setting';
         } else if (dataset.types === 'wenda') {//问答
             url = '/pages/wallet/wallet';
+        } else if (dataset.types === "invite") {
+            url = "/pages/invite/invite"
         }
 
         wx.navigateTo({

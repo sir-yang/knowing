@@ -7,32 +7,34 @@
                 <view>
                     <view class='flex_start flex_items mb10'>
                         <view class='f28 c3'>{{details.name}}</view>
-                        <view wx:if="{{details.status == 7 || details.status == 8}}" class='attention-btn {{details.attention == 1 ? "cmain" : "c9"}}' bindtap='detailEvent' data-types='attention'>{{details.attention == 1 ? "+关注" : "取消关注"}}</view>
+                        <block wx:if='{{userInfo.id !== details.id}}'>
+                            <view wx:if="{{details.status == 7 || details.status == 8}}" class='attention-btn {{details.attention == 1 ? "cmain" : "c9"}}' bindtap='detailEvent' data-types='attention'>{{details.attention == 1 ? "+关注" : "取消关注"}}</view>
+                        </block>
                     </view>
                     <view class='flex_start flex_items'>
-                        <view class='f24 c6'>知士评分</view>
-                        <view class='flex_start flex_items' bindtap='detailEvent' data-types='showEvaluate'>
+                        <view class='f24 c6'>知士</view>
+                        <view class='flex_start flex_items hide' bindtap='detailEvent' data-types='showEvaluate'>
                             <image class='score-icon' src='/images/score_icon.png'></image>
                             <view class='f24 color-red'>{{details.score}}</view>
                         </view>
                     </view>
                 </view>
             </view>
-            <view wx:if="{{details.attention != 1}}" class='flex_start flex_items self_start' bindtap='detailEvent' data-types='letters'>
+            <view wx:if='{{userInfo.id !== details.id}}' class='flex_start flex_items self_start' bindtap='detailEvent' data-types='letters'>
                 <image class='message-icon' src='/images/message_icon.png'></image>
                 <view class='f24 cmain'>私信</view>
             </view>
         </view>
         <view class='bte9s mt20 pt20'>
             <view class='flex_center'>
-                <view>
+                <view bindtap='fensi'>
                     <view class='f24 c6 txt_center'>{{details.fansNum}}</view>
                     <view class='flex_start flex_items'>
                         <image class='fan-icon' src='/images/icon_1.png'></image>
                         <view class='f24 c6'>粉丝</view>
                     </view>
                 </view>
-                <view class='attention-box'>
+                <view class='attention-box' bindtap='guanzhu'>
                     <view class='f24 c6 txt_center'>{{details.attentionNum}}</view>
                     <view class='flex_start flex_items'>
                         <image class='attention-icon' src='/images/icon_2.png'></image>
@@ -53,8 +55,8 @@
     <view class='share-course-reply-box'>
         <view class='types-tab-box flex_start flex_items'>
             <view class='{{tabIndex == 0 ? "on" : ""}}' bindtap='detailEvent' data-types='tab' data-index='0'>TA的分享</view>
-            <view class='{{tabIndex == 1 ? "on" : ""}}' bindtap='detailEvent' data-types='tab' data-index='1'>TA的课程</view>
-            <view class='{{tabIndex == 2 ? "on" : ""}}' bindtap='detailEvent' data-types='tab' data-index='2'>TA的回答</view>
+            <view class='{{tabIndex == 1 ? "on" : ""}}' bindtap='detailEvent' data-types='tab' data-index='1'>TA的回答</view>
+            <view class='{{tabIndex == 2 ? "on" : ""}}' bindtap='detailEvent' data-types='tab' data-index='2'>TA的课程</view>
         </view>
 
         <view class='share-course-reply-row'>
@@ -71,7 +73,8 @@
                         <view class='flex_end'>
                             <view class='flex_start flex_items' catchtap='detailEvent' data-types='like' data-index='{{index}}'>
                                 <view class='f24 c9'>{{item.likeNum}}</view>
-                                <image class='zan-icon' src='/images/{{item.zan == 0 ? "zan_icon" : "icon_3"}}.png'></image>
+                                <image wx:if='{{item.zan == 1}}' class='zan-icon' src='/images/icon_3.png'></image>
+                                <image wx:if='{{item.zan == 0}}' class='zan-icon' src='/images/zan_icon.png'></image>
                             </view>
                             <view class='flex_start flex_items com-box'>
                                 <view class='f24 c9'>{{item.comments}}</view>
@@ -85,7 +88,7 @@
             </block>
 
             <!-- ta的课程 -->
-            <block wx:elif="{{tabIndex == 1}}">
+            <block wx:elif="{{tabIndex == 2}}">
                 <view wx:for="{{list}}" wx:key="" bindtap='detailEvent' data-types='courses' data-id='{{item.id}}' class='course-item-box flex_start'>
                     <image class='flex_shrink' src='{{item.logo}}'></image>
                     <view class='flex1 flex_between flex_column'>
@@ -98,7 +101,7 @@
             </block>
 
             <!-- ta的回答 -->
-            <block wx:elif="{{tabIndex == 2}}">
+            <block wx:elif="{{tabIndex == 1}}">
                 <view wx:for="{{list}}" wx:key="" class='reply-item-box'>
                     <view class='flex_start flex_items'>
                         <view class='flex1 flex_start flex_items'>
@@ -120,10 +123,11 @@
                         </view>
                     </view>
                 </view>
-                <view wx:if="{{list.length === 0}}" class='no-reply-box'>
+                <view wx:if="{{list.length === 0}}" class='null-row'>暂无数据</view>
+                <!-- <view wx:if="{{list.length === 0}}" class='no-reply-box'>
                     <view class='f28 c9 txt_center'>导师思考中~ 你也有 新的疑问？快来提问吧！</view>
                     <view class='ask-question-btn' bindtap='detailEvent' data-types='question'>+我要提问</view>
-                </view>
+                </view> -->
             </block>
         </view>
     </view>

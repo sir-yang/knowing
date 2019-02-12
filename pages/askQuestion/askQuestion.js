@@ -82,7 +82,7 @@ Page({
             let data = that.getSubmitVal();
             console.log(data);
             if (!data) return;
-            
+
             data.typeTab = that.data.typeTab;
             data.imgArr = that.data.imgList;
             data.moneyIndex = that.data.moneyIndex;
@@ -103,8 +103,13 @@ Page({
             vals.wx_form_id = event.detail.formId;
             this.requestSubmit(vals);
         } else if (dataset.types === 'moneyIpt') {
+            let m = event.detail.value
+            if (m > this.data.getMoney.ask_money) {
+                common.showClickModal("提问金额不能大于" + this.data.getMoney.ask_money);
+                m = this.data.getMoney.ask_money
+            }
             that.setData({
-                moneyVal: event.detail.value
+                moneyVal: m
             })
         }
     },
@@ -115,7 +120,6 @@ Page({
             moneyIndex: -1
         })
     },
-
     // 获取数据
     getSubmitVal() {
         let that = this;
@@ -162,7 +166,9 @@ Page({
                 })
 
                 // 调用缓存
-                common.requestGetCache(that, {type: 1}, (da) => {
+                common.requestGetCache(that, {
+                    type: 1
+                }, (da) => {
                     console.log(da);
                     if (da) {
                         if (da.status == 1) {
@@ -197,20 +203,31 @@ Page({
         util.httpRequest(url, vals, 'POST').then((res) => {
             wx.hideLoading();
             if (res.result === 'success') {
-                common.requestPay(res.results, (status, res_1) => {
-                    if (status == 'success') {
-                        wx.showModal({
-                            title: '提示',
-                            content: '支付成功',
-                            showCancel: false,
-                            success() {
-                                wx.navigateBack({ })
-                            }
-                        })
-                    } else {
-                        common.showClickModal('支付失败');
-                    }
-                })
+                if (Number(vals.askMoney) > 0) {
+                    common.requestPay(res.results, (status, res_1) => {
+                        if (status == 'success') {
+                            wx.showModal({
+                                title: '提示',
+                                content: '支付成功',
+                                showCancel: false,
+                                success() {
+                                    wx.navigateBack({})
+                                }
+                            })
+                        } else {
+                            common.showClickModal('支付失败');
+                        }
+                    })
+                } else {
+                    wx.showModal({
+                        title: '提示',
+                        content: '提问成功',
+                        showCancel: false,
+                        success() {
+                            wx.navigateBack({})
+                        }
+                    })
+                }
             } else {
                 common.showClickModal(res.msg);
             }
