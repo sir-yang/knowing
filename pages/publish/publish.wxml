@@ -28,7 +28,7 @@
         </view>
 
         <!-- 文字 -->
-        <textarea class='reply-ipt' value='{{contentVal}}' maxlength='200' bindinput='publishEvent' data-types='content' placeholder-class='f9' placeholder='我要分享'></textarea>
+        <textarea class='reply-ipt' value='{{contentVal}}' disabled="{{status ? true : false}}" maxlength='200' bindinput='publishEvent' data-types='content' placeholder-class='f9' placeholder='我要分享'></textarea>
 
         <!-- 图片 -->
         <view class='flex_start mt20'>

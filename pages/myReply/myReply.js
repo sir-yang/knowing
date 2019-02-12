@@ -72,8 +72,15 @@ Page({
             })
             this.state.offset = 0;
             this.requestGetList(0);
-        } else if (dataset.types === 'seeImg') {
-
+        } else if (dataset.types === 'seeImg') { //查看大图
+            let index = dataset.index;
+            let idx = dataset.idx;
+            common.seeBigImg(list[index].qImg[idx].original_url, list[index].qImg, 2);
+        } else if (dataset.types === 'detail') { //详情
+            let index = dataset.index;
+            wx.navigateTo({
+                url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
+            })
         }
     },
 

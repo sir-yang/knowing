@@ -41,6 +41,7 @@ Page({
             };
         }
     },
+
     /**
      * 放弃回答
      */
@@ -123,6 +124,22 @@ Page({
         innerAudioContext.onError((res) => {
             common.showClickModal(res.errMsg);
         })
+    },
+
+    onShow() {
+        let that = this;
+        let userInfo = common.getStorage('userInfo');
+        if (userInfo) {
+            that.setData({
+                userInfo
+            })
+        } else {
+            common.getPersonInfo().then((res) => {
+                that.setData({
+                    userInfo: res
+                })
+            })
+        }
     },
 
     // 事件

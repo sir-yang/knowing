@@ -97,6 +97,11 @@ Page({
                 aAudio = '';
                 playing = false;
             }
+            wx.showToast({
+                title: '录音中',
+                image: '/images/recording_icon_1.png',
+                duration: 10000000
+            })
             that.setData({
                 status: true,
                 aAudio,
@@ -108,6 +113,7 @@ Page({
             that.state.audio = res.tempFilePath;
             that.state.audio_duration = parseInt(res.duration / 1000);
             let duration = util.changeTimeFormat(parseInt(res.duration / 1000));
+            wx.hideToast();
             that.setData({
                 status: false,
                 aAudio: res.tempFilePath,
@@ -198,11 +204,13 @@ Page({
         let that = this;
         let dataset = event.currentTarget.dataset;
         if (dataset.types === 'tab') {
+            if (that.data.status) return; //录音中
             if (dataset.index == that.data.tabIndex) return;
             that.setData({
                 tabIndex: dataset.index
             })
         } else if (dataset.types === 'content') {
+            if (that.data.status) return; //录音中
             that.setData({
                 contentVal: event.detail.value
             })
@@ -256,6 +264,7 @@ Page({
                 }
             }
         } else if (dataset.types === 'delAudio') { //删除录音
+            if (that.data.status) return; //录音中
             wx.showModal({
                 title: '提示',
                 content: '是否确认删除语音？',
@@ -270,6 +279,7 @@ Page({
                 }
             })
         } else if (dataset.types === 'upload') {
+            if (that.data.status) return; //录音中
             let imgList = that.data.imgList;
             let imgListArr = that.state.imgArr;
             if (imgList.length >= 9) {
@@ -293,6 +303,7 @@ Page({
                 });
             });
         } else if (dataset.types === 'removeImg') {
+            if (that.data.status) return; //录音中
             let imgList = that.data.imgList;
             let imgArr = that.state.imgArr;
             let index = dataset.index;
@@ -303,6 +314,7 @@ Page({
                 imgList
             })
         } else if (dataset.types === 'tutor') {
+            if (that.data.status) return; //录音中
             let checkList = that.data.checkList;
             let index = dataset.index;
             let leng = 0;
@@ -327,6 +339,7 @@ Page({
                 checkList
             })
         } else if (dataset.types === 'removeTutor') {
+            if (that.data.status) return; //录音中
             let checkList = that.data.checkList;
             let id = dataset.id;
             checkList.forEach((item) => {
@@ -342,10 +355,12 @@ Page({
                 tutorTk: 'hide'
             })
         } else if (dataset.types === 'showTutor') {
+            if (that.data.status) return; //录音中
             that.setData({
                 tutorTk: 'show'
             })
         } else if (dataset.types === 'temporary') { //暂存
+            if (that.data.status) return; //录音中
             let data = that.getSubmitVal();
             if (!data) return;
 
@@ -368,6 +383,7 @@ Page({
             common.requestCache(that, vals);
 
         } else if (dataset.types === 'submit') { //提交
+            if (that.data.status) return; //录音中
             let vals = that.getSubmitVal();
             if (!vals) return;
             vals.type = that.data.typeTabArr[that.data.tabIndex].id;

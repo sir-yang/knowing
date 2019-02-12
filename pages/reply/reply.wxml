@@ -22,7 +22,7 @@
             </view>
         </view>
         <!-- 文字 -->
-        <textarea class='reply-ipt' value='{{contentVal}}' maxlength='200' bindinput='replyEvent' data-types='content' placeholder-class='f9' placeholder='我要回答'></textarea>
+        <textarea class='reply-ipt' value='{{contentVal}}' disabled="{{status ? true : false}}" maxlength='200' bindinput='replyEvent' data-types='content' placeholder-class='f9' placeholder='我要回答'></textarea>
 
         <!-- 图片 -->
         <view class='flex_start mt20'>
@@ -44,7 +44,7 @@
                 <image src='/images/reply_selected_icon.png'></image>
             </view>
             <view class='onlookers-money-item'>
-                <input type='number' value='{{moneyVal}}' bindfocus='focusIpt' bindinput='replyEvent' data-types='moneyIpt' class='money-ipt' placeholder='其他金额' />
+                <input type='number' value='{{moneyVal}}' disabled="{{status ? true : false}}" bindfocus='focusIpt' bindinput='replyEvent' data-types='moneyIpt' class='money-ipt' placeholder='其他金额' />
             </view>
         </view>
     </view>
