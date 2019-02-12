@@ -54,7 +54,7 @@
     <view class='flex_warp mt10 pb10'>
         <view class='features-item-box flex_column flex_center flex_items' bindtap='myEvent' data-types='wenda'>
             <image src='/images/my_icon_1.png'></image>
-            <view class='text msg'>我的问答</view>
+            <view class='text {{userInfo.ask_msg == 0 ? "msg" : ""}}'>我的问答</view>
         </view>
         <!-- <view class='features-item-box flex_column flex_center flex_items'>
             <image src='/images/my_icon_2.png'></image>

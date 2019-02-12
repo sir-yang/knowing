@@ -37,7 +37,6 @@ Page({
                 console.log('update success');
                 common.getPersonInfo().then((info) => {
                     wx.hideLoading();
-                    console.log(info);
                     that.setData({
                         userInfo: info
                     })

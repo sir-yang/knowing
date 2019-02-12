@@ -105,19 +105,27 @@ Page({
             id: list[index].id,
             status: 2
         }
-        wx.showLoading({
-            title: '',
-            mask: true
-        })
-        util.httpRequest(url, data).then((res) => {
-            wx.hideLoading();
-            if (res.result === 'success') {
-                list.splice(index, 1);
-                that.setData({
-                    list
-                })
-            } else {
-                common.showClickModal(res.msg);
+        wx.showModal({
+            title: '提示',
+            content: '确定取消关注？',
+            success(suc) {
+                if (suc.confirm) {
+                    wx.showLoading({
+                        title: '',
+                        mask: true
+                    })
+                    util.httpRequest(url, data).then((res) => {
+                        wx.hideLoading();
+                        if (res.result === 'success') {
+                            list.splice(index, 1);
+                            that.setData({
+                                list
+                            })
+                        } else {
+                            common.showClickModal(res.msg);
+                        }
+                    })
+                }
             }
         })
     }
