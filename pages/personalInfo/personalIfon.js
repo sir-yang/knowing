@@ -15,18 +15,18 @@ Page({
             id: 2,
             name: "女"
         }],
-        schoolList: [],
+        schoolList: '',
         schoolIdx: -1,
         collegeList: [],
         collegeIdx: -1,
-        educationList: ["学士","硕士","博士","其他"],
+        educationList: ["学士", "硕士", "博士", "其他"],
         educationIdx: -1
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
+    onLoad(options) {
         // wx.showLoading({
         //     title: '请稍后...',
         //     mask: true
@@ -41,6 +41,46 @@ Page({
                 tabIndex
             })
         }
+    },
+
+    onShow() {
+        this.schoolEvent();
+    },
+
+    // 默认数据处理
+    schoolEvent() {
+        let that = this;
+        let schoolList = that.data.schoolList;
+        let userInfo = common.getStorage('userInfo');
+        let interval = setTimeout(() => {
+            if (schoolList && schoolList.length > 0) {
+                clearTimeout(interval);
+                if (userInfo && userInfo.inform) {
+                    if (userInfo.inform.university) {
+                        schoolList.forEach((item, index) => {
+                            if (item.name == userInfo.inform.university) {
+                                let collegeIdx = that.data.collegeIdx;
+                                if (userInfo.inform.academy && item.academy.length > 0) {
+                                    item.academy.forEach((college, idx) => {
+                                        if (college.name == userInfo.inform.academy) {
+                                            collegeIdx = idx;
+                                        }
+                                    })
+                                }
+
+                                that.setData({
+                                    schoolIdx: index,
+                                    collegeList: item.academy,
+                                    collegeIdx
+                                })
+                            }
+                        })
+                    }
+                }
+            } else {
+                this.schoolEvent();
+            }
+        }, 1000)
     },
 
     // 事件
@@ -73,7 +113,7 @@ Page({
                 collegeList: schoolList[event.detail.value].academy,
                 collegeIdx: 0
             })
-        } else if (dataset.types === 'college') {//选择学院
+        } else if (dataset.types === 'college') { //选择学院
             this.setData({
                 collegeIdx: event.detail.value
             })
@@ -100,7 +140,7 @@ Page({
                     icon: 'none',
                     success() {
                         common.getPersonInfo().then((info) => {
-                            wx.navigateBack({ })
+                            wx.navigateBack({})
                         })
                     }
                 })
