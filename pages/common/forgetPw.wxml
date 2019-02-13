@@ -22,5 +22,6 @@
         </view>
 
         <button form-type='submit' class='modal-btn'>确认</button>
+        <view class='flex_end f24 c6'>重新尝试？去<text class='cmain' bindtap='loginRegistEvent' data-types='toLogin'>登录</text></view>
     </form>
 </view>

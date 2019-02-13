@@ -20,21 +20,21 @@
                     </view>
                 </view>
             </view>
-            <view wx:if='{{userInfo.id !== details.id}}' class='flex_start flex_items self_start' bindtap='detailEvent' data-types='letters'>
+            <view wx:if='{{userInfo.id !== details.id && details.attention == 0}}' class='flex_start flex_items self_start' bindtap='detailEvent' data-types='letters'>
                 <image class='message-icon' src='/images/message_icon.png'></image>
                 <view class='f24 cmain'>私信</view>
             </view>
         </view>
         <view class='bte9s mt20 pt20'>
             <view class='flex_center'>
-                <view bindtap='fensi'>
+                <view bindtap='detailEvent' data-types='fensi'>
                     <view class='f24 c6 txt_center'>{{details.fansNum}}</view>
                     <view class='flex_start flex_items'>
                         <image class='fan-icon' src='/images/icon_1.png'></image>
                         <view class='f24 c6'>粉丝</view>
                     </view>
                 </view>
-                <view class='attention-box' bindtap='guanzhu'>
+                <view class='attention-box' bindtap='detailEvent' data-types='guanzhu'>
                     <view class='f24 c6 txt_center'>{{details.attentionNum}}</view>
                     <view class='flex_start flex_items'>
                         <image class='attention-icon' src='/images/icon_2.png'></image>
@@ -63,7 +63,7 @@
 
             <!-- ta的分享 -->
             <block wx:if="{{tabIndex == 0}}">
-                <view wx:for="{{list}}" wx:key="" class='share-item-box}' bindtap='detailEvent' data-types='zhixiang' data-index='{{index}}'>
+                <view wx:for="{{list}}" wx:key="" class='share-item-box' bindtap='detailEvent' data-types='zhixiang' data-index='{{index}}'>
                     <view class='f24 c3'>{{item.content}}</view>
                     <view class='img-box mt20 mb10 flex_warp'>
                         <image wx:for="{{item.img}}" wx:key="" wx:for-item="imgItem" wx:for-index="idx" src='{{imgItem.thumb_small_url}}' catchtap='detailEvent' data-types='seeImg' data-index='{{index}}' data-idx='{{idx}}'></image>

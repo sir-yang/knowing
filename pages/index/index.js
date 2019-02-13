@@ -8,6 +8,7 @@ Page({
      */
     data: {
         requestStatus: false,
+        pageName: 'index',
         typeTab: 0,
         sortTab: 0,
         order: 1,
@@ -58,31 +59,53 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        // wx.showLoading({
-        //     title: '请稍后...',
-        //     mask: true
-        // });
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
+        wx.showLoading({
+            title: '请稍后...',
+            mask: true
+        });
         let that = this;
         let token = common.getAccessToken();
         if (token) {
-            that.requestGetCate();
-            common.requestGetCollege(that);
+            that.userRole();
         } else {
             getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
-                that.requestGetCate();
-                common.requestGetCollege(that);
+                that.userRole();
             };
         }
+    },
 
-        // if (!that.state.pageOnShow) return;
-        // let userInfo = common.getStorage('userInfo'); 
+    onShow() {
+        if (!this.state.pageOnShow) return;
+        this.userRole();
+    },
+
+    // 用户权限判断
+    userRole() {
+        let that = this;
+        common.getPersonInfo().then((userInfo) => {
+            if (userInfo) {
+                if (!userInfo.avatarUrl && !userInfo.nickName) {
+                    wx.redirectTo({
+                        url: '/pages/launch/launch'
+                    })
+                    return;
+                }
+                let role = 2;
+                if (userInfo.statusId == 0 || (userInfo.status != 5 && userInfo.status != 6 && userInfo.status != 8)) {
+                    role = 1;
+                }
+                that.setData({
+                    role
+                })
+                that.requestGetCate();
+                common.requestGetCollege(that);
+            } else {
+                wx.redirectTo({
+                    url: '/pages/launch/launch'
+                })
+            }
+        })
     },
 
     // 界面显示执行
@@ -175,10 +198,7 @@ Page({
         if (this.state.isonPullDownRefresh) return;
         if (!this.state.isOnReachBottom) return;
         if (!this.state.hasmore) return;
-        wx.showLoading({
-            title: '',
-            mask: true
-        });
+
         this.state.offset = this.state.offset + this.state.limit;
         this.requestList(this.state.offset);
         this.state.isOnReachBottom = false;
@@ -210,9 +230,10 @@ Page({
                 schoolTab: event.detail.value
             })
         } else if (dataset.types === 'ask') { //提问
-            wx.navigateTo({
-                url: '/pages/askQuestion/askQuestion'
-            })
+            common.isLoginRegist(this, 'index');
+            // wx.navigateTo({
+            //     url: '/pages/askQuestion/askQuestion'
+            // })
         } else if (dataset.types === 'sortTab') { //升降序
             let order = that.data.order;
             if (that.data.sortTab == dataset.index) {
@@ -411,12 +432,20 @@ Page({
         let data = {
             type: 1
         }
+        // if (!that.state.pageOnShow) {
+        //     wx.showLoading({
+        //         title: '请稍后...',
+        //         mask: true
+        //     });
+        // }
+        
         common.requestCate(data, (res) => {
             if (res.result === 'success') {
                 that.setData({
                     typeTabArr: res.results
                 })
-                that.indexShowLoad();
+                that.state.offset = 0;
+                that.requestList(0);
             } else {
                 common.showClickModal(res.msg);
             }
@@ -448,16 +477,14 @@ Page({
                 data.order = 1;
             }
         }
-
         if (that.state.pageOnShow) {
             wx.showLoading({
-                title: '加载中...',
+                title: '',
                 mask: true
             });
         }
 
         util.httpRequest(url, data).then((res) => {
-            wx.hideLoading();
             if (res.result === 'success') {
                 let handle = common.dataListHandle(that, res, that.data.list, offset);
                 that.setData({

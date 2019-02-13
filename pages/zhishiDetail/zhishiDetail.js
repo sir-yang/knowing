@@ -56,6 +56,7 @@ Page({
             };
         }
     },
+
     getUserInfo() {
         let that = this;
         common.getPersonInfo().then((res) => {
@@ -268,24 +269,25 @@ Page({
                     common.showClickModal(err.errMsg);
                 }
             })
+        } else if (dataset.types === 'fensi') {
+            let userInfo = this.data.userInfo;
+            let details = this.data.details;
+            if (userInfo.id == details.id) {
+                wx.navigateTo({
+                    url: '/pages/attentionList/attentionList?status=1&uid=' + details.id
+                })
+            }
+        } else if (dataset.types === 'guanzhu') {
+            let userInfo = this.data.userInfo;
+            let details = this.data.details;
+            if (userInfo.id == details.id) {
+                wx.navigateTo({
+                    url: '/pages/attentionList/attentionList?status=2&uid=' + details.id
+                })
+            }
         }
     },
-    /**
-     * 跳转粉丝列表
-     */
-    fensi() {
-        wx.navigateTo({
-            url: '/pages/attentionList/attentionList?status=1&uid=' + this.data.details.id,
-        })
-    },
-    /**
-     * 跳转关注列表
-     */
-    guanzhu() {
-        wx.navigateTo({
-            url: '/pages/attentionList/attentionList?status=2&uid=' + this.data.details.id,
-        })
-    },
+
     // 授权判断
     getIsAuth() {
         let that = this;

@@ -346,6 +346,64 @@ function loginRegistData(that) {
     })
 }
 
+// 登录注册弹框
+function isLoginRegist(that, types) {
+    getPersonInfo().then((userInfo) => {
+        if (userInfo) {
+            if (!userInfo.avatarUrl && !userInfo.nickName) {
+                wx.redirectTo({
+                    url: '/pages/launch/launch'
+                })
+                return;
+            }
+
+            // 判断是否需要登录
+            let loginRegistTk = that.data.loginRegistTk;
+            let showLogin = that.data.showLogin;
+            let showPerfect = that.data.showPerfect;
+
+            if (userInfo.statusId == 0) { //未登录
+                loginRegistTk = 'show';
+                showLogin = 'show';
+                // 隐藏底部导航
+                if (wx.hideTabBar()) {
+                    wx.hideTabBar({});
+                }
+                that.setData({
+                    loginRegistTk,
+                    showLogin,
+                    showPerfect
+                })
+                // 获取图片验证码
+                requestGetImgSend(that);
+            } else if (!userInfo.name) { //未完善信息
+                // 隐藏底部导航
+                if (wx.hideTabBar()) {
+                    wx.hideTabBar({});
+                }
+                loginRegistTk = 'show';
+                showPerfect[0] = 'show';
+                showPerfect[userInfo.type] = 'show';
+                that.setData({
+                    loginRegistTk,
+                    showLogin,
+                    showPerfect
+                })
+            } else { //已登录
+                if (types === 'index') {
+                    wx.navigateTo({
+                        url: '/pages/askQuestion/askQuestion'
+                    })
+                }
+            }
+        } else {
+            wx.redirectTo({
+                url: '/pages/launch/launch'
+            })
+        }
+    });
+}
+
 
 // 登录注册事件
 function loginRegistEvent(event, that) {
@@ -418,6 +476,7 @@ function loginRegistEvent(event, that) {
         that.setData({
             showLogin: 'show',
             showRegist: 'hide',
+            showForget: 'hide',
             phoneVal: '',
             passwordVal: '',
             codeVal: '',
@@ -572,7 +631,17 @@ function requestLogin(that, vals) {
                 loginRegistTk = 'show';
             } else {
                 // 调用接口
-                that.requestList(0);
+                if (that.data.pageName === 'index') {
+                    let userInfo = getInfo('userInfo');
+                    let role = 2;
+                    if (userInfo.status != 5 && userInfo.status != 6 && userInfo.status != 8) {
+                        role = 1;
+                    }
+                    that.setData({
+                        role
+                    })
+                    that.requestList(0);
+                }
                 // 显示导航
                 if (wx.showTabBar()) {
                     wx.showTabBar({});
@@ -835,6 +904,7 @@ module.exports = {
 
     requestLoadPage,
     loginRegistData,
+    isLoginRegist,
     loginRegistEvent,
     requestLogin,
     requestGetCollege,
