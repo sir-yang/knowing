@@ -1,12 +1,13 @@
 let common = getApp().globalData.commonFun;
-
+let util = getApp().globalData.utilFun;
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        userInfo: ''
+        userInfo: '',
+        logo: ''
     },
 
     /**
@@ -69,10 +70,57 @@ Page({
             url = '/pages/wallet/wallet';
         } else if (dataset.types === "invite") {
             url = "/pages/invite/invite"
+        } else if (dataset.types === 'avatar') { //更换头像
+            let that = this;
+            wx.showModal({
+                title: '提示',
+                content: '是否更换头像？',
+                success(res) {
+                    if (res.confirm) {
+                        let logo = '';
+                        let logoImg = '';
+                        common.uploadImg(1, (photoUrl, tempFilePaths) => {
+                            tempFilePaths.forEach((url) => {
+                                logo = url;
+                            });
+
+                            photoUrl.forEach((obj) => {
+                                //console.log(JSON.parse(obj.data).key);
+                                let img = JSON.parse(obj.data).key;
+                                logoImg = img;
+                            });
+                            
+                            that.uplodFace(logoImg, logo);
+                        });
+                    }
+                }
+            })
+            return;
         }
 
         wx.navigateTo({
             url
+        })
+    },
+
+    // 修改头像
+    uplodFace(logoImg, logo) {
+        let that =  this;
+        let url = 'api/User/face';
+        util.httpRequest(url, {
+            avatarUrl: logoImg
+        }, 'POST').then((res) => {
+            if (res.result === 'success') {
+                that.setData({
+                    logo
+                });
+                wx.showToast({
+                    title: res.msg,
+                    icon: 'none'
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
         })
     }
 

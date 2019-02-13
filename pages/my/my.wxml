@@ -2,7 +2,7 @@
     <view class='top-bg-box'></view>
     <view class='base-info-box'>
         <view class='flex_start'>
-            <image class='head-img flex_shrink' src='{{userInfo.avatarUrl}}'></image>
+            <image bindtap='myEvent' data-types='avatar' class='head-img flex_shrink' src='{{logo ? logo : userInfo.avatarUrl}}'></image>
             <view>
                 <view wx:if='{{userInfo.status <=2 }}' class='f28 c3 mt5'>{{userInfo.nickName}}</view>
                 <view wx:else class='f28 c3 mt5'>{{userInfo.name}}</view>

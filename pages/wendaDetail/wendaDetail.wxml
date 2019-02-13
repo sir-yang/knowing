@@ -11,7 +11,7 @@
         <view class='flex_start flex_items mt30 pb20 bbe9s'>
             <view class='time-box'>{{details.times}}</view>
             <view class='f24 c9'>{{details.aroundNum}}人已围观</view>
-            <view class='money-box flex1 flex_end flex_items'>
+            <view wx:if="{{details.askMoney> 0}}" class='money-box flex1 flex_end flex_items'>
                 <image src='/images/money_icon.png'></image>
                 <view>提问金额 {{details.askMoney}}元</view>
             </view>

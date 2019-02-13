@@ -432,12 +432,6 @@ Page({
         let data = {
             type: 1
         }
-        // if (!that.state.pageOnShow) {
-        //     wx.showLoading({
-        //         title: '请稍后...',
-        //         mask: true
-        //     });
-        // }
         
         common.requestCate(data, (res) => {
             if (res.result === 'success') {
