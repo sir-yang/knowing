@@ -80,7 +80,7 @@ page {
     content: '';
     position: absolute;
     right: -12rpx;
-    top: 15rpx;
+    top: 8rpx;
     width: 10rpx;
     height: 10rpx;
     background: #fc2502;

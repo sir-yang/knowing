@@ -19,6 +19,11 @@ Page({
         })
     },
 
+    // 监听页面显示
+    onShow() {
+        // 消息状态
+        common.requestMessage(this);
+    },
 
     // 事件
     messageEvent(event) {

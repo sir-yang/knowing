@@ -89,6 +89,10 @@ Page({
             })
             this.state.offset = 0;
             this.requestKnowList(0);
+        } else if (dataset.types === 'myReply') { //我的回答
+            wx.navigateTo({
+                url: '/pages/wendaDetail/wendaDetail?id=22'
+            })
         } else if (dataset.types === 'tabStatus') { //状态筛选
             if (dataset.index == this.data.tabIndex) return;
             this.setData({

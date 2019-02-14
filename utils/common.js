@@ -881,6 +881,20 @@ function requestPay(info, func) {
     })
 }
 
+// 消息状态
+function requestMessage(that) {
+    let url = 'api/User/message';
+    util.httpRequest(url).then((res) => {
+        if (res.result === 'success') {
+            that.setData({
+                messageMark: res.results
+            })
+        } else {
+            common.showClickModal(res.msg);
+        }
+    })
+}
+
 
 
 
@@ -915,5 +929,6 @@ module.exports = {
     requestGetImgSend,
     requestCache,
     requestGetCache,
-    requestPay
+    requestPay,
+    requestMessage
 };

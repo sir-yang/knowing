@@ -50,8 +50,11 @@ Page({
                 common.requestGetCollege(that);
             };
         }
+    },
 
-
+    onShow() {
+        // 消息状态
+        common.requestMessage(this);
     },
 
     /**

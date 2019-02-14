@@ -23,3 +23,18 @@ page {
     width: 32rpx;
     height: 8rpx;
 }
+
+.msg {
+    position: relative;
+}
+.msg::after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 30rpx;
+    right: -10rpx;
+    width: 10rpx;
+    height: 10rpx;
+    background: #fc2502;
+    border-radius: 50%;
+}

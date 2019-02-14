@@ -42,8 +42,19 @@
     margin-right: 30rpx;
 }
 .right-msg {
+    position: relative;
     width: 32rpx;
     height: 32rpx;
+}
+.right-msg .msg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 10rpx;
+    height: 10rpx;
+    background: #fc2502;
+    border-radius: 50%;
 }
 .right-msg > image {
     display: block;

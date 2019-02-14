@@ -12,7 +12,7 @@
             <image src='/images/home_search_icon.png' bindtap='zhishiEvent' data-types='search'></image>
         </view>
         <view class='right-msg' bindtap='zhishiEvent' data-types='message'>
-            <text></text>
+            <text wx:if="{{messageMark.message == 1}}" class='msg'></text>
             <image src='/images/home_msg_icon.png'></image>
         </view>
     </view>

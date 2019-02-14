@@ -32,6 +32,8 @@ Page({
                 that.setData({
                     userInfo: info
                 })
+                // 消息状态
+                common.requestMessage(that);
             })
         } else {
             getApp().globalData.tokenUpdated = function () {
@@ -42,6 +44,8 @@ Page({
                         userInfo: info
                     })
                 })
+                // 消息状态
+                common.requestMessage(that);
             };
         }
     },

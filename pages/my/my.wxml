@@ -8,11 +8,12 @@
                 <view wx:else class='f28 c3 mt5'>{{userInfo.name}}</view>
                 <view wx:if="{{userInfo.status == 1}}" class='f24 c6 mt10'>求知者</view>
                 <view wx:elif="{{userInfo.status == 2}}" class='f24 c6 mt10'>知了</view>
-                <view wx:elif="{{userInfo.status == 3}}" class='f24 c6 mt10'>课程知士</view>
+                <view wx:else class='f24 c6 mt10'>知士</view>
+                <!-- <view wx:elif="{{userInfo.status == 3}}" class='f24 c6 mt10'>课程知士</view>
                 <view wx:elif="{{userInfo.status == 5}}" class='f24 c6 mt10'>问答知士</view>
                 <view wx:elif="{{userInfo.status == 6}}" class='f24 c6 mt10'>知了 <text class='ml20'>问答知士</text></view>
                 <view wx:elif="{{userInfo.status == 7}}" class='f24 c6 mt10'>知享圈知士</view>
-                <view wx:elif="{{userInfo.status == 8}}" class='f24 c6 mt10'>问答知士 <text class='ml20'>知享圈知士</text></view>
+                <view wx:elif="{{userInfo.status == 8}}" class='f24 c6 mt10'>问答知士 <text class='ml20'>知享圈知士</text></view> -->
             </view>
         </view>
 
@@ -55,7 +56,7 @@
     <view class='flex_warp mt10 pb10'>
         <view class='features-item-box flex_column flex_center flex_items' bindtap='myEvent' data-types='wenda'>
             <image src='/images/my_icon_1.png'></image>
-            <view class='text {{userInfo.ask_msg == 1 ? "msg" : ""}}'>我的问答</view>
+            <view class='text {{messageMark.ask_msg == 1 ? "msg" : ""}}'>我的问答</view>
         </view>
         <!-- <view class='features-item-box flex_column flex_center flex_items'>
             <image src='/images/my_icon_2.png'></image>
@@ -67,7 +68,7 @@
         </view> -->
         <view wx:if="{{userInfo.status == 5 || userInfo.status == 6 || userInfo.status == 8}}" class='features-item-box flex_column flex_center flex_items' bindtap='myEvent' data-types='wallet'>
             <image src='/images/my_icon_4.png'></image>
-            <view class='text msg'>我的钱包</view>
+            <view class='text {{messageMark.account_msg == 1 ? "msg": ""}}'>我的钱包</view>
         </view>
         <view class='features-item-box flex_column flex_center flex_items' bindtap='myEvent' data-types='apply'>
             <image src='/images/my_icon_5.png'></image>

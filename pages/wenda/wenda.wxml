@@ -1,7 +1,8 @@
 <view class='p20' wx:if="{{requestStatus}}">
     <view class='first-tab-box flex_start'>
-        <view class='flex1 mr20 {{typeIndex == 1 ? "on" : ""}}' bindtap='wendaEvent' data-types='tabType' data-index='1'>我的提问</view>
-        <view class='flex1 {{typeIndex == 2 ? "on" : ""}}' bindtap='wendaEvent' data-types='tabType' data-index='2'>我的围观</view>
+        <view class='flex1 {{typeIndex == 1 ? "on" : ""}}' bindtap='wendaEvent' data-types='tabType' data-index='1'>我的提问</view>
+        <view class='flex1 mlr20 {{typeIndex == 2 ? "on" : ""}}' bindtap='wendaEvent' data-types='tabType' data-index='2'>我的围观</view>
+        <view class='flex1' bindtap='wendaEvent' data-types='myReply'>我的回答</view>
     </view>
 
     <view wx:if="{{typeIndex == 1}}" class='answer-status-box flex_start'>

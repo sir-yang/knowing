@@ -107,6 +107,8 @@ Page({
     onShow() {
         let that = this;
         that.getUserInfo();
+        // 消息状态
+        common.requestMessage(that);
         getApp().globalData.enjoyUpdateCallback = function (index) {
             that.requestGetDetail(index);
         };

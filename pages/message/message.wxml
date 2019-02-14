@@ -1,11 +1,11 @@
 <view class='p20'>
     <view class='setting-box'>
         <view class='flex_between flex_items' bindtap='messageEvent' data-types='mine'>
-            <view>我的消息</view>
+            <view class='{{messageMark.self_message == 1 ? "msg" : ""}}'>我的消息</view>
             <image class='more-right-icon' src='/images/more_right_icon.png'></image>
         </view>
         <view class='flex_between flex_items' bindtap='messageEvent' data-types='system'>
-            <view>系统消息</view>
+            <view class='{{messageMark.system_message == 1 ? "msg" : ""}}'>系统消息</view>
             <image class='more-right-icon' src='/images/more_right_icon.png'></image>
         </view>
         <view class='flex_between flex_items' bindtap='messageEvent' data-types='private'>

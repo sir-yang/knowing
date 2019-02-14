@@ -76,6 +76,8 @@ Page({
     },
 
     onShow() {
+        // 消息状态
+        common.requestMessage(this);
         if (!this.state.pageOnShow) return;
         this.userRole();
     },

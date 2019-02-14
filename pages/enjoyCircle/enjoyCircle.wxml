@@ -12,7 +12,7 @@
             <image src='/images/home_search_icon.png' bindtap='enjoyEvent' data-types='search'></image>
         </view>
         <view class='right-msg' bindtap='enjoyEvent' data-types='message'>
-            <text></text>
+            <text wx:if="{{messageMark.message == 1}}" class='msg'></text>
             <image src='/images/home_msg_icon.png'></image>
         </view>
     </view>
@@ -43,7 +43,7 @@
             <view class='f28 c3 ml20 mr30 flex_shrink'>{{item.user.name}}</view>
             <view class='f24 c6'>{{item.user.keyWords}}</view>
             <!-- 分享论坛 -->
-            <view wx:if="{{typeIndex == 1}}" class='report' catchtap='enjoyEvent' data-types='report' data-index='{{index}}'>举报</view>
+            <view wx:if="{{typeIndex == 1}}" class='report hide' catchtap='enjoyEvent' data-types='report' data-index='{{index}}'>举报</view>
         </view>
 
         <view wx:if="{{item.audio}}" class='audio-box flex_start flex_items'>
@@ -84,7 +84,7 @@
     <!-- 数据提示判断 -->
     <block>
         <view wx:if="{{list.length > 0 && !hasNext}}" class='notmore'>没有更多数据</view>
-        <view wx:if="{{list.length === 0}}" class='noComment'>暂无数据</view>
+        <view wx:if="{{list.length === 0}}" class='noComment'>关注知士，可在此查看知士分享内容</view>
     </block>
 
 </view>
