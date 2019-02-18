@@ -46,3 +46,14 @@
         <view wx:if="{{list.length === 0}}" class='noComment'>暂无数据</view>
     </block>
 </view>
+
+<!-- 登录注册相关 -->
+<view class='tankuang {{loginRegistTk}}'></view>
+<!-- 登录 -->
+<include src="/pages/common/login.wxml" />
+<!-- 忘记密码 -->
+<include src="/pages/common/forgetPw.wxml" />
+<!-- 注册 -->
+<include src="/pages/common/regist.wxml" />
+<!-- 完善信息 -->
+<include src="/pages/common/perfectInfo.wxml" />

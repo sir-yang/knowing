@@ -28,7 +28,7 @@
     <!-- 普通用户 -->
     <view wx:if="{{role == 1}}" class='sort-box flex_between flex_items'>
         <view class='sort-item {{sortTab == 3 ? (order == 1 ? "on" : "down") : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='3'>提问时间</view>
-        <view class='sort-item {{sortTab == 2 ? (order == 1 ? "on" : "down") : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='2'>问题金额</view>
+        <view class='sort-item {{sortTab == 2 ? (order == 1 ? "on" : "down") : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='2'>围观金额</view>
         <view class='sort-item {{sortTab == 1 ? (order == 1 ? "on" : "down") : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='1'>围观人数</view>
     </view>
 
@@ -82,12 +82,12 @@
 </view>
 
 <!-- 围观弹框 -->
-<view class='tankuang {{onlookersTk}}' bindtap='questionAnswerEvent' data-types='closeTk'></view>
+<!-- <view class='tankuang {{onlookersTk}}' bindtap='questionAnswerEvent' data-types='closeTk'></view>
 <view class='onlookers-modal-content {{onlookersTk}}'>
     <view class='look-btn' bindtap='questionAnswerEvent' data-types='share'>分享围观</view>
     <view class='look-btn bte9s' bindtap='questionAnswerEvent' data-types='pay'>付费围观</view>
     <view class='look-btn mt10' bindtap='questionAnswerEvent' data-types=''>取消</view>
-</view>
+</view> -->
 
 <!-- 海报 -->
 <view class='tankuang {{posterTk}}'></view>

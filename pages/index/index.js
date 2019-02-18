@@ -10,9 +10,8 @@ Page({
         requestStatus: false,
         pageName: 'index',
         typeTab: 0,
-        sortTab: 0,
+        sortTab: 3,
         order: 1,
-        onlookersTk: 'hide', // 围观弹框
         posterTk: 'hide', //海报弹框
         posterUrl: '', //海报路径
         searchVal: '',
@@ -76,10 +75,21 @@ Page({
     },
 
     onShow() {
-        // 消息状态
-        common.requestMessage(this);
         if (!this.state.pageOnShow) return;
         this.userRole();
+    },
+
+
+    onUnload() {
+        console.log(1212);
+        this.setData({
+            loginRegistTk: 'hide',
+            showLogin: 'hide',
+            showPerfect: ['hide', 'hide', 'hide', 'hide'],
+            phoneVal: '',
+            passwordVal: '',
+            codeVal: ''
+        })
     },
 
     // 用户权限判断
@@ -92,6 +102,9 @@ Page({
                         url: '/pages/launch/launch'
                     })
                     return;
+                }
+                if (userInfo.statusId == 1) { //判断是否调用右上角消息通知
+                    common.requestMessage(that);
                 }
                 let role = 2;
                 if (userInfo.statusId == 0 || (userInfo.status != 5 && userInfo.status != 6 && userInfo.status != 8)) {
@@ -232,10 +245,11 @@ Page({
                 schoolTab: event.detail.value
             })
         } else if (dataset.types === 'ask') { //提问
-            common.isLoginRegist(this, 'index');
-            // wx.navigateTo({
-            //     url: '/pages/askQuestion/askQuestion'
-            // })
+            common.isLoginRegist(that, () => {
+                wx.navigateTo({
+                    url: '/pages/askQuestion/askQuestion'
+                })
+            });
         } else if (dataset.types === 'sortTab') { //升降序
             let order = that.data.order;
             if (that.data.sortTab == dataset.index) {
@@ -251,86 +265,55 @@ Page({
             that.state.offset = 0;
             that.requestList(0);
         } else if (dataset.types === 'detail') { //详情
-            let index = dataset.index;
-            if (that.data.role == 2) return;
-            if (list[index].around == 1) {
-                if (list[index].status == 3 || list[index].status == 5) {
-                    wx.navigateTo({
-                        url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
-                    })
-                } else if (list[index].status == 1) {
-                    common.showClickModal('问题暂未回答');
-                }
-            } else {
-                that.state.shareId = list[index].id;
-                wx.showActionSheet({
-                    itemList: ["分享围观", "付费围观"],
-                    success(res) {
-                        console.log(res.tapIndex);
-                        if (res.tapIndex == 0) {
-                            that.getIsAuth();
-                            that.requestPoster();
-                        } else {
-                            wx.showTabBar({
-                                success() {
-                                    that.setData({
-                                        onlookersTk: 'hide'
-                                    })
-                                }
-                            })
-                            that.requestPay();
-                        }
+            common.isLoginRegist(that, () => {
+                let index = dataset.index;
+                if (that.data.role == 2) return;
+                if (list[index].around == 1) {
+                    if (list[index].status == 3 || list[index].status == 5) {
+                        wx.navigateTo({
+                            url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
+                        })
+                    } else if (list[index].status == 1) {
+                        common.showClickModal('问题暂未回答');
                     }
-                })
-            }
-        } else if (dataset.types === 'onlookers') { //围观弹框
-            if (list[dataset.index].around == 0) return;
-            that.state.shareId = list[dataset.index].id;
-            wx.showActionSheet({
-                itemList: ["分享围观", "付费围观"],
-                success(res) {
-                    if (res.tapIndex == 0) {
-                        that.getIsAuth();
-                        that.requestPoster();
-                    } else {
-                        wx.showTabBar({
-                            success() {
-                                that.setData({
-                                    onlookersTk: 'hide'
+                } else {
+                    that.state.shareId = list[index].id;
+                    wx.showActionSheet({
+                        itemList: ["分享围观", "付费围观"],
+                        success(res) {
+                            console.log(res.tapIndex);
+                            if (res.tapIndex == 0) {
+                                that.getIsAuth();
+                                that.requestPoster();
+                            } else {
+                                wx.showTabBar({})
+                                that.requestPay();
+                            }
+                        }
+                    })
+                }
+            });
+        } else if (dataset.types === 'reply') { //去回答
+            common.isLoginRegist(that, () => {
+                let index = dataset.index;
+                if (list[index].status == 1) {
+                    wx.showModal({
+                        title: '提示',
+                        content: "确定回答",
+                        showCancel: true,
+                        success(_res) {
+                            console.log(_res)
+                            if (_res.confirm) {
+                                wx.navigateTo({
+                                    url: '/pages/reply/reply?id=' + list[index].id
                                 })
                             }
-                        })
-                        that.requestPay();
-                    }
-                }
-            })
-        } else if (dataset.types === 'reply') { //去回答
-            let index = dataset.index;
-            if (list[index].status == 1) {
-                wx.showModal({
-                    title: '提示',
-                    content: "确定回答",
-                    showCancel: true,
-                    success(_res) {
-                        console.log(_res)
-                        if (_res.confirm) {
-                            wx.navigateTo({
-                                url: '/pages/reply/reply?id=' + list[index].id
-                            })
                         }
-                    }
-                });
-            } else if (list[index].status == 2) {
-                common.showClickModal('问题已被他人锁定');
-            } else {
-                common.showClickModal('问题已被他人回答');
-            }
-        } else if (dataset.types === 'closeTk') { //关闭围观弹框
-            wx.showTabBar({
-                success() {
-                    that.setData({
-                        onlookersTk: 'hide'
-                    })
+                    });
+                } else if (list[index].status == 2) {
+                    common.showClickModal('问题已被他人锁定');
+                } else {
+                    common.showClickModal('问题已被他人回答');
                 }
             })
         } else if (dataset.types === 'seeImg') { //查看大图
@@ -348,10 +331,12 @@ Page({
             // }
             that.state.offset = 0;
             that.requestList(0);
-        } else if (dataset.types === 'message') {
-            wx.navigateTo({
-                url: '/pages/message/message'
-            })
+        } else if (dataset.types === 'message') { //消息
+            common.isLoginRegist(that, () => {
+                wx.navigateTo({
+                    url: '/pages/message/message'
+                })
+            });
         } else if (dataset.types === 'savaImg') { //保存海报
             wx.getImageInfo({
                 src: that.data.posterUrl,
@@ -461,18 +446,25 @@ Page({
         let data = {
             offset,
             limit: that.state.limit,
-            type: typeTabArr[that.data.typeTab].id
+            type: typeTabArr[that.data.typeTab].id,
+            status: that.data.sortTab
         }
-        data.answer = that.data.role == 1 ? 1 : 2;
+        if (that.data.role == 2) {
+            data.answer = 1;
+        }
+        // data.answer = that.data.role == 1 ? 1 : 2;
         if (that.data.searchVal != '') {
             data.key = that.data.searchVal;
         }
-        if (that.data.sortTab != 0) {
-            data.status = that.data.sortTab;
-            if (that.data.order == 1) {
-                data.order = 1;
-            }
+        if (that.data.order == 1) {
+            data.order = 1;
         }
+        // if (that.data.sortTab != 0) {
+        //     data.status = that.data.sortTab;
+        //     if (that.data.order == 1) {
+        //         data.order = 1;
+        //     }
+        // }
         if (that.state.pageOnShow) {
             wx.showLoading({
                 title: '',
@@ -511,7 +503,6 @@ Page({
                 wx.showTabBar({
                     success() {
                         that.setData({
-                            onlookersTk: 'hide',
                             posterTk: 'show',
                             posterUrl: res.results
                         })

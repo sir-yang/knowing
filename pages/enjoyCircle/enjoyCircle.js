@@ -9,6 +9,7 @@ Page({
      */
     data: {
         requestStatus: false,
+        pageName: "enjoyCircle",
         searchVal: '',
         typeIndex: 2,
         typeTabArr: [],
@@ -19,7 +20,24 @@ Page({
         schoolTab: 0, //顶部学校索引
         playing: false, //播放状态
         percent: 0,
-        playAudioIdx: -1
+        playAudioIdx: -1,
+
+        // 登录注册相关
+        loginRegistTk: 'hide',
+        showLogin: 'hide', //登录
+        showRegist: 'hide', //注册
+        showForget: 'hide', //忘记密码
+        showPerfect: ['hide', 'hide', 'hide', 'hide'], //0:完善信息 1:学生 2:教师 3:其他
+        identity: 1, //注册角色
+        genderId: 1,
+        CountdownVal: '发送验证码',
+        CountdownTime: 60,
+        onClick: true,
+        clearTimeout: true,
+        phoneVal: '',
+        passwordVal: '',
+        confirmVal: '',
+        codeVal: ''
     },
 
     state: {
@@ -107,9 +125,7 @@ Page({
     onShow() {
         let that = this;
         that.getUserInfo();
-        // 消息状态
-        common.requestMessage(that);
-        getApp().globalData.enjoyUpdateCallback = function (index) {
+        getApp().globalData.enjoyUpdateCallback = function(index) {
             that.requestGetDetail(index);
         };
     },
@@ -130,10 +146,13 @@ Page({
 
     getUserInfo() {
         let that = this;
-        common.getPersonInfo().then((res) => {
+        common.getPersonInfo().then((info) => {
             that.setData({
-                userInfo: res
+                userInfo: info
             })
+            if (info.statusId == 1) { //判断是否调用右上角消息通知
+                common.requestMessage(that);
+            }
         })
     },
 
@@ -244,13 +263,17 @@ Page({
             this.state.offset = 0;
             this.requestGetList(0);
         } else if (dataset.types === 'message') { //消息
-            wx.navigateTo({
-                url: '/pages/message/message'
-            })
+            common.isLoginRegist(this, () => {
+                wx.navigateTo({
+                    url: '/pages/message/message'
+                })
+            });
         } else if (dataset.types === 'publish') { //发布
-            wx.navigateTo({
-                url: '/pages/publish/publish'
-            })
+            common.isLoginRegist(this, () => {
+                wx.navigateTo({
+                    url: '/pages/publish/publish'
+                })
+            });
         } else if (dataset.types === 'moreTab') { //更多分类
             this.setData({
                 showMore: !this.data.showMore
@@ -260,38 +283,46 @@ Page({
             let idx = dataset.idx;
             common.seeBigImg(list[index].img[idx].original_url, list[index].img, 2);
         } else if (dataset.types === 'detail') { //详情
-            let id = dataset.id;
-            wx.navigateTo({
-                url: '/pages/enjoyDetail/enjoyDetail?id=' + id + '&index=' + dataset.index
-            })
+            common.isLoginRegist(this, () => {
+                let id = dataset.id;
+                wx.navigateTo({
+                    url: '/pages/enjoyDetail/enjoyDetail?id=' + id + '&index=' + dataset.index
+                })
+            });
         } else if (dataset.types === 'like') { //点赞
-            let index = dataset.index;
-            let userInfo = this.data.userInfo;
-            wx.showLoading({
-                title: '',
-                mask: true
-            })
-            if (userInfo.id == list[index].uid) return;
-            this.requestLike(list, index);
+            let that = this;
+            common.isLoginRegist(that, () => {
+                let index = dataset.index;
+                let userInfo = that.data.userInfo;
+                wx.showLoading({
+                    title: '',
+                    mask: true
+                })
+                if (userInfo.id == list[index].uid) return;
+                that.requestLike(list, index);
+            });
         } else if (dataset.types === 'report') { //举报
             let index = dataset.index;
             this.requestReport(list[index].id);
         } else if (dataset.types === 'play') { //语音播放
-            let index = dataset.index;
-            if (this.state.playId == list[index].id) { //
-                if (this.data.playing) {
-                    innerAudioContext.pause();
+            let that = this;
+            common.isLoginRegist(that, () => {
+                let index = dataset.index;
+                if (that.state.playId == list[index].id) { //
+                    if (that.data.playing) {
+                        innerAudioContext.pause();
+                    } else {
+                        innerAudioContext.play();
+                    }
                 } else {
+                    innerAudioContext.src = list[index].audio;
                     innerAudioContext.play();
+                    that.state.playId = list[index].id;
+                    that.setData({
+                        playAudioIdx: index
+                    })
                 }
-            } else {
-                innerAudioContext.src = list[index].audio;
-                innerAudioContext.play();
-                this.state.playId = list[index].id;
-                this.setData({
-                    playAudioIdx: index
-                })
-            }
+            });
         }
     },
 
@@ -366,7 +397,7 @@ Page({
         let that = this;
         let list = that.data.list;
         let url = 'api/share/getPage';
-        console.log(12,index);
+        console.log(12, index);
 
         if (list[index]) {
             util.httpRequest(url, {

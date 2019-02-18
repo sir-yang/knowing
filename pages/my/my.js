@@ -6,8 +6,27 @@ Page({
      * 页面的初始数据
      */
     data: {
+        requestStatus: false,
+        pageName: 'my',
         userInfo: '',
-        logo: ''
+        logo: '',
+
+        // 登录注册相关
+        loginRegistTk: 'hide',
+        showLogin: 'hide', //登录
+        showRegist: 'hide', //注册
+        showForget: 'hide', //忘记密码
+        showPerfect: ['hide', 'hide', 'hide', 'hide'], //0:完善信息 1:学生 2:教师 3:其他
+        identity: 1, //注册角色
+        genderId: 1,
+        CountdownVal: '发送验证码',
+        CountdownTime: 60,
+        onClick: true,
+        clearTimeout: true,
+        phoneVal: '',
+        passwordVal: '',
+        confirmVal: '',
+        codeVal: ''
     },
 
     /**
@@ -25,29 +44,43 @@ Page({
      */
     onShow: function() {
         let that = this;
+        that.setData({
+            requestStatus: false
+        })
         let token = common.getAccessToken();
         if (token) {
-            common.getPersonInfo().then((info) => {
+            common.isLoginRegist(that, (info) => {
                 wx.hideLoading();
-                that.setData({
-                    userInfo: info
-                })
-                // 消息状态
-                common.requestMessage(that);
-            })
+                if (info.statusId == 1) {
+                    that.setData({
+                        userInfo: info,
+                        requestStatus: true
+                    })
+                    // 消息状态
+                    common.requestMessage(that);
+                }
+            });
         } else {
             getApp().globalData.tokenUpdated = function () {
                 console.log('update success');
-                common.getPersonInfo().then((info) => {
+                common.isLoginRegist(that, (info) => {
                     wx.hideLoading();
-                    that.setData({
-                        userInfo: info
-                    })
-                })
-                // 消息状态
-                common.requestMessage(that);
+                    if (info.statusId == 1) {
+                        that.setData({
+                            userInfo: info,
+                            requestStatus: true
+                        })
+                        // 消息状态
+                        common.requestMessage(that);
+                    }
+                });
             };
         }
+    },
+
+    // ==============  登录 注册  ============ //
+    loginRegistEvent(event) {
+        common.loginRegistEvent(event, this);
     },
 
     // 事件

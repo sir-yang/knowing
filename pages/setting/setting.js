@@ -58,7 +58,7 @@ Page({
                                 icon: 'none',
                                 success() {
                                     wx.switchTab({
-                                        url: '/pages/index/index'
+                                        url: '/pages/enjoyCircle/enjoyCircle'
                                     })
                                 }
                             })

@@ -86,5 +86,15 @@
         <view wx:if="{{list.length > 0 && !hasNext}}" class='notmore'>没有更多数据</view>
         <view wx:if="{{list.length === 0}}" class='noComment'>关注知士，可在此查看知士分享内容</view>
     </block>
-
 </view>
+
+<!-- 登录注册相关 -->
+<view class='tankuang {{loginRegistTk}}'></view>
+<!-- 登录 -->
+<include src="/pages/common/login.wxml" />
+<!-- 忘记密码 -->
+<include src="/pages/common/forgetPw.wxml" />
+<!-- 注册 -->
+<include src="/pages/common/regist.wxml" />
+<!-- 完善信息 -->
+<include src="/pages/common/perfectInfo.wxml" />

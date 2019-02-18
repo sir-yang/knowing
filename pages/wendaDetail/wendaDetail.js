@@ -33,51 +33,21 @@ Page({
 
         let token = common.getAccessToken();
         if (token) {
-            that.requestGetDetail();
+            if (options.hasOwnProperty('id')) {
+                that.requestGetDetail();
+            } else {
+                that.requestGetQuestion();
+            }
         } else {
             getApp().globalData.tokenUpdated = function() {
                 console.log('update success');
-                that.requestGetDetail();
+                if (options.hasOwnProperty('id')) {
+                    that.requestGetDetail();
+                } else {
+                    that.requestGetQuestion();
+                }
             };
         }
-    },
-
-    /**
-     * 放弃回答
-     */
-    btn1() {
-        let url = "api/answer/refuse";
-        wx.showLoading({
-            title: '',
-            mask: true
-        })
-        let val = {
-            id: this.data.details.id
-        }
-        util.httpRequest(url, val, "POST").then((res) => {
-            wx.hideLoading();
-            if (res.result === "success") {
-                wx.showModal({
-                    title: '提示',
-                    content: res.msg,
-                    showCancel: false,
-                    success(_res) {
-                        wx.switchTab({
-                            url: '/pages/index/index',
-                        })
-                    }
-                });
-            } else {
-                common.showClickModal(res.msg)
-            }
-        })
-    },
-
-    /**
-     * 继续回答
-     */
-    btn2() {
-        wx.navigateBack({})
     },
 
     /**
@@ -155,6 +125,12 @@ Page({
             } else {
                 innerAudioContext.play();
             }
+        } else if (dataset.types === 'refuse') { //放弃回答
+            this.requestRefuse();
+        } else if (dataset.types === 'carry') { //继续回答
+            wx.navigateTo({
+                url: '/pages/reply/reply?id=' + this.data.details.id
+            })
         }
     },
 
@@ -174,6 +150,58 @@ Page({
                     requestStatus: true,
                     details: res.results
                 })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
+    },
+
+    // 获取问题信息
+    requestGetQuestion() {
+        let that = this;
+        let url = 'api/Answer/userAnswer';
+        util.httpRequest(url).then((res) => {
+            wx.hideLoading();
+            if (res.result === 'success') {
+                if (!res.results) {
+                    wx.showModal({
+                        title: '提示',
+                        content: '您当前没有回答问题',
+                        showCancel: false,
+                        success() {
+                            wx.navigateBack({})
+                        }
+                    })
+                }
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
+    },
+
+    // 放弃回答
+    requestRefuse() {
+        let url = "api/answer/refuse";
+        wx.showLoading({
+            title: '',
+            mask: true
+        })
+        let val = {
+            id: this.data.details.id
+        }
+        util.httpRequest(url, val, "POST").then((res) => {
+            wx.hideLoading();
+            if (res.result === "success") {
+                wx.showModal({
+                    title: '提示',
+                    content: res.msg,
+                    showCancel: false,
+                    success(_res) {
+                        wx.switchTab({
+                            url: '/pages/index/index'
+                        })
+                    }
+                });
             } else {
                 common.showClickModal(res.msg);
             }

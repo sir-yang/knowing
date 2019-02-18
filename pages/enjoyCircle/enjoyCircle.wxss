@@ -1,3 +1,7 @@
+@import "/pages/common/login.wxss";
+@import "/pages/common/forgetPw.wxss";
+@import "/pages/common/regist.wxss";
+
 page {
     background: #f0f3f8;
 }

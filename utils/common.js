@@ -347,7 +347,7 @@ function loginRegistData(that) {
 }
 
 // 登录注册弹框
-function isLoginRegist(that, types) {
+function isLoginRegist(that, func) {
     getPersonInfo().then((userInfo) => {
         if (userInfo) {
             if (!userInfo.avatarUrl && !userInfo.nickName) {
@@ -366,7 +366,8 @@ function isLoginRegist(that, types) {
                 loginRegistTk = 'show';
                 showLogin = 'show';
                 // 隐藏底部导航
-                if (wx.hideTabBar()) {
+                console.log(that.data.pageName);
+                if (wx.hideTabBar && that.data.pageName != 'my') {
                     wx.hideTabBar({});
                 }
                 that.setData({
@@ -378,7 +379,7 @@ function isLoginRegist(that, types) {
                 requestGetImgSend(that);
             } else if (!userInfo.name) { //未完善信息
                 // 隐藏底部导航
-                if (wx.hideTabBar()) {
+                if (wx.hideTabBar && that.data.pageName != 'my') {
                     wx.hideTabBar({});
                 }
                 loginRegistTk = 'show';
@@ -390,11 +391,7 @@ function isLoginRegist(that, types) {
                     showPerfect
                 })
             } else { //已登录
-                if (types === 'index') {
-                    wx.navigateTo({
-                        url: '/pages/askQuestion/askQuestion'
-                    })
-                }
+                func(userInfo);
             }
         } else {
             wx.redirectTo({
@@ -630,9 +627,9 @@ function requestLogin(that, vals) {
                 showPerfect[that.data.identity] = 'show';
                 loginRegistTk = 'show';
             } else {
+                userInfo.statusId = 1;
                 // 调用接口
-                if (that.data.pageName === 'index') {
-                    let userInfo = getInfo('userInfo');
+                if (that.data.pageName === 'index') { //问答列表
                     let role = 2;
                     if (userInfo.status != 5 && userInfo.status != 6 && userInfo.status != 8) {
                         role = 1;
@@ -640,10 +637,26 @@ function requestLogin(that, vals) {
                     that.setData({
                         role
                     })
+                    requestMessage(that);
+                    that.state.offset = 0;
                     that.requestList(0);
+                } else if (that.data.pageName === 'zhishiCircle') { //知士圈
+                    requestMessage(that);
+                    that.state.offset = 0;
+                    that.requestList(0);
+                } else if (that.data.pageName === 'enjoyCircle') { //知享圈
+                    requestMessage(that);
+                    that.state.offset = 0;
+                    that.requestGetList(0);
+                } else if (that.data.pageName === 'my') { //我的
+                    that.setData({
+                        requestStatus: true
+                    })
+                    // 消息状态
+                    requestMessage(that);
                 }
                 // 显示导航
-                if (wx.showTabBar()) {
+                if (wx.showTabBar && that.data.pageName != 'my') {
                     wx.showTabBar({});
                 }
             }
@@ -654,6 +667,7 @@ function requestLogin(that, vals) {
                 phoneVal: '',
                 passwordVal: '',
                 codeVal: '',
+                userInfo
             })
         } else {
             showClickModal(res.msg);
@@ -749,7 +763,7 @@ function requestSavePerfect(that, vals) {
                 showPerfect
             })
             // 显示导航
-            if (wx.showTabBar()) {
+            if (wx.showTabBar && tha.data.pageName != 'my') {
                 wx.showTabBar({});
             }
         } else {

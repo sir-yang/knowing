@@ -41,20 +41,6 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
-
-    },
-
-    /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
@@ -84,6 +70,14 @@ Page({
         this.state.isOnReachBottom = false;
     },
 
+    // 进入主页
+    viewDetail(event) {
+        let id = event.currentTarget.dataset.id;
+        wx.navigateTo({
+            url: '/pages/zhishiDetail/zhishiDetail?id=' + id
+        })
+    },
+
     // 获取关注列表
     requestGetList(offset) {
         let that = this;
@@ -94,7 +88,7 @@ Page({
             limit: that.state.limit,
             status: op.status
         }
-        if (op.hasOwnProperty("uid")){
+        if (op.hasOwnProperty("uid")) {
             data["uid"] = op.uid;
         }
         util.httpRequest(url, data).then((res) => {

@@ -53,8 +53,8 @@
 
     <view wx:if="{{userInfo.id == details.answers.id && details.status == 1}}" class='footer-tab-box'>
         <view class='flex_start'>
-            <view bindtap='btn1' class='footer-left-btn'>放弃回答</view>
-            <view bindtap='btn2' class='submit-btn'>继续回答</view>
+            <view bindtap='detailEvent' data-types='refuse' class='footer-left-btn'>放弃回答</view>
+            <view bindtap='detailEvent' data-types='carry' class='submit-btn'>继续回答</view>
         </view>
     </view>
 

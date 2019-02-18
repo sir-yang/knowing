@@ -1,4 +1,4 @@
-<view class='plr20'>
+<view wx:if="{{requestStatus}}" class='plr20'>
     <view class='top-bg-box'></view>
     <view class='base-info-box'>
         <view class='flex_start'>
@@ -84,3 +84,14 @@
         </view>
     </view>
 </view>
+
+<!-- 登录注册相关 -->
+<view class='tankuang {{loginRegistTk}}'></view>
+<!-- 登录 -->
+<include src="/pages/common/login.wxml" />
+<!-- 忘记密码 -->
+<include src="/pages/common/forgetPw.wxml" />
+<!-- 注册 -->
+<include src="/pages/common/regist.wxml" />
+<!-- 完善信息 -->
+<include src="/pages/common/perfectInfo.wxml" />

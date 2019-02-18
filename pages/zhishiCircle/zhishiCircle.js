@@ -8,12 +8,30 @@ Page({
      */
     data: {
         requestStatus: false,
+        pageName: 'zhishiCircle',
         bannerArr: [],
         tabIndex: -1,
         list: [],
         searchVal: '',
         schoolList: [],
-        schoolTab: 0 //顶部学校索引
+        schoolTab: 0, //顶部学校索引
+
+        // 登录注册相关
+        loginRegistTk: 'hide',
+        showLogin: 'hide', //登录
+        showRegist: 'hide', //注册
+        showForget: 'hide', //忘记密码
+        showPerfect: ['hide', 'hide', 'hide', 'hide'], //0:完善信息 1:学生 2:教师 3:其他
+        identity: 1, //注册角色
+        genderId: 1,
+        CountdownVal: '发送验证码',
+        CountdownTime: 60,
+        onClick: true,
+        clearTimeout: true,
+        phoneVal: '',
+        passwordVal: '',
+        confirmVal: '',
+        codeVal: ''
     },
 
     state: {
@@ -53,8 +71,14 @@ Page({
     },
 
     onShow() {
-        // 消息状态
-        common.requestMessage(this);
+        let that = this;
+        common.getPersonInfo().then((userInfo) => {
+            if (userInfo) {
+                if (userInfo.statusId == 1) { //判断是否调用右上角消息通知
+                    common.requestMessage(that);
+                }
+            }
+        })
     },
 
     /**
@@ -77,6 +101,11 @@ Page({
         this.state.offset = this.state.offset + this.state.limit;
         this.requestList(this.state.offset);
         this.state.isOnReachBottom = false;
+    },
+
+    // ==============  登录 注册  ============ //
+    loginRegistEvent(event) {
+        common.loginRegistEvent(event, this);
     },
 
     // 点击事件
@@ -104,15 +133,20 @@ Page({
             this.state.offset = 0;
             this.requestList(0);
         } else if (dataset.types === 'message') {
-            wx.navigateTo({
-                url: '/pages/message/message'
-            })
+            common.isLoginRegist(this, () => {
+                wx.navigateTo({
+                    url: '/pages/message/message'
+                })
+            });
         } else if (dataset.types === 'detail') {
-            let list = this.data.list;
-            let index = dataset.index;
-            wx.navigateTo({
-                url: '/pages/zhishiDetail/zhishiDetail?id=' + list[index].id
-            })
+            let that = this;
+            common.isLoginRegist(that, () => {
+                let list = that.data.list;
+                let index = dataset.index;
+                wx.navigateTo({
+                    url: '/pages/zhishiDetail/zhishiDetail?id=' + list[index].id
+                })
+            });
         }
     },
 
