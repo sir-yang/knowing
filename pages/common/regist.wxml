@@ -39,7 +39,18 @@
             </view>
         </view>
 
+        <view class='mt20'>
+            <checkbox-group bindchange="loginRegistEvent" data-types="checkbox">
+                <label class='f24 c3'>
+                    <checkbox value='1'></checkbox>已阅读并同意
+                    <text class='protocol' catchtap='loginRegistEvent' data-types='protocol'>《孰知协议》</text>
+                </label>
+            </checkbox-group>
+        </view>
+
         <button form-type='submit' class='modal-btn'>注册</button>
-        <view class='flex_end f24 c6'>已有账号？去<text class='cmain' bindtap='loginRegistEvent' data-types='toLogin'>登录</text></view>
+        <view class='flex_end f24 c6'>已有账号？去
+            <text class='cmain' bindtap='loginRegistEvent' data-types='toLogin'>登录</text>
+        </view>
     </form>
 </view>

@@ -2,7 +2,7 @@
     position: relative;
     width: 100%;
     margin-top: 20rpx;
-    padding: 20rpx 10rpx;
+    padding: 20rpx 0rpx;
     background: #e3e3e3;
     border-radius: 10rpx;
     font-size: 24rpx;
@@ -24,4 +24,29 @@
 }
 .comment-box .name {
     color: #336699;
+}
+
+.bbc {
+    border-bottom: 1px solid #ccc;
+}
+
+.likeName text {
+    font-size: 24rpx;
+    color: #336699;
+}
+
+.like-icon {
+    display: block;
+    width: 24rpx;
+    height: 24rpx;
+    margin-right: 10rpx;
+    margin-top: 6rpx;
+}
+
+.comment-icon {
+    display: block;
+    width: 27rpx;
+    height: 24rpx;
+    margin-right: 7rpx;
+    margin-top: 6rpx;
 }

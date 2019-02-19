@@ -98,13 +98,6 @@ Page({
         }
     },
 
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function() {
-
-    },
-
     // 事件
     detailEvent(event) {
         let dataset = event.currentTarget.dataset;
@@ -217,16 +210,17 @@ Page({
         util.httpRequest(url, data).then((res) => {
             wx.hideLoading();
             if (res.result === 'success') {
-                if (details.zan == 1) {
-                    details.likeNum = Number(details.likeNum) + 1;
-                    details.zan = 0;
-                } else {
-                    details.likeNum = Number(details.likeNum) - 1;
-                    details.zan = 1;
-                }
-                that.setData({
-                    details
-                })
+                // if (details.zan == 1) {
+                //     details.likeNum = Number(details.likeNum) + 1;
+                //     details.zan = 0;
+                // } else {
+                //     details.likeNum = Number(details.likeNum) - 1;
+                //     details.zan = 1;
+                // }
+                // that.setData({
+                //     details
+                // })
+                that.requestGetDetail();
             } else {
                 common.showClickModal(res.msg);
             }

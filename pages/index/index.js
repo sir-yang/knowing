@@ -34,6 +34,7 @@ Page({
         showForget: 'hide', //忘记密码
         showPerfect: ['hide', 'hide', 'hide', 'hide'], //0:完善信息 1:学生 2:教师 3:其他
         identity: 1, //注册角色
+        agree: false, //协议状态
         genderId: 1,
         CountdownVal: '发送验证码',
         CountdownTime: 60,

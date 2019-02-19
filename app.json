@@ -34,7 +34,8 @@
         "pages/myMsg/myMsg",
         "pages/coursesDetail/coursesDetail",
         "pages/enjoyDetail/enjoyDetail",
-        "pages/applyDesc/applyDesc"
+        "pages/applyDesc/applyDesc",
+        "pages/agree/agree"
     ],
     "window": {
         "backgroundTextStyle": "light",

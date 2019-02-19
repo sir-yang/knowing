@@ -76,7 +76,7 @@ Page({
             offset,
             limit: that.state.limit
         }
-        util.httpRequest(url).then((res) => {
+        util.httpRequest(url, data).then((res) => {
             wx.hideLoading();
             if (res.result === 'success') {
                 let handle = common.dataListHandle(that, res, that.data.list, offset);

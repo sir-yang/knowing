@@ -22,3 +22,26 @@
     background: #fff;
     border-radius: 50%;
 }
+
+checkbox .wx-checkbox-input {
+    width: 30rpx;
+    height: 30rpx;
+}
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+  text-align: center;
+  font-size: 22rpx;
+  color: #3399cc;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+.protocol {
+    color: #2889e2;
+}
+
+.modal-btn {
+    margin-top: 25rpx;
+}
+

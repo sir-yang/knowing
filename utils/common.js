@@ -469,6 +469,21 @@ function loginRegistEvent(event, that) {
         that.setData({
             identity: index
         })
+    } else if (dataset.types === 'checkbox') { //协议选中状态
+        let value = event.detail.value;
+        let agree = that.data.agree;
+        if (value.length > 0) {
+            agree = true;
+        } else {
+            agree = false;
+        }
+        that.setData({
+            agree
+        })
+    } else if (dataset.types === 'protocol') { //注册协议
+        wx.navigateTo({
+            url: '/pages/agree/agree'
+        })
     } else if (dataset.types === 'toLogin') { //去登录
         that.setData({
             showLogin: 'show',
@@ -515,6 +530,10 @@ function loginRegistEvent(event, that) {
         }
         if (isNull(vals.code)) {
             showTimeToast('请输入验证码');
+            return false;
+        }
+        if (!that.data.agree) {
+            showTimeToast('请勾选孰知协议');
             return false;
         }
         vals.wx_form_id = event.detail.formId;
