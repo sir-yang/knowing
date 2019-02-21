@@ -179,6 +179,11 @@ Page({
 
     },
 
+    // ==============  登录 注册  ============ //
+    loginRegistEvent(event) {
+        common.loginRegistEvent(event, this);
+    },
+    
     // 事件
     enjoyEvent(event) {
         let dataset = event.currentTarget.dataset;

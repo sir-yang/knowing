@@ -17,7 +17,8 @@ Page({
     },
 
     state: {
-        options: {}
+        options: {},
+        pageOnShow: false
     },
 
     /**
@@ -97,18 +98,13 @@ Page({
     },
 
     onShow() {
-        let that = this;
-        let userInfo = common.getStorage('userInfo');
-        if (userInfo) {
-            that.setData({
-                userInfo
+        if (!this.state.pageOnShow) return;
+        if (this.state.options.hasOwnProperty('type')) {
+            wx.showLoading({
+                title: '',
+                mask: true
             })
-        } else {
-            common.getPersonInfo().then((res) => {
-                that.setData({
-                    userInfo: res
-                })
-            })
+            this.requestGetQuestion();
         }
     },
 
@@ -129,7 +125,7 @@ Page({
             this.requestRefuse();
         } else if (dataset.types === 'carry') { //继续回答
             wx.navigateTo({
-                url: '/pages/reply/reply?id=' + this.data.details.id
+                url: '/pages/reply/reply?id=' + this.data.details.id + '&types=continue'
             })
         }
     },
@@ -171,6 +167,12 @@ Page({
                         success() {
                             wx.navigateBack({})
                         }
+                    })
+                } else {
+                    that.state.pageOnShow = true;
+                    that.setData({
+                        requestStatus: true,
+                        details: res.results
                     })
                 }
             } else {

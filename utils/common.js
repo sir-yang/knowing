@@ -579,6 +579,18 @@ function loginRegistEvent(event, that) {
         that.setData({
             educationIdx: event.detail.value
         })
+    } else if (dataset.types === 'closeLogin') { //点击登录遮罩层
+        that.setData({
+            loginRegistTk: 'hide',
+            showLogin: 'hide',
+            showPerfect: ['hide', 'hide', 'hide', 'hide'],
+            phoneVal: '',
+            passwordVal: '',
+            codeVal: ''
+        })
+        if (wx.showTabBar && that.data.pageName != 'my') {
+            wx.showTabBar({});
+        }
     }
 }
 

@@ -82,7 +82,6 @@ Page({
 
 
     onUnload() {
-        console.log(1212);
         this.setData({
             loginRegistTk: 'hide',
             showLogin: 'hide',
@@ -279,16 +278,29 @@ Page({
                     }
                 } else {
                     that.state.shareId = list[index].id;
+                    let itemList = ["分享围观", "免费围观"];
+                    if (item.aroundMoney > 0) {
+                        itemList = ["分享围观", "付费围观"];
+                    }
                     wx.showActionSheet({
-                        itemList: ["分享围观", "付费围观"],
+                        itemList,
                         success(res) {
-                            console.log(res.tapIndex);
                             if (res.tapIndex == 0) {
                                 that.getIsAuth();
                                 that.requestPoster();
                             } else {
                                 wx.showTabBar({})
-                                that.requestPay();
+                                if (item.aroundMoney > 0) {
+                                    that.requestPay();
+                                } else {
+                                    if (list[index].status == 3 || list[index].status == 5) {
+                                        wx.navigateTo({
+                                            url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
+                                        })
+                                    } else if (list[index].status == 1) {
+                                        common.showClickModal('问题暂未回答');
+                                    }
+                                }
                             }
                         }
                     })

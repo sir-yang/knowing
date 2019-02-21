@@ -8,13 +8,15 @@
         <view class='img-box flex_warp'>
             <image wx:for="{{details.qImg}}" wx:key="" catchtap='detailEvent' data-types='seeImg' data-index='{{index}}' src='{{item.thumb_small_url}}'></image>
         </view>
-        <view class='flex_start flex_items mt30 pb20 bbe9s'>
+        <view class='flex_start flex_items mt30 {{(details.status == 3 || details.status == 5) ? "pb20 bbe9s" : ""}}'>
             <view class='time-box'>{{details.times}}</view>
-            <!-- <view class='f24 c9'>{{details.aroundNum}}人已围观</view>
-            <view wx:if="{{details.askMoney> 0}}" class='money-box flex1 flex_end flex_items'>
-                <image src='/images/money_icon.png'></image>
-                <view>提问金额 {{details.askMoney}}元</view>
-            </view> -->
+            <block wx:if="{{details.status == 3 || details.status == 5}}">
+                <view class='f24 c9'>{{details.aroundNum}}人已围观</view>
+                <view wx:if="{{details.askMoney> 0}}" class='money-box flex1 flex_end flex_items'>
+                    <image src='/images/money_icon.png'></image>
+                    <view>提问金额 {{details.askMoney}}元</view>
+                </view>
+            </block>
         </view>
 
         <view wx:if='{{details.status == 3 || details.status == 5}}' class='flex_start mtb30'>
@@ -51,7 +53,7 @@
 
     </view>
 
-    <view wx:if="{{details.status == 1}}" class='footer-tab-box'>
+    <view wx:if="{{details.status == 2}}" class='footer-tab-box'>
         <view class='flex_start'>
             <view bindtap='detailEvent' data-types='refuse' class='footer-left-btn'>放弃回答</view>
             <view bindtap='detailEvent' data-types='carry' class='submit-btn'>继续回答</view>

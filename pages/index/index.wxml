@@ -55,7 +55,7 @@
             <view class='flex_start flex_items mt30 pb20'>
                 <view class='time-box'>{{item.times}}</view>
                 <view wx:if="{{role == 1}}" class='f24 c9'>{{item.aroundNum}}人已围观</view>
-                <view wx:if="{{item.aroundMoney > 0 || item.askMoney > 0}}" class='money-box flex1 flex_end flex_items'>
+                <view class='money-box flex1 flex_end flex_items'>
                     <image src='/images/money_icon.png'></image>
                     <view wx:if="{{role == 1}}">围观金额 {{item.aroundMoney}}元</view>
                     <view wx:else>提问金额 {{item.askMoney}}元</view>
@@ -81,14 +81,6 @@
     </view>
 </view>
 
-<!-- 围观弹框 -->
-<!-- <view class='tankuang {{onlookersTk}}' bindtap='questionAnswerEvent' data-types='closeTk'></view>
-<view class='onlookers-modal-content {{onlookersTk}}'>
-    <view class='look-btn' bindtap='questionAnswerEvent' data-types='share'>分享围观</view>
-    <view class='look-btn bte9s' bindtap='questionAnswerEvent' data-types='pay'>付费围观</view>
-    <view class='look-btn mt10' bindtap='questionAnswerEvent' data-types=''>取消</view>
-</view> -->
-
 <!-- 海报 -->
 <view class='tankuang {{posterTk}}'></view>
 <view class='poster-modal-content {{posterTk}}'>
@@ -101,7 +93,7 @@
 
 
 <!-- 登录注册相关 -->
-<view class='tankuang {{loginRegistTk}}'></view>
+<view class='tankuang {{loginRegistTk}}' bindtap='loginRegistEvent' data-types='closeLogin'></view>
 <!-- 登录 -->
 <include src="/pages/common/login.wxml" />
 <!-- 忘记密码 -->

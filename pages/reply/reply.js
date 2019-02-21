@@ -73,6 +73,7 @@ Page({
         common.requestGetCache(that, {
             type: 2
         }, (da) => {
+            let opt = that.state.options;
             if (da) {
                 if (da.status == 1) {
                     let replyData = da.content.data;
@@ -96,12 +97,16 @@ Page({
                         })
                     }
                 } else {
+                    if (!opt.hasOwnProperty('types')) {
+                        // 调用锁定问题
+                        that.requestAnswerLock();
+                    }
+                }
+            } else {
+                if (!opt.hasOwnProperty('types')) {
                     // 调用锁定问题
                     that.requestAnswerLock();
                 }
-            } else {
-                // 调用锁定问题
-                that.requestAnswerLock();
             }
         })
     },

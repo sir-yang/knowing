@@ -89,7 +89,7 @@
 </view>
 
 <!-- 登录注册相关 -->
-<view class='tankuang {{loginRegistTk}}'></view>
+<view class='tankuang {{loginRegistTk}}' bindtap='loginRegistEvent' data-types='closeLogin'></view>
 <!-- 登录 -->
 <include src="/pages/common/login.wxml" />
 <!-- 忘记密码 -->

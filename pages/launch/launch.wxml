@@ -1,7 +1,7 @@
 <view wx:if="{{loadStatus}}" class="userinfo">
     <block wx:if="{{!hasUserInfo}}">
         <image class='userinfo-avatar' src='/images/avatar.png'></image>
-        <button class='get-userinfo-btn' open-type='getUserInfo' bindgetuserinfo='getUserInfo'>获取头像昵称</button>
+        <button class='get-userinfo-btn' open-type='getUserInfo' bindgetuserinfo='getUserInfo'>走近孰知</button>
     </block>
     <block wx:else>
         <image class='userinfo-avatar' src='{{userInfo.avatarUrl}}'></image>

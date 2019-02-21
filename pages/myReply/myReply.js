@@ -24,7 +24,7 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
         wx.showLoading({
             title: '请稍后...',
             mask: true
@@ -35,7 +35,7 @@ Page({
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh: function () {
+    onPullDownRefresh: function() {
         this.state.isonPullDownRefresh = true;
         wx.showLoading({
             title: '加载中...',
@@ -49,7 +49,7 @@ Page({
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom: function () {
+    onReachBottom: function() {
         if (this.state.isonPullDownRefresh) return;
         if (!this.state.isOnReachBottom) return;
         if (!this.state.hasmore) return;
@@ -65,19 +65,21 @@ Page({
     // 事件
     myReplyEvent(event) {
         let dataset = event.currentTarget.dataset;
+        let list = this.data.list;
+        let index = dataset.index;
         if (dataset.types === 'typeTab') {
-            if (dataset.index == this.data.typeIndex) return;
+            if (index == this.data.typeIndex) return;
             this.setData({
-                typeIndex: dataset.index
+                typeIndex: index
             })
             this.state.offset = 0;
             this.requestGetList(0);
         } else if (dataset.types === 'seeImg') { //查看大图
-            let index = dataset.index;
+        
             let idx = dataset.idx;
             common.seeBigImg(list[index].qImg[idx].original_url, list[index].qImg, 2);
         } else if (dataset.types === 'detail') { //详情
-            let index = dataset.index;
+        
             wx.navigateTo({
                 url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
             })
@@ -118,7 +120,7 @@ Page({
         }
         util.httpRequest(url, data).then((res) => {
             wx.hideLoading();
-            if(res.result === 'success') {
+            if (res.result === 'success') {
                 let handle = common.dataListHandle(that, res, that.data.list, offset);
                 that.setData({
                     requestStatus: true,

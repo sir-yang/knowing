@@ -87,7 +87,11 @@ Page({
         let url = 'api/User/saveUser';
         util.httpRequest(url, vals, 'POST').then((res) => {
             if (res.result === 'success') {
-                common.getPersonInfo().then(() => {});
+                common.getPersonInfo().then(() => {
+                    wx.switchTab({
+                        url: '/pages/index/index'
+                    })
+                });
             } else {
                 common.showClickModal(res.msg);
             }
