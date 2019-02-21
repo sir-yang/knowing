@@ -7,17 +7,19 @@
     </view>
     <view wx:if="{{details.comment && details.comment.length > 0}}" class='plr10 flex_start'>
         <image class='comment-icon flex_shrink' src='/images/comment_icon.png'></image>
-        <view wx:for="{{details.comment}}" wx:key="" class='flex_start'>
-            <view class='name flex_shrink'>{{item.user.name ? item.user.name : item.user.nickName}}：</view>
-            <view class='reply-box flex1'>
-                <view catchtap='detailEvent' data-types='reply' data-pid='{{item.id}}' data-uid='{{item.uid}}'>{{item.content}}</view>
-                <view wx:for="{{item.reply}}" wx:key="" wx:for-item="reply" wx:for-index="idx" class='flex_start' catchtap='detailEvent' data-types='reply' data-pid='{{reply.id}}' data-uid='{{reply.uid}}'>
-                    <view class='flex_shrink'>
-                        <text class='name'>{{reply.user.name}}</text>
-                        <text> 回复 </text>
-                        <text class='name'>{{reply.users ? reply.users.name : ""}}：</text>
+        <view class='flex1'>
+            <view wx:for="{{details.comment}}" wx:key="" class='flex_start'>
+                <view class='name flex_shrink'>{{item.user.name ? item.user.name : item.user.nickName}}：</view>
+                <view class='reply-box flex1'>
+                    <view catchtap='detailEvent' data-types='reply' data-pid='{{item.id}}' data-uid='{{item.uid}}'>{{item.content}}</view>
+                    <view wx:for="{{item.reply}}" wx:key="" wx:for-item="reply" wx:for-index="idx" class='flex_start' catchtap='detailEvent' data-types='reply' data-pid='{{reply.id}}' data-uid='{{reply.uid}}'>
+                        <view class='flex_shrink'>
+                            <text class='name'>{{reply.user.name}}</text>
+                            <text> 回复 </text>
+                            <text class='name'>{{reply.users ? reply.users.name : ""}}：</text>
+                        </view>
+                        <view class='flex1'>{{reply.content}}</view>
                     </view>
-                    <view class='flex1'>{{reply.content}}</view>
                 </view>
             </view>
         </view>

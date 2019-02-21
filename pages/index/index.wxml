@@ -63,11 +63,13 @@
             </view>
 
             <!-- 知士 -->
-            <view wx:if="{{role == 1}}" class='flex_start flex_items bte9s pt20 pb10'>
-                <image class='list-item-head' src='{{item.answers.avatarUrl}}'></image>
-                <view class='flex1 flex_between flex_column'>
-                    <view class='f26 c3'>{{item.answers.name}}</view>
-                    <view class='f24 c6'>{{item.answers.keyWords}}</view>
+            <view wx:if="{{role == 1}}" class='flex_between  bte9s pt20 pb10'>
+                <view class='flex_start flex_items' catchtap='questionAnswerEvent' data-types='zhishiDetail' data-id='{{item.answers.id}}'>
+                    <image class='list-item-head' src='{{item.answers.avatarUrl}}'></image>
+                    <view class='flex1 flex_between flex_column'>
+                        <view class='f26 c3'>{{item.answers.name}}</view>
+                        <view class='f24 c6'>{{item.answers.keyWords}}</view>
+                    </view>
                 </view>
                 <view class='f24 cmain self_end'>查看回答详情</view>
             </view>
@@ -82,7 +84,7 @@
 </view>
 
 <!-- 海报 -->
-<view class='tankuang {{posterTk}}'></view>
+<view class='tankuang {{posterTk}}' bindtap='questionAnswerEvent' data-types='closePoster'></view>
 <view class='poster-modal-content {{posterTk}}'>
     <view class='poster-img'>
         <image src='{{posterUrl}}'></image>

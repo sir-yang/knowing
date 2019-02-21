@@ -72,10 +72,18 @@ Page({
 
     // 进入主页
     viewDetail(event) {
-        let id = event.currentTarget.dataset.id;
+        let list = this.data.list;
+        let index = event.currentTarget.dataset.index;
         wx.navigateTo({
-            url: '/pages/zhishiDetail/zhishiDetail?id=' + id
+            url: '/pages/zhishiDetail/zhishiDetail?id=' + list[index].id
         })
+        // if (list[index].status != 2 && list[index].status != 1) {
+        //     wx.navigateTo({
+        //         url: '/pages/zhishiDetail/zhishiDetail?id=' + list[index].id
+        //     })
+        // } else {
+        //     common.showClickModal('');
+        // }
     },
 
     // 获取关注列表

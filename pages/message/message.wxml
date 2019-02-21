@@ -12,7 +12,7 @@
             <view>私信</view>
             <image class='more-right-icon' src='/images/more_right_icon.png'></image>
         </view>
-        <view wx:if="{{userInfo.status == 7 || userInfo.status == 8}}" class='flex_between flex_items' bindtap='messageEvent' data-types='know'>
+        <view wx:if="{{userInfo.status != 1 && userInfo.status != 2}}" class='flex_between flex_items' bindtap='messageEvent' data-types='know'>
             <view>知了分享</view>
             <image class='more-right-icon' src='/images/more_right_icon.png'></image>
         </view>

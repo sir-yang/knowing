@@ -1,5 +1,5 @@
 <view wx:if="{{requestStatus}}" class='plr20 pb20'>
-    <view wx:for="{{list}}" wx:key="" bindtap='viewDetail' data-id='{{item.id}}' class='attention-item-box flex_start'>
+    <view wx:for="{{list}}" wx:key="" bindtap='viewDetail' data-index='{{index}}' class='attention-item-box flex_start'>
         <image class='head-img flex_shrink' src='{{item.avatarUrl}}'></image>
         <view class='flex_column flex_between flex1'>
             <view class='flex1 flex_between'>

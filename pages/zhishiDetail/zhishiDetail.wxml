@@ -8,11 +8,11 @@
                     <view class='flex_start flex_items mb10'>
                         <view class='f28 c3'>{{details.name}}</view>
                         <block wx:if='{{userInfo.id !== details.id}}'>
-                            <view wx:if="{{details.status == 7 || details.status == 8}}" class='attention-btn {{details.attention == 1 ? "cmain" : "c9"}}' bindtap='detailEvent' data-types='attention'>{{details.attention == 1 ? "+关注" : "取消关注"}}</view>
+                            <view wx:if="{{details.status != 1 && details.status != 2}}" class='attention-btn {{details.attention == 1 ? "cmain" : "c9"}}' bindtap='detailEvent' data-types='attention'>{{details.attention == 1 ? "+关注" : "取消关注"}}</view>
                         </block>
                     </view>
                     <view class='flex_start flex_items'>
-                        <view class='f24 c6'>知士</view>
+                        <view class='f24 c6'>{{(details.status == 1 || details.status == 2) ? "知了" : "知士"}}</view>
                         <view class='flex_start flex_items hide' bindtap='detailEvent' data-types='showEvaluate'>
                             <image class='score-icon' src='/images/score_icon.png'></image>
                             <view class='f24 color-red'>{{details.score}}</view>
@@ -20,14 +20,14 @@
                     </view>
                 </view>
             </view>
-            <view wx:if='{{userInfo.id !== details.id && details.attention == 0}}' class='flex_start flex_items self_start' bindtap='detailEvent' data-types='letters'>
+            <view wx:if='{{userInfo.id !== details.id}}' class='flex_start flex_items self_start' bindtap='detailEvent' data-types='letters'>
                 <image class='message-icon' src='/images/message_icon.png'></image>
                 <view class='f24 cmain'>私信</view>
             </view>
         </view>
         <view class='bte9s mt20 pt20'>
             <view class='flex_center'>
-                <view bindtap='detailEvent' data-types='fensi'>
+                <view wx:if="{{details.status != 1 && details.status != 2}}" bindtap='detailEvent' data-types='fensi'>
                     <view class='f24 c6 txt_center'>{{details.fansNum}}</view>
                     <view class='flex_start flex_items'>
                         <image class='fan-icon' src='/images/icon_1.png'></image>
@@ -55,8 +55,10 @@
     <view class='share-course-reply-box'>
         <view class='types-tab-box flex_start flex_items'>
             <view class='{{tabIndex == 0 ? "on" : ""}}' bindtap='detailEvent' data-types='tab' data-index='0'>TA的分享</view>
-            <view class='{{tabIndex == 1 ? "on" : ""}}' bindtap='detailEvent' data-types='tab' data-index='1'>TA的回答</view>
-            <view class='{{tabIndex == 2 ? "on" : ""}}' bindtap='detailEvent' data-types='tab' data-index='2'>TA的课程</view>
+            <block wx:if="{{details.status != 1 && details.status != 2}}">
+                <view class='{{tabIndex == 1 ? "on" : ""}}' bindtap='detailEvent' data-types='tab' data-index='1'>TA的回答</view>
+                <view class='{{tabIndex == 2 ? "on" : ""}}' bindtap='detailEvent' data-types='tab' data-index='2'>TA的课程</view>
+            </block>
         </view>
 
         <view class='share-course-reply-row'>
@@ -124,10 +126,6 @@
                     </view>
                 </view>
                 <view wx:if="{{list.length === 0}}" class='null-row'>暂无数据</view>
-                <!-- <view wx:if="{{list.length === 0}}" class='no-reply-box'>
-                    <view class='f28 c9 txt_center'>导师思考中~ 你也有 新的疑问？快来提问吧！</view>
-                    <view class='ask-question-btn' bindtap='detailEvent' data-types='question'>+我要提问</view>
-                </view> -->
             </block>
         </view>
     </view>
@@ -145,7 +143,7 @@
 </view>
 
 <!-- 海报 -->
-<view class='tankuang {{posterTk}}'></view>
+<view class='tankuang {{posterTk}}' bindtap='detailEvent' data-types='closePoster'></view>
 <view class='poster-modal-content {{posterTk}}'>
     <view class='poster-img'>
         <image src='{{posterUrl}}'></image>

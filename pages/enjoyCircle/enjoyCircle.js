@@ -148,7 +148,8 @@ Page({
         let that = this;
         common.getPersonInfo().then((info) => {
             that.setData({
-                userInfo: info
+                userInfo: info,
+                messageMark: ''
             })
             if (info.statusId == 1) { //判断是否调用右上角消息通知
                 common.requestMessage(that);

@@ -279,7 +279,7 @@ Page({
                 } else {
                     that.state.shareId = list[index].id;
                     let itemList = ["分享围观", "免费围观"];
-                    if (item.aroundMoney > 0) {
+                    if (list[index].aroundMoney > 0) {
                         itemList = ["分享围观", "付费围观"];
                     }
                     wx.showActionSheet({
@@ -289,18 +289,8 @@ Page({
                                 that.getIsAuth();
                                 that.requestPoster();
                             } else {
-                                wx.showTabBar({})
-                                if (item.aroundMoney > 0) {
-                                    that.requestPay();
-                                } else {
-                                    if (list[index].status == 3 || list[index].status == 5) {
-                                        wx.navigateTo({
-                                            url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
-                                        })
-                                    } else if (list[index].status == 1) {
-                                        common.showClickModal('问题暂未回答');
-                                    }
-                                }
+                                wx.showTabBar({});
+                                that.requestPay(index);
                             }
                         }
                     })
@@ -338,10 +328,6 @@ Page({
                 searchVal: event.detail.value
             })
         } else if (dataset.types === 'search') { //搜索
-            // if (that.data.searchVal == "") {
-            //     common.showTimeToast('请输入搜索关键词');
-            //     return;
-            // }
             that.state.offset = 0;
             that.requestList(0);
         } else if (dataset.types === 'message') { //消息
@@ -372,6 +358,16 @@ Page({
                 fail(err) {
                     common.showClickModal(err.errMsg);
                 }
+            })
+        } else if (dataset.types === 'zhishiDetail') { //知士详情
+            common.isLoginRegist(that, () => {
+                wx.navigateTo({
+                    url: '/pages/zhishiDetail/zhishiDetail?id=' + dataset.id
+                })
+            });
+        } else if (dataset.types === 'closePoster') { //关闭海报弹框
+            that.setData({
+                posterTk: 'hide'
             })
         }
     },
@@ -432,7 +428,7 @@ Page({
         let data = {
             type: 1
         }
-        
+
         common.requestCate(data, (res) => {
             if (res.result === 'success') {
                 that.setData({
@@ -465,19 +461,12 @@ Page({
         if (that.data.role == 2) {
             data.answer = 1;
         }
-        // data.answer = that.data.role == 1 ? 1 : 2;
         if (that.data.searchVal != '') {
             data.key = that.data.searchVal;
         }
         if (that.data.order == 1) {
             data.order = 1;
         }
-        // if (that.data.sortTab != 0) {
-        //     data.status = that.data.sortTab;
-        //     if (that.data.order == 1) {
-        //         data.order = 1;
-        //     }
-        // }
         if (that.state.pageOnShow) {
             wx.showLoading({
                 title: '',
@@ -528,7 +517,7 @@ Page({
     },
 
     // 调用支付围观
-    requestPay() {
+    requestPay(index) {
         let that = this;
         let url = 'api/Answer/around';
         wx.showLoading({
@@ -542,22 +531,41 @@ Page({
             console.log(res);
             if (res.result === 'success') {
                 wx.hideLoading();
-                common.requestPay(res.results, (status, res_1) => {
-                    if (status == 'success') {
+                if (res.results) {
+                    common.requestPay(res.results, (status, res_1) => {
+                        if (status == 'success') {
+                            wx.showModal({
+                                title: '提示',
+                                content: '支付成功',
+                                showCancel: false,
+                                success() {
+                                    wx.navigateTo({
+                                        url: '/pages/wendaDetail/wendaDetail?id=' + that.state.shareId
+                                    })
+                                }
+                            })
+                        } else {
+                            common.showClickModal('支付失败');
+                        }
+                    })
+                } else {
+                    let list = that.data.list;
+                    if (list[index].status == 3 || list[index].status == 5) {
                         wx.showModal({
                             title: '提示',
-                            content: '支付成功',
+                            content: '围观成功',
                             showCancel: false,
                             success() {
                                 wx.navigateTo({
-                                    url: '/pages/wendaDetail/wendaDetail?id=' + that.state.shareId
+                                    url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
                                 })
                             }
                         })
-                    } else {
-                        common.showClickModal('支付失败');
+                    } else if (list[index].status == 1) {
+                        common.showClickModal('问题暂未回答');
                     }
-                })
+                }
+                
             } else {
                 common.showClickModal(res.msg);
             }

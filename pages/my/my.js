@@ -45,7 +45,13 @@ Page({
     onShow: function() {
         let that = this;
         that.setData({
-            requestStatus: false
+            requestStatus: false,
+            loginRegistTk: 'hide',
+            showLogin: 'hide',
+            showPerfect: ['hide', 'hide', 'hide', 'hide'],
+            phoneVal: '',
+            passwordVal: '',
+            codeVal: ''
         })
         let token = common.getAccessToken();
         if (token) {
