@@ -20,7 +20,7 @@
                     </view>
                 </view>
             </view>
-            <view wx:if='{{userInfo.id !== details.id}}' class='flex_start flex_items self_start' bindtap='detailEvent' data-types='letters'>
+            <view wx:if='{{userInfo.id != details.id && details.status != 1 && details.status != 2}}' class='flex_start flex_items self_start' bindtap='detailEvent' data-types='letters'>
                 <image class='message-icon' src='/images/message_icon.png'></image>
                 <view class='f24 cmain'>私信</view>
             </view>
@@ -34,7 +34,7 @@
                         <view class='f24 c6'>粉丝</view>
                     </view>
                 </view>
-                <view class='attention-box' bindtap='detailEvent' data-types='guanzhu'>
+                <view class='{{(details.status == 1 || details.status == 2) ? "" : "attention-box"}}' bindtap='detailEvent' data-types='guanzhu'>
                     <view class='f24 c6 txt_center'>{{details.attentionNum}}</view>
                     <view class='flex_start flex_items'>
                         <image class='attention-icon' src='/images/icon_2.png'></image>
@@ -47,7 +47,7 @@
 
     <!-- 知士介绍 -->
     <view class='introduction-box'>
-        <view class='title'>知士简介</view>
+        <view class='title'>{{(details.status == 1 || details.status == 2) ? "知了" : "知士"}}简介</view>
         <view class='row'>{{details.introduce ? details.introduce : "暂无简介"}}</view>
     </view>
 
@@ -121,7 +121,7 @@
                         <view class='f24 c9'>{{item.aroundNum}}人已围观</view>
                         <view class='money-box flex1 flex_end flex_items'>
                             <image src='/images/money_icon.png'></image>
-                            <view>问题价值 {{item.askMoney}}元</view>
+                            <view>围观金额 {{item.aroundMoney}}元</view>
                         </view>
                     </view>
                 </view>

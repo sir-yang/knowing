@@ -71,11 +71,21 @@ Page({
             common.seeBigImg(list[index].img[idx].original_url, list[index].img, 2);
         } else if (dataset.types === 'delete') {
             let index = dataset.index;
-            wx.showLoading({
-                title: '',
-                mask: true
+            let that = this;
+            wx.showModal({
+                title: '提示',
+                content: '确认删除？',
+                success(res) {
+                    if (res.confirm) {
+                        wx.showLoading({
+                            title: '',
+                            mask: true
+                        })
+                        that.requestDelShare(index);
+                    }
+                }
             })
-            this.requestDelShare(index);
+            
         }
     },
 

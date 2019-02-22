@@ -236,11 +236,11 @@ Page({
             if (that.data.status) return; //录音中
             let imgList = that.data.imgList;
             let imgListArr = that.state.imgArr;
-            if (imgList.length >= 9) {
+            if (imgList.length >= 12) {
                 common.showClickModal('请先删除部分图片');
                 return false;
             }
-            common.uploadImg((9 - imgList.length), (photoUrl, tempFilePaths) => {
+            common.uploadImg((12 - imgList.length), (photoUrl, tempFilePaths) => {
                 tempFilePaths.forEach((url) => {
                     imgList.push(url);
                 });

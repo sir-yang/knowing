@@ -407,6 +407,11 @@ Page({
             // wx.hideLoading();
             that.requestGetShareList(0);
             if (res.result === 'success') {
+                if (res.results.status == 1 || res.results.status == 2) {
+                    wx.setNavigationBarTitle({
+                        title: '知了详情'
+                    })
+                }
                 that.setData({
                     requestStatus: true,
                     details: res.results

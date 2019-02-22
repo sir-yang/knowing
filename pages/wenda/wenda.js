@@ -31,6 +31,10 @@ Page({
             title: '请稍后...',
             mask: true
         });
+        let userInfo = common.getStorage('userInfo');
+        that.setData({
+            userInfo
+        })
         let token = common.getAccessToken();
         if (token) {
             that.requestKnowList(0);

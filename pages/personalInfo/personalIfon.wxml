@@ -44,7 +44,7 @@
 
         <view class='base-info-box'>
             <view class='desc'>简介</view>
-            <textarea name="introduce" value='{{userInfo.introduce}}' placeholder='请输入简介'></textarea>
+            <textarea name="introduce" value='{{userInfo.introduce}}' maxlength='300' placeholder='请输入简介'></textarea>
         </view>
 
         <view class='footer-spacing'></view>
