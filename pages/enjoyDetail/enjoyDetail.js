@@ -34,15 +34,7 @@ Page({
             mask: true
         })
 
-        let token = common.getAccessToken();
-        if (token) {
-            that.requestGetDetail();
-        } else {
-            getApp().globalData.tokenUpdated = function() {
-                console.log('update success');
-                that.requestGetDetail();
-            };
-        }
+        that.requestGetDetail();
     },
 
     /**

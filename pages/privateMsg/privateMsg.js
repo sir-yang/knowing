@@ -28,16 +28,7 @@ Page({
             mask: true
         });
 
-        let that = this;
-        let token = common.getAccessToken();
-        if (token) {
-            that.requestGetMsgList(0);
-        } else {
-            getApp().globalData.tokenUpdated = function() {
-                console.log('update success');
-                that.requestGetMsgList(0);
-            };
-        }
+        this.requestGetMsgList(0);
     },
 
     /**

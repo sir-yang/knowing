@@ -43,18 +43,8 @@ Page({
             title: '加载中...',
             mask: true
         });
-        let that = this;
-        let token = common.getAccessToken();
-        if (token) {
-            that.getUserInfo();
-            that.requestGetDetail(options);
-        } else {
-            getApp().globalData.tokenUpdated = function() {
-                console.log('update success');
-                that.getUserInfo();
-                that.requestGetDetail(options);
-            };
-        }
+        this.getUserInfo();
+        this.requestGetDetail(options);
     },
 
     getUserInfo() {
@@ -132,12 +122,10 @@ Page({
         } else if (dataset.types === 'attention') { //关注
             this.requestAttention();
         } else if (dataset.types === 'letters') { //私信
-            if (Number(this.data.details.attention) === 0) {
+            if (Number(this.data.details.letter) === 0) {
                 wx.navigateTo({
                     url: '/pages/privateMsgDetail/privateMsgDetail?uid=' + this.state.options.id
                 })
-            } else {
-                common.showClickModal("关注后才能发起私信")
             }
         } else if (dataset.types === 'showEvaluate') { //显示评价框
             if (Number(this.data.userInfo.id) === (this.data.details.id)) {
@@ -186,7 +174,7 @@ Page({
             } else {
                 let that = this;
                 that.state.shareId = list[index].id;
-                let itemList = ["分享围观", "免费围观"];
+                let itemList = ["免费围观"];
                 if (list[index].aroundMoney > 0) {
                     itemList = ["分享围观", "付费围观"];
                 }
@@ -194,8 +182,13 @@ Page({
                     itemList,
                     success(res) {
                         if (res.tapIndex == 0) {
-                            that.getIsAuth();
-                            that.requestPoster();
+                            if (list[index].aroundMoney > 0) {
+                                that.getIsAuth();
+                                that.requestPoster();
+                            } else {
+                                wx.showTabBar({});
+                                that.requestPay(index);
+                            }
                         } else {
                             wx.showTabBar({})
                             that.requestPay(index);

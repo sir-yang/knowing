@@ -82,7 +82,7 @@ function setToken(token) {
     setInfo('token', token.token);
     setInfo('refresh_token', token.fresh_token);
     //提前一半的时间就要刷新
-    let expireIn = token.token_expire * 1000;
+    let expireIn = (token.token_expire - 3600) * 1000;
     setInfo('expire_at', expireIn);
 }
 /**

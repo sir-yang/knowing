@@ -53,21 +53,10 @@ Page({
             mask: true
         })
 
-        let token = common.getAccessToken();
-        if (token) {
-            that.requestGetBanner();
-            that.requestGetCate();
-            that.requestList(0);
-            common.requestGetCollege(that);
-        } else {
-            getApp().globalData.tokenUpdated = function() {
-                console.log('update success');
-                that.requestGetBanner();
-                that.requestGetCate();
-                that.requestList(0);
-                common.requestGetCollege(that);
-            };
-        }
+        that.requestGetBanner();
+        that.requestGetCate();
+        that.requestList(0);
+        common.requestGetCollege(that);
     },
 
     onShow() {

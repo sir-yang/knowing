@@ -32,22 +32,10 @@ Page({
             mask: true
         })
 
-        let token = common.getAccessToken();
-        if (token) {
-            if (options.hasOwnProperty('id')) {
-                that.requestGetDetail();
-            } else {
-                that.requestGetQuestion();
-            }
+        if (options.hasOwnProperty('id')) {
+            that.requestGetDetail();
         } else {
-            getApp().globalData.tokenUpdated = function() {
-                console.log('update success');
-                if (options.hasOwnProperty('id')) {
-                    that.requestGetDetail();
-                } else {
-                    that.requestGetQuestion();
-                }
-            };
+            that.requestGetQuestion();
         }
     },
 

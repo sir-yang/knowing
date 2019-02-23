@@ -128,12 +128,51 @@ function formatPhoneOnkeyUp(mobile) {
 function httpRequest(url, data, method) {
     let m = method || 'GET';
     let d = data || {};
-    return wx.pro.request({
-        url,
-        data: d,
-        method: m
+    let accessToken = wx.getStorageSync('token');
+    console.log(accessToken)
+    if (accessToken) {
+        let expireAt = wx.getStorageSync('expire_at');
+        let now = Date.parse(new Date());
+        if (expireAt) {
+            if (now < expireAt) {
+                return wx.pro.request({
+                    url,
+                    data: d,
+                    method: m
+                });
+            }
+        }
+    }
+
+    //移出token
+    wx.removeStorageSync('token');
+    wx.removeStorageSync('expire_at');
+    return wx.pro.login({}).then((res) => {
+        console.log(res.code)
+        let val = {
+            code: res.code
+        }
+        let url = 'api/Oauth/createToken';
+        return wx.pro.request({
+            url,
+            data: val,
+            method: "POST"
+        });
+    }).then((res) => {
+        console.log(res);
+        if (res.result === "success") {
+            wx.setStorageSync('token', res.results.token);
+            let expireIn = (res.results.token_expire * 1000);
+            wx.setStorageSync('expire_at', expireIn);
+            return wx.pro.request({
+                url,
+                data: d,
+                method: m
+            });
+        }
     });
 }
+
 
 
 module.exports = {

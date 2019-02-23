@@ -59,19 +59,9 @@ Page({
             mask: true
         });
         let that = this;
-        let token = common.getAccessToken();
-        if (token) {
-            that.requestGetCate();
-            that.requestGetList(0);
-            common.requestGetCollege(that);
-        } else {
-            getApp().globalData.tokenUpdated = function() {
-                console.log('update success');
-                that.requestGetCate();
-                that.requestGetList(0);
-                common.requestGetCollege(that);
-            };
-        }
+        that.requestGetCate();
+        that.requestGetList(0);
+        common.requestGetCollege(that);
     },
 
     /**

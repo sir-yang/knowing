@@ -35,15 +35,7 @@ Page({
         that.setData({
             userInfo
         })
-        let token = common.getAccessToken();
-        if (token) {
-            that.requestKnowList(0);
-        } else {
-            getApp().globalData.tokenUpdated = function() {
-                console.log('update success');
-                that.requestKnowList(0);
-            };
-        }
+        that.requestKnowList(0);
     },
 
     /**

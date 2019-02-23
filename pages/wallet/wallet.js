@@ -28,16 +28,7 @@ Page({
             title: '请稍后...',
             mask: true
         })
-        let that = this;
-        let token = common.getAccessToken();
-        if (token) {
-            that.requestGetAccount();
-        } else {
-            getApp().globalData.tokenUpdated = function () {
-                console.log('update success');
-                that.requestGetAccount();
-            };
-        }
+        this.requestGetAccount();
     },
 
     /**

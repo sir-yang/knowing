@@ -87,7 +87,7 @@ function promisify() {
                 url: wx.getStorageSync('serverurl') + options.url,
                 method: options.method || 'GET',
                 header: {
-                    'token': common.getAccessToken()
+                    'token': wx.getStorageSync('token')
                 },
                 success: (res) => {
                     wx.removeStorageSync("formId")

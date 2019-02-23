@@ -22,19 +22,9 @@ Page({
         this.state.options = options;
         console.log(this.state.options);
         let that = this;
-        let token = common.getAccessToken();
-        if (token) {
-            common.getPersonInfo().then((info) => {
-                that.launchLoad(info);
-            });
-        } else {
-            getApp().globalData.tokenUpdated = function () {
-                console.log('update success');
-                common.getPersonInfo().then((info) => {
-                    that.launchLoad(info);
-                });
-            };
-        }
+        common.getPersonInfo().then((info) => {
+            that.launchLoad(info);
+        });
     },
 
     launchLoad(userInfo) {

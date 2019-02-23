@@ -43,31 +43,6 @@ App({
                 updateManager.applyUpdate()
             })
         }
-
-        wx.pro.checkSession().then(() => {
-            let token = common.getAccessToken();
-            if (!token) {
-                console.log('no token');
-            } else if (that.checkToken) {
-                that.checkToken = false;
-            }
-            that.refresh(options);
-        }).catch((_e) => {
-            //移出token
-            // wx.removeStorageSync('token');
-            // wx.removeStorageSync('expire_at');
-            that.refresh(options);
-        });
-    },
-
-    // 刷新token
-    refresh(_options) {
-        common.getToken().then((_res) => {
-            getApp().globalData.tokenUpdated();
-            // common.getPersonInfo().then((_re) => {
-            //     getApp().globalData.tokenUpdated();
-            // });
-        });
     },
 
     globalData: {

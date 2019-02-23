@@ -29,16 +29,7 @@ Page({
             title: '请稍后...',
             mask: true
         });
-        let that = this;
-        let token = common.getAccessToken();
-        if (token) {
-            that.requestGetList(0);
-        } else {
-            getApp().globalData.tokenUpdated = function () {
-                console.log('update success');
-                that.requestGetList(0);
-            };
-        }
+        this.requestGetList(0);
     },
 
     /**

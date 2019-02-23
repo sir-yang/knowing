@@ -64,15 +64,7 @@ Page({
             mask: true
         });
         let that = this;
-        let token = common.getAccessToken();
-        if (token) {
-            that.userRole();
-        } else {
-            getApp().globalData.tokenUpdated = function() {
-                console.log('update success');
-                that.userRole();
-            };
-        }
+        that.userRole();
     },
 
     onShow() {
@@ -278,7 +270,7 @@ Page({
                     }
                 } else {
                     that.state.shareId = list[index].id;
-                    let itemList = ["分享围观", "免费围观"];
+                    let itemList = ["免费围观"];
                     if (list[index].aroundMoney > 0) {
                         itemList = ["分享围观", "付费围观"];
                     }
@@ -286,8 +278,13 @@ Page({
                         itemList,
                         success(res) {
                             if (res.tapIndex == 0) {
-                                that.getIsAuth();
-                                that.requestPoster();
+                                if (list[index].aroundMoney > 0) {
+                                    that.getIsAuth();
+                                    that.requestPoster();
+                                } else {
+                                    wx.showTabBar({});
+                                    that.requestPay(index);
+                                }
                             } else {
                                 wx.showTabBar({});
                                 that.requestPay(index);

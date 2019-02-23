@@ -53,35 +53,18 @@ Page({
             passwordVal: '',
             codeVal: ''
         })
-        let token = common.getAccessToken();
-        if (token) {
-            common.isLoginRegist(that, (info) => {
-                wx.hideLoading();
-                if (info.statusId == 1) {
-                    that.setData({
-                        userInfo: info,
-                        requestStatus: true
-                    })
-                    // 消息状态
-                    common.requestMessage(that);
-                }
-            });
-        } else {
-            getApp().globalData.tokenUpdated = function () {
-                console.log('update success');
-                common.isLoginRegist(that, (info) => {
-                    wx.hideLoading();
-                    if (info.statusId == 1) {
-                        that.setData({
-                            userInfo: info,
-                            requestStatus: true
-                        })
-                        // 消息状态
-                        common.requestMessage(that);
-                    }
-                });
-            };
-        }
+
+        common.isLoginRegist(that, (info) => {
+            wx.hideLoading();
+            if (info.statusId == 1) {
+                that.setData({
+                    userInfo: info,
+                    requestStatus: true
+                })
+                // 消息状态
+                common.requestMessage(that);
+            }
+        });
     },
 
     // ==============  登录 注册  ============ //

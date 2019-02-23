@@ -50,21 +50,10 @@ Page({
                 content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
             });
         }
-
-        let that = this;
-        let token = common.getAccessToken();
-        if (token) {
-            // 获取提问金额
-            common.requestGetMoney(that);
-            that.getCache();
-        } else {
-            getApp().globalData.tokenUpdated = function() {
-                console.log('update success');
-                // 获取提问金额
-                common.requestGetMoney(that);
-                that.getCache();
-            };
-        }
+        
+        // 获取提问金额
+        common.requestGetMoney(this);
+        this.getCache();
     },
 
     // 获取暂存数据
