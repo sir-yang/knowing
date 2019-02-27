@@ -31,7 +31,7 @@ Page({
         //     title: '请稍后...',
         //     mask: true
         // })
-        common.requestGetCollege(this);
+        // common.requestGetCollege(this);
         let userInfo = common.getStorage('userInfo');
         if (userInfo) {
             let tabIndex = this.data.tabIndex;
@@ -44,7 +44,7 @@ Page({
     },
 
     onShow() {
-        this.schoolEvent();
+        // this.schoolEvent();
     },
 
     // 默认数据处理
@@ -103,6 +103,8 @@ Page({
             let genderData = this.data.genderData;
             let tabIndex = this.data.tabIndex;
             vals.gender = genderData[tabIndex].id;
+            console.log(vals);
+            return;
 
             // 调用接口
             this.requestSaveInfo(vals);

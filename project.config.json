@@ -47,10 +47,10 @@
 					"scene": "1008"
 				},
 				{
-					"id": -1,
+					"id": 1,
 					"name": "12",
-					"pathName": "pages/enjoyDetail/enjoyDetail",
-					"query": "id=5&index=0"
+					"pathName": "pages/launch/launch",
+					"query": ""
 				}
 			]
 		}

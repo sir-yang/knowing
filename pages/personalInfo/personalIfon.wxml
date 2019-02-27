@@ -15,15 +15,17 @@
             </view>
             <view class='flex_between flex_items'>
                 <view>学校名称</view>
-                <picker bindchange="personalEvent" data-types='school' value="{{schoolIdx}}" range="{{schoolList}}" range-key='name'>
+                <!-- <picker bindchange="personalEvent" data-types='school' value="{{schoolIdx}}" range="{{schoolList}}" range-key='name'>
                     <input class='rt-ipt c3' type='text' name="university" value='{{schoolIdx == -1 ? userInfo.inform.university : schoolList[schoolIdx].name}}' disabled placeholder='请输入学校名称' />
-                </picker>
+                </picker> -->
+                <input type='text' name="university" value='{{userInfo.inform.university}}' placeholder='请输入学校名称' />
             </view>
             <view class='flex_between flex_items'>
                 <view>学院</view>
-                <picker bindchange="personalEvent" data-types='college' value="{{collegeIdx}}" range="{{collegeList}}" range-key='name'>
+                <!-- <picker bindchange="personalEvent" data-types='college' value="{{collegeIdx}}" range="{{collegeList}}" range-key='name'>
                     <input class='rt-ipt c3' type='text' name="academy" value='{{collegeIdx == -1 ? userInfo.inform.academy : collegeList[collegeIdx].name}}' disabled placeholder='请输入学院' />
-                </picker>
+                </picker> -->
+                <input type='text' name="academy" value='{{userInfo.inform.academy}}' placeholder='请输入学院' />
             </view>
             <view class='flex_between flex_items'>
                 <view>专业</view>
@@ -34,7 +36,6 @@
                 <picker bindchange="personalEvent" data-types='education' value="{{educationIdx}}" range="{{educationList}}">
                     <input type='text' name="education" value='{{educationIdx == -1 ? userInfo.inform.education : educationList[educationIdx]}}' disabled placeholder='请选择学位' />
                 </picker>
-                <!-- <input type='text' name="education" value='{{userInfo.inform.education}}' placeholder='请输入学历' /> -->
             </view>
             <view class='flex_between flex_items'>
                 <view>年级</view>

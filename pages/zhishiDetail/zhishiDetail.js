@@ -1,4 +1,4 @@
-let common = getApp().globalData.commonFun;
+   let common = getApp().globalData.commonFun;
 let util = getApp().globalData.utilFun;
 
 Page({
