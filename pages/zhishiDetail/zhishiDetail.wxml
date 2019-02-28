@@ -20,7 +20,7 @@
                     </view>
                 </view>
             </view>
-            <view wx:if='{{userInfo.id != details.id && details.letter == 0}}' class='flex_start flex_items self_start' bindtap='detailEvent' data-types='letters'>
+            <view wx:if='{{userInfo.id != details.id && (details.letter == 0 || (details.status != 1 && details.status != 2))}}' class='flex_start flex_items self_start' bindtap='detailEvent' data-types='letters'>
                 <image class='message-icon' src='/images/message_icon.png'></image>
                 <view class='f24 cmain'>私信</view>
             </view>

@@ -126,6 +126,8 @@ Page({
                 wx.navigateTo({
                     url: '/pages/privateMsgDetail/privateMsgDetail?uid=' + this.state.options.id
                 })
+            } else {
+                common.showClickModal('关注知士后可发起私信');
             }
         } else if (dataset.types === 'showEvaluate') { //显示评价框
             if (Number(this.data.userInfo.id) === (this.data.details.id)) {
