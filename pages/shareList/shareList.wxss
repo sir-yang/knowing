@@ -19,6 +19,20 @@ page {
     color: #ff3300;
 }
 
+.audio-box {
+    margin-top: 25rpx;
+    padding: 20rpx;
+    border: 1px solid #e9e9e9;
+    border-radius: 10rpx;
+}
+.audio-img {
+    display: block;
+    width: 48rpx;
+    height: 48rpx;
+    margin-right: 10rpx;
+}
+
+
 /* 评论 */
 @import "/pages/common/comment.wxss";
 

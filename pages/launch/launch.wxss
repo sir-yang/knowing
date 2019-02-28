@@ -19,6 +19,15 @@
     color: #aaa;
 }
 
+.backImg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
 .get-userinfo-btn,
 .enter-use-btn {
     position: absolute;
@@ -29,7 +38,7 @@
     line-height: 88rpx;
     text-align: center;
     font-size: 30rpx;
-    color: #666;
+    color: #fff;
     border: 1px solid #e3e3e3;
     border-radius: 10rpx;
 }

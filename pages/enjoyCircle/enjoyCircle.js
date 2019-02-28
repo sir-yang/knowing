@@ -109,6 +109,10 @@ Page({
         });
         innerAudioContext.onError((res) => {
             common.showClickModal(res.errMsg);
+            that.setData({
+                playing: false,
+                playAudioIdx: -1
+            });
         })
     },
 

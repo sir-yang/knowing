@@ -102,7 +102,14 @@ Page({
         let details = this.data.details;
         if (dataset.types === 'seeImg') { //查看大图
             let index = dataset.index;
-            common.seeBigImg(details.qImg[index].original_url, details.qImg, 2);
+            let character = dataset.character;
+            let imgUrl = details.qImg[index].original_url;
+            let imgArr = details.qImg;
+            if (character == 2) {
+                imgUrl = details.aImg[index].original_url;
+                imgArr = details.aImg;
+            }
+            common.seeBigImg(imgUrl, imgArr, 2);
         } else if (dataset.types === 'play') { //播放/暂停音频
             if (this.data.playing) {
                 innerAudioContext.pause();

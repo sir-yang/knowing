@@ -1,7 +1,18 @@
 <view wx:if="{{requestStatus}}" class='plr20 pb20'>
-    <view wx:for="{{list}}" wx:key="" class='my-share-item-box'>
+    <view wx:for="{{list}}" wx:key="" class='my-share-item-box' bindtap='shareEvent' data-types='detail' data-index='{{index}}'>
         <view class='delete-btn' catchtap='shareEvent' data-types='delete' data-index='{{index}}'>删除</view>
         <view class='f24 c3 mt10'>{{item.content}}</view>
+        <view wx:if="{{item.audio}}" class='audio-box flex_start flex_items'>
+            <image class='audio-img' catchtap='shareEvent' data-types='play' data-index='{{index}}' src='/images/audio_icon.png'></image>
+            <view class='flex1'>
+                <view class='f20 c3'>分享语音.mp3</view>
+                <view class='flex_start flex_items mt5'>
+                    <view class='f18 c9 mr10'>{{playAudioIdx == index ? currentTime : "00:00"}}</view>
+                    <progress class='flex1' percent='{{playAudioIdx == index ? percent : 0}}' stroke-width="2" activeColor="#2889e2" backgroundColor="#edeaff"></progress>
+                    <view class='f18 c9 ml10'>{{item.audio_times ? item.audio_times : "00:00"}}</view>
+                </view>
+            </view>
+        </view>
         <view class='img-box mt20 mb10 flex_warp'>
             <image wx:for="{{item.img}}" wx:key="" wx:for-item="imgItem" wx:for-index="idx" catchtap='shareEvent' data-types='seeImg' data-index='{{index}}' data-idx='{{idx}}' src='{{imgItem.thumb_small_url}}'></image>
         </view>

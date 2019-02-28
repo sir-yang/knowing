@@ -22,6 +22,7 @@ Page({
         this.state.options = options;
         console.log(this.state.options);
         let that = this;
+        this.requestGetCofig();
         common.getPersonInfo().then((info) => {
             that.launchLoad(info);
         });
@@ -86,5 +87,22 @@ Page({
                 common.showClickModal(res.msg);
             }
         });
+    },
+
+    // 获取背景配置
+    requestGetCofig() {
+        let that = this;
+        let url = 'api/Config/authorize';
+        util.httpRequest(url).then((res) => {
+            wx.hideLoading();
+            if (res.result === 'success') {
+                that.setData({
+                    loadStatus: true,
+                    backImg: res.results
+                })
+            } else {
+                common.showClickModal(res.msg);
+            }
+        })
     }
 })

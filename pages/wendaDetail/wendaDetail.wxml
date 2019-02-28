@@ -6,7 +6,7 @@
         </view>
         <text selectable="true" class='mt20 f24 c3'>{{details.question}}</text>
         <view class='img-box flex_warp'>
-            <image wx:for="{{details.qImg}}" wx:key="" catchtap='detailEvent' data-types='seeImg' data-index='{{index}}' src='{{item.thumb_small_url}}'></image>
+            <image wx:for="{{details.qImg}}" wx:key="" catchtap='detailEvent' data-types='seeImg' data-index='{{index}}' data-character='1' src='{{item.thumb_small_url}}'></image>
         </view>
         <view class='flex_start flex_items mt30 {{(details.status == 3 || details.status == 5) ? "pb20 bbe9s" : ""}}'>
             <view class='time-box'>{{details.times}}</view>
@@ -47,8 +47,12 @@
             <text selectable="true">{{details.answer}}</text>
         </view>
 
-        <view class='detail-image'>
+        <!-- <view class='detail-image '>
             <image wx:for="{{details.aImg}}" wx:key="" src='{{item.original_url}}'></image>
+        </view> -->
+
+        <view class='img-box flex_warp'>
+            <image wx:for="{{details.aImg}}" wx:key="" catchtap='detailEvent' data-types='seeImg' data-index='{{index}}' data-character='2' src='{{item.thumb_small_url}}'></image>
         </view>
 
     </view>

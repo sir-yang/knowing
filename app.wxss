@@ -114,6 +114,10 @@
     margin-left: 35rpx;
 }
 
+.ml50 {
+    margin-left: 50rpx;
+}
+
 .mb5 {
     margin-bottom: 5rpx;
 }

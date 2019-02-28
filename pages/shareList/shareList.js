@@ -1,5 +1,7 @@
 let common = getApp().globalData.commonFun;
 let util = getApp().globalData.utilFun;
+
+const innerAudioContext = wx.createInnerAudioContext();
 Page({
 
     /**
@@ -7,7 +9,10 @@ Page({
      */
     data: {
         requestStatus: false,
-        list: []
+        list: [],
+        playing: false, //播放状态
+        percent: 0,
+        playAudioIdx: -1,
     },
 
     state: {
@@ -17,6 +22,7 @@ Page({
         pageOnShow: false,
         isOnReachBottom: true,
         isonPullDownRefresh: false,
+        playId: 0 //播放ID
     },
 
     /**
@@ -28,6 +34,65 @@ Page({
             mask: true
         })
         this.requestGetList(0);
+    },
+
+    /**
+     * 生命周期函数--监听页面初次渲染完成
+     */
+    onReady: function() {
+        let that = this;
+        // 播放
+        innerAudioContext.onPlay(() => {
+            console.log('开始播放');
+            that.setData({
+                playing: true
+            });
+        })
+        innerAudioContext.onPause((res) => {
+            console.log('监听暂停', res);
+            that.setData({
+                playing: false
+            });
+        })
+
+        innerAudioContext.onStop((res) => {
+            console.log('监听停止', res);
+            that.setData({
+                playing: false,
+                playAudioIdx: -1
+            });
+        })
+        // 监听结束
+        innerAudioContext.onEnded((res) => {
+            console.log('监听结束', res);
+            that.setData({
+                playing: false,
+                playAudioIdx: -1
+            });
+        })
+        // 监听进度
+        innerAudioContext.onTimeUpdate((res) => {
+            let percent = parseInt((parseInt(innerAudioContext.currentTime) / parseInt(innerAudioContext.duration)) * 100);
+            let currentTime = util.changeTimeFormat(parseInt(innerAudioContext.currentTime));
+            that.setData({
+                percent,
+                currentTime
+            })
+        });
+        innerAudioContext.onError((res) => {
+            common.showClickModal(res.errMsg);
+            that.setData({
+                playing: false,
+                playAudioIdx: -1
+            });
+        })
+    },
+
+    onShow() {
+        let that = this;
+        getApp().globalData.enjoyUpdateCallback = function(index) {
+            that.requestGetDetail(index);
+        };
     },
 
     /**
@@ -65,7 +130,12 @@ Page({
     shareEvent(event) {
         let list = this.data.list;
         let dataset = event.currentTarget.dataset;
-        if (dataset.types === 'seeImg') {
+        if (dataset.types === 'detail') {
+            let index = dataset.index;
+            wx.navigateTo({
+                url: '/pages/enjoyDetail/enjoyDetail?id=' + list[index].id + '&index=' + index
+            })
+        } else if (dataset.types === 'seeImg') {
             let index = dataset.index;
             let idx = dataset.idx;
             common.seeBigImg(list[index].img[idx].original_url, list[index].img, 2);
@@ -85,7 +155,23 @@ Page({
                     }
                 }
             })
-
+        } else if (dataset.types === 'play') { //语音播放
+            let that = this;
+            let index = dataset.index;
+            if (that.state.playId == list[index].id) { //
+                if (that.data.playing) {
+                    innerAudioContext.pause();
+                } else {
+                    innerAudioContext.play();
+                }
+            } else {
+                innerAudioContext.src = list[index].audio;
+                innerAudioContext.play();
+                that.state.playId = list[index].id;
+                that.setData({
+                    playAudioIdx: index
+                })
+            }
         }
     },
 
@@ -114,6 +200,30 @@ Page({
                 common.showClickModal(res.msg);
             }
         })
+    },
+
+    // 获取详情 更新
+    requestGetDetail(index) {
+        let that = this;
+        let list = that.data.list;
+        let url = 'api/share/getPage';
+
+        if (list[index]) {
+            util.httpRequest(url, {
+                id: list[index].id
+            }).then((res) => {
+                if (res.result === 'success') {
+                    list[index].comments = res.results.comments;
+                    list[index].likeNum = res.results.likeNum;
+                    list[index].zan = res.results.zan;
+                    that.setData({
+                        list
+                    })
+                } else {
+                    common.showClickModal(res.msg);
+                }
+            })
+        }
     },
 
     // 删除分享
