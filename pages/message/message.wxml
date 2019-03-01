@@ -9,11 +9,11 @@
             <image class='more-right-icon' src='/images/more_right_icon.png'></image>
         </view>
         <view class='flex_between flex_items' bindtap='messageEvent' data-types='private'>
-            <view>私信</view>
+            <view class='{{messageMark.letter_message == 1 ? "msg" : ""}}'>私信</view>
             <image class='more-right-icon' src='/images/more_right_icon.png'></image>
         </view>
         <view wx:if="{{userInfo.status != 1 && userInfo.status != 2}}" class='flex_between flex_items' bindtap='messageEvent' data-types='know'>
-            <view>知了分享</view>
+            <view class='{{messageMark.share_message == 1 ? "msg" : ""}}'>知了分享</view>
             <image class='more-right-icon' src='/images/more_right_icon.png'></image>
         </view>
     </view>
