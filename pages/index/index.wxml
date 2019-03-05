@@ -25,8 +25,14 @@
         <view class='ask-question' bindtap='questionAnswerEvent' data-types='ask'>+提问</view>
     </view>
 
+    <!-- 知士 -->
+    <view wx:if="{{role == 2}}" class='flex_start flex_items role_tab_box'>
+        <view class='flex1 mr20 {{roleTab == 2 ? "on" : ""}}' bindtap='questionAnswerEvent' data-types='roleTab' data-index='2'>问答社区</view>
+        <view class='flex1 {{roleTab == 1 ? "on" : ""}}' bindtap='questionAnswerEvent' data-types='roleTab' data-index='1'>知了问题</view>
+    </view>
+
     <!-- 普通用户 -->
-    <view wx:if="{{role == 1}}" class='sort-box flex_between flex_items'>
+    <view wx:if="{{role == 1 || roleTab == 2}}" class='sort-box flex_between flex_items'>
         <view class='sort-item {{sortTab == 3 ? (order == 1 ? "on" : "down") : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='3'>提问时间</view>
         <view class='sort-item {{sortTab == 2 ? (order == 1 ? "on" : "down") : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='2'>围观金额</view>
         <view class='sort-item {{sortTab == 1 ? (order == 1 ? "on" : "down") : ""}}' bindtap='questionAnswerEvent' data-types='sortTab' data-index='1'>围观人数</view>
@@ -46,7 +52,7 @@
                     <image class='list-item-head' src='{{item.user.avatarUrl}}'></image>
                     <view class='f28 c3'>{{item.user.name}}</view>
                 </view>
-                <view wx:if="{{role == 2}}" class='answer-text' catchtap='questionAnswerEvent' data-types='reply' data-index='{{index}}'>去回答</view>
+                <view wx:if="{{role == 2 && roleTab == 1}}" class='answer-text' catchtap='questionAnswerEvent' data-types='reply' data-index='{{index}}'>去回答</view>
             </view>
             <view class='mt20 f24 c3'>{{item.question}}</view>
             <view wx:if="{{item.qImg.length > 0}}" class='img-box flex_warp'>

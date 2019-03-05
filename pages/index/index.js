@@ -10,6 +10,7 @@ Page({
         requestStatus: false,
         pageName: 'index',
         typeTab: 0,
+        roleTab: 2, //默认显示问答社区列表
         sortTab: 3,
         order: 1,
         posterTk: 'hide', //海报弹框
@@ -230,8 +231,8 @@ Page({
                 searchVal: '',
                 typeTab: dataset.index
             })
-            this.state.offset = 0;
-            this.requestList(0);
+            that.state.offset = 0;
+            that.requestList(0);
         } else if (dataset.types === 'school') { //学校切换
             that.setData({
                 schoolTab: event.detail.value
@@ -242,6 +243,14 @@ Page({
                     url: '/pages/askQuestion/askQuestion'
                 })
             });
+        } else if (dataset.types === 'roleTab') { //知士问题切换
+            let index = dataset.index;
+            if (index == that.data.roleTab) return; 
+            that.setData({
+                roleTab: index
+            })
+            that.state.offset = 0;
+            that.requestList(0);
         } else if (dataset.types === 'sortTab') { //升降序
             let order = that.data.order;
             if (that.data.sortTab == dataset.index) {
@@ -453,10 +462,8 @@ Page({
             offset,
             limit: that.state.limit,
             type: typeTabArr[that.data.typeTab].id,
-            status: that.data.sortTab
-        }
-        if (that.data.role == 2) {
-            data.answer = 1;
+            status: that.data.sortTab,
+            answer: that.data.roleTab
         }
         if (that.data.searchVal != '') {
             data.key = that.data.searchVal;

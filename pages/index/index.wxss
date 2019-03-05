@@ -43,6 +43,22 @@ Page {
     color: #fff;
 }
 
+.role_tab_box {
+    margin-top: 20rpx;
+}
+.role_tab_box > view.flex1 {
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    line-height: 82rpx;
+    font-size: 26rpx;
+    color: #999;
+}
+.role_tab_box > view.flex1.on {
+    background: #fff;
+    color: #278ae2;
+}
+
 .sort-box {
     margin-top: 20rpx;
     padding: 0 40rpx 0 20rpx;
