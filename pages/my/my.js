@@ -12,6 +12,8 @@ Page({
         logo: '',
 
         // 登录注册相关
+        educationList: ["学士", "硕士", "博士", "其他"],
+        educationIdx: -1,
         loginRegistTk: 'hide',
         showLogin: 'hide', //登录
         showRegist: 'hide', //注册

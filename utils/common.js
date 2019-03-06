@@ -557,10 +557,6 @@ function loginRegistEvent(event, that) {
             return false;
         }
 
-        // if (isNull(vals.code)) {
-        //     showTimeToast('请输入验证码');
-        //     return false;
-        // }
         vals.wx_form_id = event.detail.formId;
 
         requestSavePerfect(that, vals);

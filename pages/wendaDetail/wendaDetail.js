@@ -103,11 +103,14 @@ Page({
         if (dataset.types === 'seeImg') { //查看大图
             let index = dataset.index;
             let character = dataset.character;
-            let imgUrl = details.qImg[index].original_url;
-            let imgArr = details.qImg;
-            if (character == 2) {
+            let imgUrl = "";
+            let imgArr = [];
+            if (character == 2) { //问题回答
                 imgUrl = details.aImg[index].original_url;
                 imgArr = details.aImg;
+            } else { //提问图片
+                imgUrl = details.qImg[index].original_url;
+                imgArr = details.qImg;
             }
             common.seeBigImg(imgUrl, imgArr, 2);
         } else if (dataset.types === 'play') { //播放/暂停音频

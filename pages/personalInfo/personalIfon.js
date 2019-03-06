@@ -87,10 +87,13 @@ Page({
     personalEvent(event) {
         let dataset = event.currentTarget.dataset;
         if (dataset.types === 'gender') {
+            let that = this;
             wx.showActionSheet({
                 itemList: ["男", "女"],
                 success(res) {
-                    tabIndex: res.tabIndex
+                    that.setData({
+                        tabIndex: res.tapIndex
+                    })
                 }
             })
         } else if (dataset.types === 'submit') {
@@ -103,9 +106,6 @@ Page({
             let genderData = this.data.genderData;
             let tabIndex = this.data.tabIndex;
             vals.gender = genderData[tabIndex].id;
-            console.log(vals);
-            return;
-
             // 调用接口
             this.requestSaveInfo(vals);
         } else if (dataset.types === 'school') {

@@ -25,10 +25,10 @@ Page({
         schoolTab: 0, //顶部学校索引
         collegeList: [], //学院
         collegeIdx: -1,
-        educationList: ["学士", "硕士", "博士", "其他"],
-        educationIdx: -1,
 
         // 登录注册相关
+        educationList: ["学士", "硕士", "博士", "其他"],
+        educationIdx: -1,
         loginRegistTk: 'hide',
         showLogin: 'hide', //登录
         showRegist: 'hide', //注册
@@ -229,6 +229,7 @@ Page({
             if (dataset.index == that.data.typeTab) return;
             that.setData({
                 searchVal: '',
+                list: [],
                 typeTab: dataset.index
             })
             that.state.offset = 0;
@@ -245,8 +246,9 @@ Page({
             });
         } else if (dataset.types === 'roleTab') { //知士问题切换
             let index = dataset.index;
-            if (index == that.data.roleTab) return; 
+            if (index == that.data.roleTab) return;
             that.setData({
+                list: [],
                 roleTab: index
             })
             that.state.offset = 0;
@@ -260,15 +262,17 @@ Page({
             }
             that.setData({
                 sortTab: dataset.index,
-                order
+                order,
+                list: []
             })
 
             that.state.offset = 0;
             that.requestList(0);
         } else if (dataset.types === 'detail') { //详情
             common.isLoginRegist(that, () => {
+                console.log(1212);
                 let index = dataset.index;
-                if (that.data.role == 2) return;
+                if (that.data.role == 2 && that.data.roleTab == 1) return;
                 if (list[index].around == 1) {
                     if (list[index].status == 3 || list[index].status == 5) {
                         wx.navigateTo({
@@ -569,7 +573,7 @@ Page({
                         common.showClickModal('问题暂未回答');
                     }
                 }
-                
+
             } else {
                 common.showClickModal(res.msg);
             }

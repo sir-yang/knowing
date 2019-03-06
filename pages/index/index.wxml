@@ -60,16 +60,16 @@
             </view>
             <view class='flex_start flex_items mt30 pb20'>
                 <view class='time-box'>{{item.times}}</view>
-                <view wx:if="{{role == 1}}" class='f24 c9'>{{item.aroundNum}}人已围观</view>
+                <view wx:if="{{role == 1 || roleTab == 2}}" class='f24 c9'>{{item.aroundNum}}人已围观</view>
                 <view class='money-box flex1 flex_end flex_items'>
                     <image src='/images/money_icon.png'></image>
-                    <view wx:if="{{role == 1}}">围观金额 {{item.aroundMoney}}元</view>
+                    <view wx:if="{{role == 1 || roleTab == 2}}">围观金额 {{item.aroundMoney}}元</view>
                     <view wx:else>提问金额 {{item.askMoney}}元</view>
                 </view>
             </view>
 
             <!-- 知士 -->
-            <view wx:if="{{role == 1}}" class='flex_between  bte9s pt20 pb10'>
+            <view wx:if="{{role == 1  || roleTab == 2}}" class='flex_between  bte9s pt20 pb10'>
                 <view class='flex_start flex_items' catchtap='questionAnswerEvent' data-types='zhishiDetail' data-id='{{item.answers.id}}'>
                     <image class='list-item-head' src='{{item.answers.avatarUrl}}'></image>
                     <view class='flex1 flex_between flex_column'>
