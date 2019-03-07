@@ -461,28 +461,27 @@ Page({
         let that = this;
         let url = 'api/Answer/save';
         if (vals.hasOwnProperty('aAudio')) { //判断是否有语音 有则执行上传
-            that.uploadAudio((aAudio) => {
-                vals.aAudio = aAudio;
+            that.uploadAudio(vals);
+        } else {
+            util.httpRequest(url, vals, 'POST').then((res) => {
+                if (res.result === 'success') {
+                    wx.showModal({
+                        title: '提示',
+                        content: res.msg,
+                        showCancel: false,
+                        success() {
+                            wx.navigateBack({});
+                        }
+                    })
+                } else {
+                    common.showClickModal(res.msg);
+                }
             })
         }
-        util.httpRequest(url, vals, 'POST').then((res) => {
-            if (res.result === 'success') {
-                wx.showModal({
-                    title: '提示',
-                    content: res.msg,
-                    showCancel: false,
-                    success() {
-                        wx.navigateBack({});
-                    }
-                })
-            } else {
-                common.showClickModal(res.msg);
-            }
-        })
     },
 
     // 上传语音
-    uploadAudio(func) {
+    uploadAudio(vals) {
         let that = this;
         wx.showLoading({
             title: '请稍后...',
@@ -500,7 +499,23 @@ Page({
             });
         }).then((res) => {
             let key = JSON.parse(res.data).key;
-            func(key);
+            vals.audio = key;
+            let saveUrl = 'api/Answer/save';
+            util.httpRequest(saveUrl, vals, 'POST').then((res) => {
+                wx.hideLoading();
+                if (res.result === 'success') {
+                    wx.showModal({
+                        title: '提示',
+                        content: res.msg,
+                        showCancel: false,
+                        success() {
+                            wx.navigateBack({});
+                        }
+                    })
+                } else {
+                    common.showClickModal(res.msg);
+                }
+            });
         });
     }
 })

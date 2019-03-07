@@ -3,7 +3,7 @@
         <image class='head-img flex_shrink' src='{{item.avatarUrl}}'></image>
         <view class='flex_column flex_between flex1'>
             <view class='flex1 flex_between'>
-                <view class='f28 c3 bold'>{{item.name ? item.name : item.nickName}}</view>
+                <view class='f28 c3 bold'>{{(item.status == 1 || item.status == 2) ? item.nickName : item.name}}</view>
                 <view wx:if="{{status == 2}}" class='attention-status' catchtap='requestCancalAttention' data-index='{{index}}'>√已关注</view>
             </view>
             <view class='f24 c6'>{{item.keyWords}}</view>

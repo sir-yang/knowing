@@ -44,7 +44,7 @@ Page({
             mask: true
         });
         this.getUserInfo();
-        this.requestGetDetail(options);
+        this.requestGetDetail('load');
     },
 
     getUserInfo() {
@@ -393,19 +393,23 @@ Page({
 
 
     // 获取知士详情
-    requestGetDetail(opt) {
+    requestGetDetail(types) {
         let that = this;
+        let opt = that.state.options;
         let url = 'api/User/getPage';
         util.httpRequest(url, {
             id: opt.id
         }).then((res) => {
-            // wx.hideLoading();
-            that.requestGetShareList(0);
+            if (types == 'load') {//初次加载
+                that.requestGetShareList(0);
+            }
             if (res.result === 'success') {
-                if (res.results.status == 1 || res.results.status == 2) {
-                    wx.setNavigationBarTitle({
-                        title: '知了详情'
-                    })
+                if (types == 'load') {//初次加载
+                    if (res.results.status == 1 || res.results.status == 2) {
+                        wx.setNavigationBarTitle({
+                            title: '知了详情'
+                        })
+                    }
                 }
                 that.setData({
                     requestStatus: true,
@@ -503,17 +507,7 @@ Page({
             wx.hideLoading();
             common.showTimeToast(res.msg);
             if (res.result === 'success') {
-                let details = that.data.details;
-                if (details.attention == 1) {
-                    details.attention = 0;
-                    details.fansNum = Number(details.fansNum) + 1;
-                } else {
-                    details.attention = 1;
-                    details.fansNum = Number(details.fansNum) - 1
-                }
-                that.setData({
-                    details
-                })
+                that.requestGetDetail('refresh');
             }
         })
     },

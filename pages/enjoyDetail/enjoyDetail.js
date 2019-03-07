@@ -123,10 +123,10 @@ Page({
                 }
             }
 
+            that.state.pid = '';
             wx.showActionSheet({
                 itemList,
                 success(res) {
-                    console.log(res.tapIndex);
                     if (res.tapIndex == 0) {
                         if (userInfo.id != details.user.id) {
                             if (userInfo.id == dataset.uid) {
@@ -151,18 +151,18 @@ Page({
                 }
             })
         } else if (dataset.types === 'ipt') {
-            console.log(event);
             this.setData({
                 contentVal: event.detail.value
             })
         } else if (dataset.types === 'submit') {
-            if (Number(common.getStorage("userInfo").id) === (this.data.details.uid)){
+            console.log(this.state.pid);
+            if (Number(common.getStorage("userInfo").id) === (this.data.details.uid) && !this.state.pid){
                 common.showTimeToast('不能评论自己');
-                return false;
+                return;
             }
             if (common.isNull(this.data.contentVal)) {
                 common.showTimeToast('请输入评论内容');
-                return false;
+                return;
             }
             this.requestSubmitComment();
         }

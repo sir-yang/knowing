@@ -399,7 +399,6 @@ Page({
         let that = this;
         let list = that.data.list;
         let url = 'api/share/getPage';
-        console.log(12, index);
 
         if (list[index]) {
             util.httpRequest(url, {

@@ -10,15 +10,16 @@
         <view class='flex1'>
             <view wx:for="{{details.comment}}" wx:key="" class=''>
                 <view class='flex_start'>
-                    <view class='name flex_shrink'>{{item.user.name ? item.user.name : item.user.nickName}}：</view>
+                    <view class='name flex_shrink'>{{(item.user.status == 1 || item.user.status == 2) ? item.user.nickName : item.user.name}}：</view>
                     <view class='flex1' catchtap='detailEvent' data-types='reply' data-pid='{{item.id}}' data-uid='{{item.uid}}'>{{item.content}}</view>
                 </view>
 
                 <view wx:for="{{item.reply}}" wx:key="" wx:for-item="reply" wx:for-index="idx" class='flex_start ml50' catchtap='detailEvent' data-types='reply' data-pid='{{reply.id}}' data-uid='{{reply.uid}}'>
                     <view class='flex_shrink'>
-                        <text class='name'>{{reply.user.name}}</text>
+                        <text class='name'>{{(reply.user.status == 1 || reply.user.status== 2) ? reply.user.nickName : reply.user.name}}</text>
                         <text> 回复 </text>
-                        <text class='name'>{{reply.users ? reply.users.name : ""}}：</text>
+                        <text wx:if="{{reply.users}}" class='name'>{{(reply.users.status == 1 || reply.users.status== 2) ? reply.users.nickName : reply.users.name}}：</text>
+                        <text wx:else class='name'>：</text>
                     </view>
                     <view class='flex1'>{{reply.content}}</view>
                 </view>
