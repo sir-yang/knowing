@@ -247,9 +247,17 @@ Page({
         } else if (dataset.types === 'roleTab') { //知士问题切换
             let index = dataset.index;
             if (index == that.data.roleTab) return;
+            let sortTab = that.data.sortTab;
+            let order = that.data.order;
+            if (index == 1 && that.data.sortTab == 1) {
+                sortTab = 3;
+                order = 1;
+            }
             that.setData({
                 list: [],
-                roleTab: index
+                roleTab: index,
+                sortTab,
+                order
             })
             that.state.offset = 0;
             that.requestList(0);

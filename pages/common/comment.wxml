@@ -2,7 +2,7 @@
     <view wx:if="{{details.likes.length > 0}}" class='likeName plr10 {{details.comment.length > 0 ? "bbc pb10 mb10" : ""}} flex_start'>
         <image class='like-icon flex_shrink' src='/images/like_icon.png'></image>
         <view class="flex1">
-            <text wx:for="{{details.likes}}" wx:key="">{{index > 0 ? "，" : ""}}{{item.user.name ? item.user.name : item.user.nickName}}</text>
+            <text wx:for="{{details.likes}}" wx:key="">{{index > 0 ? "，" : ""}}{{(item.user.status == 1 || item.user.status == 2) ? item.user.nickName : item.user.name}}</text>
         </view>
     </view>
     <view wx:if="{{details.comment && details.comment.length > 0}}" class='plr10 flex_start'>

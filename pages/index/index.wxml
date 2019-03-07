@@ -50,7 +50,7 @@
             <view class='flex_start flex_items'>
                 <view class='flex1 flex_start flex_items'>
                     <image class='list-item-head' src='{{item.user.avatarUrl}}'></image>
-                    <view class='f28 c3'>{{item.user.name}}</view>
+                    <view class='f28 c3'>{{(item.user.status == 1 || item.user.status == 2) ? item.user.name : item.user.nickName}}</view>
                 </view>
                 <view wx:if="{{role == 2 && roleTab == 1}}" class='answer-text' catchtap='questionAnswerEvent' data-types='reply' data-index='{{index}}'>去回答</view>
             </view>
@@ -74,7 +74,7 @@
                     <image class='list-item-head' src='{{item.answers.avatarUrl}}'></image>
                     <view class='flex1 flex_between flex_column'>
                         <view class='f26 c3'>{{item.answers.name}}</view>
-                        <view class='f24 c6'>{{item.answers.keyWords}}</view>
+                        <view class='f24 c6 clamp1'>{{item.answers.keyWords}}</view>
                     </view>
                 </view>
                 <view class='f24 cmain ml10 flex_shrink self_end'>查看回答详情</view>

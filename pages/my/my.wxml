@@ -5,7 +5,7 @@
             <image bindtap='myEvent' data-types='avatar' class='head-img flex_shrink' src='{{logo ? logo : userInfo.avatarUrl}}'></image>
             <view>
                 <view wx:if='{{userInfo.status <=2 }}' class='f28 c3 mt5'>{{userInfo.nickName}}</view>
-                <view wx:else class='f28 c3 mt5'>{{userInfo.name}}</view>
+                <view wx:else class='f28 c3 mt5'>{{(userInfo.status == 1 || userInfo.status == 2) ? userInfo.nickName : userInfo.name}}</view>
                 <view wx:if="{{userInfo.status == 1 || userInfo.status == 2}}" class='f24 c6 mt10'>知了</view>
                 <view wx:else class='f24 c6 mt10'>知士</view>
             </view>

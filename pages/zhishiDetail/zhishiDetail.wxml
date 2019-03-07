@@ -108,7 +108,7 @@
                     <view class='flex_start flex_items'>
                         <view class='flex1 flex_start flex_items'>
                             <image class='head-icon' src='{{item.user.avatarUrl}}'></image>
-                            <view class='f28 c3'>{{item.user.name}}</view>
+                            <view class='f28 c3'>{{(item.user.status == 1 || item.user.status == 2) ? item.user.nickName : item.user.name}}</view>
                         </view>
                         <view class='f26 cmain' bindtap='detailEvent' data-types='wenda' data-index='{{index}}'>查看回答详情</view>
                     </view>

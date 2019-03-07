@@ -1,4 +1,4 @@
-<view class='p20'>
+<view wx:if="{{requestStatus}}" class='p20'>
     <view class='setting-box'>
         <view class='flex_between flex_items' bindtap='messageEvent' data-types='mine'>
             <view class='{{messageMark.self_message == 1 ? "msg" : ""}}'>我的消息</view>

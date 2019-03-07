@@ -6,7 +6,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+        requestStatus: false
     },
 
     /**
@@ -15,7 +15,8 @@ Page({
     onLoad: function (options) {
         let userInfo = common.getStorage('userInfo');
         this.setData({
-            userInfo
+            userInfo,
+            requestStatus: true
         })
     },
 

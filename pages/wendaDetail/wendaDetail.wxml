@@ -2,7 +2,7 @@
     <view class='detail-pages'>
         <view class='flex_start flex_items'>
             <image class='detail-head' src='{{details.user.avatarUrl}}'></image>
-            <view class='f28 c3'>{{details.user.name}}</view>
+            <view class='f28 c3'>{{(details.user.status == 1 || details.user.status == 2) ? details.user.nickName : details.user.name}}</view>
         </view>
         <text selectable="true" class='mt20 f24 c3'>{{details.question}}</text>
         <view class='img-box flex_warp'>
