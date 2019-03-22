@@ -6,7 +6,7 @@
             <input class='rt-ipt' type='number' name="phone" value='{{phoneVal}}' bindinput='loginRegistEvent' data-types='phoneIpt' maxlength='15' placeholder-class='c9' placeholder='请输入手机号码' />
         </view>
         <view class='input-box flex_start flex_items'>
-            <label>新密码</label>
+            <label>设置密码</label>
             <input class='rt-ipt' type='text' name="password" value='{{passwordVal}}' bindinput='loginRegistEvent' data-types='phoneIpt' data-valtype='password' maxlength='20' password="true" placeholder-class='c9' placeholder='请输入密码' />
         </view>
         <view class='input-box flex_start flex_items'>

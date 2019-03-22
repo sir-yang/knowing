@@ -48,6 +48,7 @@ Page({
     },
 
     state: {
+        options: {},
         hasmore: true,
         offset: 0, //从第几条数据开始查询
         limit: 10, //每页条数
@@ -59,12 +60,25 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
+    onLoad: function(opt) {
+        let that = this;
         wx.showLoading({
             title: '请稍后...',
             mask: true
         });
-        let that = this;
+        var scene = decodeURIComponent(opt.scene);
+        let param = {};
+        if (scene != 'undefined') {
+            //海报二维码进入
+            var qrCodeOpt = scene.split("#");
+            param = {
+                uid: qrCodeOpt[0],
+                objId: qrCodeOpt[1]
+            }
+        } else {
+            param = opt;
+        }
+        that.state.options = param;
         that.userRole();
     },
 
@@ -476,6 +490,13 @@ Page({
             type: typeTabArr[that.data.typeTab].id,
             status: that.data.sortTab,
             answer: that.data.roleTab
+        }
+        if (!that.state.pageOnShow) {
+            let opt = that.state.options;
+            if (opt.hasOwnProperty('objId')) {
+                data.objId = opt.objId;
+                data.uid = opt.uid;
+            }
         }
         if (that.data.searchVal != '') {
             data.key = that.data.searchVal;

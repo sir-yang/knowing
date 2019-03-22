@@ -21,16 +21,10 @@
         </view>
         <view class='input-box flex_start flex_items'>
             <label>学校</label>
-            <!-- <picker bindchange="loginRegistEvent" data-types='school' value="{{schoolIdx}}" range="{{schoolList}}" range-key='name'>
-                <input class='rt-ipt {{schoolIdx == -1 ? "c9" : "c3"}}' type='text' name="university" value='{{schoolIdx == -1 ? "请选择学校" : schoolList[schoolIdx].name}}' disabled />
-            </picker> -->
             <input class='rt-ipt' type='text' name="university" placeholder-class='c9' placeholder='请选择学校' />
         </view>
         <view class='input-box flex_start flex_items'>
             <label>学院</label>
-            <!-- <picker bindchange="loginRegistEvent" data-types='college' value="{{collegeIdx}}" range="{{collegeList}}" range-key='name'>
-                <input class='rt-ipt {{collegeIdx == -1 ? "c9" : "c3"}}' type='text' name="academy" value='{{collegeIdx == -1 ? "请选择学院" : collegeList[collegeIdx].name}}' disabled />
-            </picker> -->
             <input class='rt-ipt' type='text' name="academy" placeholder-class='c9' placeholder='请选择学院' />
         </view>
         <view class='input-box flex_start flex_items'>

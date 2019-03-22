@@ -652,54 +652,67 @@ function requestLogin(that, vals) {
             if (isNull(userInfo.name)) { //未完善资料
                 showPerfect[0] = 'show';
                 showPerfect[that.data.identity] = 'show';
-                loginRegistTk = 'show';
+                that.setData({
+                    loginRegistTk: 'show',
+                    showLogin: 'hide', //登录
+                    showPerfect,
+                    phoneVal: '',
+                    passwordVal: '',
+                    codeVal: '',
+                    userInfo
+                })
             } else {
-                userInfo.statusId = 1;
-                // 调用接口
-                if (that.data.pageName === 'index') { //问答列表
-                    let role = 2;
-                    if (userInfo.status != 5 && userInfo.status != 6 && userInfo.status != 8) {
-                        role = 1;
-                    }
-                    that.setData({
-                        role
-                    })
-                    requestMessage(that);
-                    that.state.offset = 0;
-                    that.requestList(0);
-                } else if (that.data.pageName === 'zhishiCircle') { //知士圈
-                    requestMessage(that);
-                    that.state.offset = 0;
-                    that.requestList(0);
-                } else if (that.data.pageName === 'enjoyCircle') { //知享圈
-                    requestMessage(that);
-                    that.state.offset = 0;
-                    that.requestGetList(0);
-                } else if (that.data.pageName === 'my') { //我的
-                    that.setData({
-                        requestStatus: true
-                    })
-                    // 消息状态
-                    requestMessage(that);
-                }
-                // 显示导航
-                if (wx.showTabBar && that.data.pageName != 'my') {
-                    wx.showTabBar({});
-                }
+                logoSuccess();
             }
-            that.setData({
-                loginRegistTk,
-                showLogin: 'hide',
-                showPerfect,
-                phoneVal: '',
-                passwordVal: '',
-                codeVal: '',
-                userInfo
-            })
         } else {
             showClickModal(res.msg);
         }
     });
+}
+
+// 登录、完善资料后执行
+function logoSuccess(that) {
+    // 重新获取用户信息
+    getPersonInfo().then((info) => {
+        // 调用接口
+        requestMessage(that);
+        if (that.data.pageName === 'index') { //问答列表
+            let role = 2;
+            if (info.status != 5 && info.status != 6 && info.status != 8) {
+                role = 1;
+            }
+            that.setData({
+                role
+            })
+            that.state.offset = 0;
+            that.requestList(0);
+        } else if (that.data.pageName === 'enjoyCircle') { //知享圈
+            that.state.offset = 0;
+            if (that.data.typeIndex == 1) {
+                that.state.offset = 0;
+                that.requestGetList(0);
+            }
+        } else if (that.data.pageName === 'my') { //我的
+            that.setData({
+                requestStatus: true
+            })
+        }
+        // 消息状态
+        that.setData({
+            loginRegistTk: 'hide',
+            showLogin: 'hide', //登录
+            showPerfect: ['hide', 'hide', 'hide', 'hide'], //0:完善信息 1:学生 2:教师 3:其他
+            phoneVal: '',
+            passwordVal: '',
+            codeVal: '',
+            userInfo: info
+        })
+    })
+    
+    // 显示导航
+    if (wx.showTabBar && that.data.pageName != 'my') {
+        wx.showTabBar({});
+    }
 }
 
 // 注册
@@ -776,23 +789,7 @@ function requestSavePerfect(that, vals) {
     util.httpRequest(url, vals, 'POST').then((res) => {
         wx.hideLoading();
         if (res.result === 'success') {
-            // 重新获取用户信息
-            getPersonInfo().then(() => {
-                // 重新获取列表
-                that.requestList(0);
-            })
-
-            let showPerfect = that.data.showPerfect;
-            showPerfect[0] = 'hide';
-            showPerfect[that.data.identity] = 'hide';
-            that.setData({
-                loginRegistTk: 'hide',
-                showPerfect
-            })
-            // 显示导航
-            if (wx.showTabBar && tha.data.pageName != 'my') {
-                wx.showTabBar({});
-            }
+            logoSuccess(that);
         } else {
             showClickModal(res.msg);
         }

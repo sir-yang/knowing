@@ -1,7 +1,6 @@
 <view wx:if="{{loadStatus}}" class="userinfo">
     <image class='backImg' src='{{backImg}}'></image>
     <block wx:if="{{!hasUserInfo}}">
-        <!-- <image class='userinfo-avatar' src='/images/avatar.png'></image> -->
         <button class='get-userinfo-btn' open-type='getUserInfo' bindgetuserinfo='getUserInfo'>走近孰知</button>
     </block>
     <block wx:else>
