@@ -532,7 +532,7 @@ function loginRegistEvent(event, that) {
             showTimeToast('请输入验证码');
             return false;
         }
-        if (!that.data.agree) {
+        if (!that.data.agree && dataset.types === 'regist') {
             showTimeToast('请勾选孰知协议');
             return false;
         }
@@ -662,7 +662,7 @@ function requestLogin(that, vals) {
                     userInfo
                 })
             } else {
-                logoSuccess();
+                logoSuccess(that);
             }
         } else {
             showClickModal(res.msg);
