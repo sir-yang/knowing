@@ -43,8 +43,8 @@
 					"id": 0,
 					"name": "自定义",
 					"pathName": "pages/launch/launch",
-					"query": "inviteId=4",
-					"scene": "1008"
+					"query": "uid=1&objId=24",
+					"scene": 1012
 				},
 				{
 					"id": 1,

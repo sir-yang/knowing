@@ -1,0 +1,16 @@
+@import "/my/pages/setting/setting.wxss";
+
+.customer-info-box {
+    margin-top: 25rpx;
+    padding: 35rpx 20rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .1);
+    line-height: 64rpx;
+}
+.customer-info-box image {
+    display: block;
+    width: 44rpx;
+    height: 44rpx;
+    margin-right: 20rpx;
+}

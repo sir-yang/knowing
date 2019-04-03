@@ -126,7 +126,7 @@ Page({
         } else if (dataset.types === 'message') {
             common.isLoginRegist(this, () => {
                 wx.navigateTo({
-                    url: '/pages/message/message'
+                    url: '/common/pages/message/message'
                 })
             });
         } else if (dataset.types === 'detail') {
@@ -135,7 +135,7 @@ Page({
                 let list = that.data.list;
                 let index = dataset.index;
                 wx.navigateTo({
-                    url: '/pages/zhishiDetail/zhishiDetail?id=' + list[index].id
+                    url: '/zhishi/pages/zhishiDetail/zhishiDetail?id=' + list[index].id
                 })
             });
         }

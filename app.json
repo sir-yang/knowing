@@ -2,39 +2,9 @@
     "pages": [
         "pages/index/index",
         "pages/launch/launch",
-        "pages/wendaDetail/wendaDetail",
-        "pages/reply/reply",
-        "pages/askQuestion/askQuestion",
         "pages/zhishiCircle/zhishiCircle",
-        "pages/zhishiDetail/zhishiDetail",
         "pages/enjoyCircle/enjoyCircle",
-        "pages/publish/publish",
         "pages/my/my",
-        "pages/shareList/shareList",
-        "pages/attentionList/attentionList",
-        "pages/wenda/wenda",
-        "pages/wallet/wallet",
-        "pages/withdraw/withdraw",
-        "pages/invite/invite",
-        "pages/apply/apply",
-        "pages/setting/setting",
-        "pages/personalInfo/personalIfon",
-        "pages/customer/customer",
-        "pages/useCoupons/useCoupons",
-        "pages/errorInfo/errorInfo",
-        "pages/refundIssue/refundIssue",
-        "pages/about/about",
-        "pages/message/message",
-        "pages/myReply/myReply",
-        "pages/knowShare/knowShare",
-        "pages/systemMsg/systemMsg",
-        "pages/privateMsg/privateMsg",
-        "pages/systemMsgDetail/systemMsgDetail",
-        "pages/privateMsgDetail/privateMsgDetail",
-        "pages/myMsg/myMsg",
-        "pages/coursesDetail/coursesDetail",
-        "pages/enjoyDetail/enjoyDetail",
-        "pages/applyDesc/applyDesc",
         "pages/agree/agree"
     ],
     "window": {
@@ -75,5 +45,65 @@
             }
         ]
     },
+    "requiredBackgroundModes": [
+        "audio"
+    ],
+    "subpackages": [
+        {
+            "root": "wenda",
+            "pages": [
+                "pages/wendaDetail/wendaDetail",
+                "pages/askQuestion/askQuestion",
+                "pages/reply/reply"
+            ]
+        },
+        {
+            "root": "zhishi",
+            "pages": [
+                "pages/zhishiDetail/zhishiDetail",
+                "pages/coursesDetail/coursesDetail"
+            ]
+        },
+        {
+            "root": "enjoy",
+            "pages": [
+                "pages/publish/publish",
+                "pages/enjoyDetail/enjoyDetail"
+            ]
+        },
+        {
+            "root": "my",
+            "pages": [
+                "pages/wenda/wenda",
+                "pages/apply/apply",
+                "pages/setting/setting",
+                "pages/personalInfo/personalInfo",
+                "pages/customer/customer",
+                "pages/about/about",
+                "pages/useCoupons/useCoupons",
+                "pages/errorInfo/errorInfo",
+                "pages/refundIssue/refundIssue",
+                "pages/applyDesc/applyDesc",
+                "pages/wallet/wallet",
+                "pages/withdraw/withdraw",
+                "pages/myReply/myReply",
+                "pages/invite/invite"
+            ]
+        },
+        {
+            "root": "common",
+            "pages": [
+                "pages/shareList/shareList",
+                "pages/attentionList/attentionList",
+                "pages/message/message",
+                "pages/knowShare/knowShare",
+                "pages/systemMsg/systemMsg",
+                "pages/privateMsg/privateMsg",
+                "pages/systemMsgDetail/systemMsgDetail",
+                "pages/privateMsgDetail/privateMsgDetail",
+                "pages/myMsg/myMsg"
+            ]
+        }
+    ],
     "debug": true
 }

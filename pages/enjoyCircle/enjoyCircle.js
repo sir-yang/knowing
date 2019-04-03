@@ -267,13 +267,13 @@ Page({
         } else if (dataset.types === 'message') { //消息
             common.isLoginRegist(this, () => {
                 wx.navigateTo({
-                    url: '/pages/message/message'
+                    url: '/common/pages/message/message'
                 })
             });
         } else if (dataset.types === 'publish') { //发布
             common.isLoginRegist(this, () => {
                 wx.navigateTo({
-                    url: '/pages/publish/publish'
+                    url: '/enjoy/pages/publish/publish'
                 })
             });
         } else if (dataset.types === 'moreTab') { //更多分类
@@ -288,7 +288,7 @@ Page({
             common.isLoginRegist(this, () => {
                 let id = dataset.id;
                 wx.navigateTo({
-                    url: '/pages/enjoyDetail/enjoyDetail?id=' + id + '&index=' + dataset.index
+                    url: '/enjoy/pages/enjoyDetail/enjoyDetail?id=' + id + '&index=' + dataset.index
                 })
             });
         } else if (dataset.types === 'like') { //点赞

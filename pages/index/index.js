@@ -67,6 +67,7 @@ Page({
             mask: true
         });
         var scene = decodeURIComponent(opt.scene);
+        console.log(scene);
         let param = {};
         if (scene != 'undefined') {
             //海报二维码进入
@@ -78,6 +79,7 @@ Page({
         } else {
             param = opt;
         }
+        console.log(param);
         that.state.options = param;
         that.userRole();
     },
@@ -103,10 +105,17 @@ Page({
     userRole() {
         let that = this;
         common.getPersonInfo().then((userInfo) => {
+            let opt = that.state.options;
+            let url = '/pages/launch/launch';
+            if (!that.state.pageOnShow && opt.hasOwnProperty('objId')) {
+                url += '?uid=' + opt.uid + '&objId=' + opt.objId;
+            }
             if (userInfo) {
                 if (!userInfo.avatarUrl && !userInfo.nickName) {
+                    let url = '/pages/launch/launch';
+                    opt.hasOwnProperty('objId')
                     wx.redirectTo({
-                        url: '/pages/launch/launch'
+                        url
                     })
                     return;
                 }
@@ -124,79 +133,10 @@ Page({
                 common.requestGetCollege(that);
             } else {
                 wx.redirectTo({
-                    url: '/pages/launch/launch'
+                    url
                 })
             }
         })
-    },
-
-    // 界面显示执行
-    indexShowLoad() {
-        let that = this;
-        common.getPersonInfo().then((userInfo) => {
-            if (userInfo) {
-                if (!userInfo.avatarUrl && !userInfo.nickName) {
-                    wx.redirectTo({
-                        url: '/pages/launch/launch'
-                    })
-                    return;
-                }
-                let role = 2;
-                if (userInfo.status != 5 && userInfo.status != 6 && userInfo.status != 8) {
-                    role = 1;
-                }
-
-                // 判断是否需要登录
-                let loginRegistTk = that.data.loginRegistTk;
-                let showLogin = that.data.showLogin;
-                let showPerfect = that.data.showPerfect;
-
-                if (userInfo.statusId == 0) { //未登录
-                    loginRegistTk = 'show';
-                    showLogin = 'show';
-                    // 隐藏底部导航
-                    if (wx.hideTabBar()) {
-                        wx.hideTabBar({});
-                    }
-                    that.setData({
-                        role,
-                        loginRegistTk,
-                        showLogin,
-                        showPerfect
-                    })
-                    // 获取图片验证码
-                    common.requestGetImgSend(that);
-                } else if (!userInfo.name) {
-                    // 隐藏底部导航
-                    if (wx.hideTabBar()) {
-                        wx.hideTabBar({});
-                    }
-                    loginRegistTk = 'show';
-                    showPerfect[0] = 'show';
-                    showPerfect[userInfo.type] = 'show';
-                    that.setData({
-                        role,
-                        loginRegistTk,
-                        showLogin,
-                        showPerfect
-                    })
-                } else { //已登录 调用列表
-                    wx.showLoading({
-                        title: '加载中...',
-                        mask: true
-                    });
-                    that.setData({
-                        role
-                    })
-                    this.state.offset = 0;
-                    that.requestList(0);
-                }
-            } else {
-                wx.redirectTo({
-                    url: '/pages/launch/launch'
-                })
-            }
-        });
     },
 
     /**
@@ -246,6 +186,10 @@ Page({
                 list: [],
                 typeTab: dataset.index
             })
+            wx.showLoading({
+                title: '',
+                mask: true
+            })
             that.state.offset = 0;
             that.requestList(0);
         } else if (dataset.types === 'school') { //学校切换
@@ -255,7 +199,7 @@ Page({
         } else if (dataset.types === 'ask') { //提问
             common.isLoginRegist(that, () => {
                 wx.navigateTo({
-                    url: '/pages/askQuestion/askQuestion'
+                    url: '/wenda/pages/askQuestion/askQuestion'
                 })
             });
         } else if (dataset.types === 'roleTab') { //知士问题切换
@@ -273,6 +217,10 @@ Page({
                 sortTab,
                 order
             })
+            wx.showLoading({
+                title: '',
+                mask: true
+            })
             that.state.offset = 0;
             that.requestList(0);
         } else if (dataset.types === 'sortTab') { //升降序
@@ -288,17 +236,20 @@ Page({
                 list: []
             })
 
+            wx.showLoading({
+                title: '',
+                mask: true
+            })
             that.state.offset = 0;
             that.requestList(0);
         } else if (dataset.types === 'detail') { //详情
             common.isLoginRegist(that, () => {
-                console.log(1212);
                 let index = dataset.index;
                 if (that.data.role == 2 && that.data.roleTab == 1) return;
                 if (list[index].around == 1) {
                     if (list[index].status == 3 || list[index].status == 5) {
                         wx.navigateTo({
-                            url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
+                            url: '/wenda/pages/wendaDetail/wendaDetail?id=' + list[index].id
                         })
                     } else if (list[index].status == 1) {
                         common.showClickModal('问题暂未回答');
@@ -340,7 +291,7 @@ Page({
                             console.log(_res)
                             if (_res.confirm) {
                                 wx.navigateTo({
-                                    url: '/pages/reply/reply?id=' + list[index].id
+                                    url: '/wenda/pages/reply/reply?id=' + list[index].id
                                 })
                             }
                         }
@@ -360,12 +311,16 @@ Page({
                 searchVal: event.detail.value
             })
         } else if (dataset.types === 'search') { //搜索
+            wx.showLoading({
+                title: '',
+                mask: true
+            })
             that.state.offset = 0;
             that.requestList(0);
         } else if (dataset.types === 'message') { //消息
             common.isLoginRegist(that, () => {
                 wx.navigateTo({
-                    url: '/pages/message/message'
+                    url: '/common/pages/message/message'
                 })
             });
         } else if (dataset.types === 'savaImg') { //保存海报
@@ -394,7 +349,7 @@ Page({
         } else if (dataset.types === 'zhishiDetail') { //知士详情
             common.isLoginRegist(that, () => {
                 wx.navigateTo({
-                    url: '/pages/zhishiDetail/zhishiDetail?id=' + dataset.id
+                    url: '/zhishi/pages/zhishiDetail/zhishiDetail?id=' + dataset.id
                 })
             });
         } else if (dataset.types === 'closePoster') { //关闭海报弹框
@@ -494,8 +449,11 @@ Page({
         if (!that.state.pageOnShow) {
             let opt = that.state.options;
             if (opt.hasOwnProperty('objId')) {
-                data.objId = opt.objId;
-                data.uid = opt.uid;
+                let userInfo = common.getStorage('userInfo');
+                if (userInfo.id != opt.uid) {
+                    data.objId = opt.objId;
+                    data.uid = opt.uid;
+                }
             }
         }
         if (that.data.searchVal != '') {
@@ -503,12 +461,6 @@ Page({
         }
         if (that.data.order == 1) {
             data.order = 1;
-        }
-        if (that.state.pageOnShow) {
-            wx.showLoading({
-                title: '',
-                mask: true
-            });
         }
 
         util.httpRequest(url, data).then((res) => {
@@ -577,7 +529,7 @@ Page({
                                 showCancel: false,
                                 success() {
                                     wx.navigateTo({
-                                        url: '/pages/wendaDetail/wendaDetail?id=' + that.state.shareId
+                                        url: '/wenda/pages/wendaDetail/wendaDetail?id=' + that.state.shareId
                                     })
                                 }
                             })
@@ -594,7 +546,7 @@ Page({
                             showCancel: false,
                             success() {
                                 wx.navigateTo({
-                                    url: '/pages/wendaDetail/wendaDetail?id=' + list[index].id
+                                    url: '/wenda/pages/wendaDetail/wendaDetail?id=' + list[index].id
                                 })
                             }
                         })

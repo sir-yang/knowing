@@ -366,30 +366,46 @@ function isLoginRegist(that, func) {
                 loginRegistTk = 'show';
                 showLogin = 'show';
                 // 隐藏底部导航
-                console.log(that.data.pageName);
                 if (wx.hideTabBar && that.data.pageName != 'my') {
                     wx.hideTabBar({});
+                    that.setData({
+                        loginRegistTk,
+                        showLogin,
+                        showPerfect
+                    })
+                } else {
+                    that.setData({
+                        requestStatus: false,
+                        loginRegistTk,
+                        showLogin,
+                        showPerfect
+                    })
                 }
-                that.setData({
-                    loginRegistTk,
-                    showLogin,
-                    showPerfect
-                })
                 // 获取图片验证码
                 requestGetImgSend(that);
             } else if (!userInfo.name) { //未完善信息
                 // 隐藏底部导航
-                if (wx.hideTabBar && that.data.pageName != 'my') {
-                    wx.hideTabBar({});
-                }
+                // if (wx.hideTabBar && that.data.pageName != 'my') {
+                //     wx.hideTabBar({});
+                // }
                 loginRegistTk = 'show';
                 showPerfect[0] = 'show';
                 showPerfect[userInfo.type] = 'show';
-                that.setData({
-                    loginRegistTk,
-                    showLogin,
-                    showPerfect
-                })
+                if (wx.hideTabBar && that.data.pageName != 'my') {
+                    wx.hideTabBar({});
+                    that.setData({
+                        loginRegistTk,
+                        showLogin,
+                        showPerfect
+                    })
+                } else {
+                    that.setData({
+                        requestStatus: false,
+                        loginRegistTk,
+                        showLogin,
+                        showPerfect
+                    })
+                }
             } else { //已登录
                 func(userInfo);
             }
@@ -576,16 +592,26 @@ function loginRegistEvent(event, that) {
             educationIdx: event.detail.value
         })
     } else if (dataset.types === 'closeLogin') { //点击登录遮罩层
-        that.setData({
-            loginRegistTk: 'hide',
-            showLogin: 'hide',
-            showPerfect: ['hide', 'hide', 'hide', 'hide'],
-            phoneVal: '',
-            passwordVal: '',
-            codeVal: ''
-        })
         if (wx.showTabBar && that.data.pageName != 'my') {
             wx.showTabBar({});
+            that.setData({
+                loginRegistTk: 'hide',
+                showLogin: 'hide',
+                showRegist: 'hide', //注册
+                showForget: 'hide', //忘记密码
+                showPerfect: ['hide', 'hide', 'hide', 'hide'],
+                identity: 1, //注册角色
+                agree: false, //协议状态
+                genderId: 1,
+                CountdownVal: '发送验证码',
+                CountdownTime: 60,
+                onClick: true,
+                clearTimeout: true,
+                phoneVal: '',
+                passwordVal: '',
+                confirmVal: '',
+                codeVal: '',
+            })
         }
     }
 }

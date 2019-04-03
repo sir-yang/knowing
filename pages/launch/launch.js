@@ -19,8 +19,8 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+        console.log(options);
         this.state.options = options;
-        console.log(this.state.options);
         let that = this;
         this.requestGetCofig();
         common.getPersonInfo().then((info) => {
@@ -65,8 +65,15 @@ Page({
                 nickName: userInfo.nickName,
                 gender: userInfo.gender
             }
-            if (this.state.options.hasOwnProperty('inviteId')) {
+            let opt = this.state.options;
+            //好友邀请进入
+            if (opt.hasOwnProperty('inviteId')) {
                 vals.inviteId = this.state.options.inviteId;
+            }
+            // 围观进入
+            if (opt.hasOwnProperty('objId')) {
+                vals.uid = opt.uid;
+                vals.objId = opt.objId;
             }
             this.requestSaveInfo(vals);
         }

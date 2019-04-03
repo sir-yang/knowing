@@ -1,0 +1,10 @@
+<import src="../../../wxParse/wxParse.wxml" />
+<view wx:if="{{requestStatus}}" class='plr20'>
+    <view class='detail-box'>
+        <view class='f30 c3 txt_center'>{{details.name}}</view>
+        <view class='f18 c6 txt_center mt10'>{{detials.addTime}}</view>
+        <view class='content-detail'>
+            <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+        </view>
+    </view>
+</view>

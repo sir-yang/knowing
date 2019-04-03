@@ -46,15 +46,15 @@ Page({
      */
     onShow: function() {
         let that = this;
-        that.setData({
-            requestStatus: false,
-            loginRegistTk: 'hide',
-            showLogin: 'hide',
-            showPerfect: ['hide', 'hide', 'hide', 'hide'],
-            phoneVal: '',
-            passwordVal: '',
-            codeVal: ''
-        })
+        // that.setData({
+        //     requestStatus: false,
+        //     loginRegistTk: 'hide',
+        //     showLogin: 'hide',
+        //     showPerfect: ['hide', 'hide', 'hide', 'hide'],
+        //     phoneVal: '',
+        //     passwordVal: '',
+        //     codeVal: ''
+        // })
 
         common.isLoginRegist(that, (info) => {
             wx.hideLoading();
@@ -79,25 +79,23 @@ Page({
         let dataset = event.currentTarget.dataset;
         let url = '';
         if (dataset.types === 'share') {//分享
-            url = '/pages/shareList/shareList';
+            url = '/common/pages/shareList/shareList';
         } else if (dataset.types === 'reply') {//回答
-            url = '/pages/myReply/myReply';
+            url = '/my/pages/myReply/myReply';
         } else if (dataset.types === 'fans') {//粉丝
-            url = '/pages/attentionList/attentionList?status=1';
+            url = '/common/pages/attentionList/attentionList?status=1';
         } else if (dataset.types === 'attention') {//关注
-            url = '/pages/attentionList/attentionList?status=2';
+            url = '/common/pages/attentionList/attentionList?status=2';
         } else if (dataset.types === 'wenda') {//问答
-            url = '/pages/wenda/wenda';
+            url = '/my/pages/wenda/wenda';
         } else if (dataset.types === 'wallet') {//钱包
-            url = '/pages/wallet/wallet';
+            url = '/my/pages/wallet/wallet';
         } else if (dataset.types === 'apply') {//申请
-            url = '/pages/apply/apply';
+            url = '/my/pages/apply/apply';
         } else if (dataset.types === 'set') {//设置
-            url = '/pages/setting/setting';
-        } else if (dataset.types === 'wenda') {//问答
-            url = '/pages/wallet/wallet';
+            url = '/my/pages/setting/setting';
         } else if (dataset.types === "invite") {
-            url = "/pages/invite/invite"
+            url = "/my/pages/invite/invite"
         } else if (dataset.types === 'avatar') { //更换头像
             let that = this;
             wx.showModal({

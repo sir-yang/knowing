@@ -4,9 +4,7 @@ let util = require('utils/util.js');
 let common = require('utils/common.js');
 
 App({
-    checkToken: false,
     onLaunch(_options) {
-        this.checkToken = true;
         wx.setStorageSync("serverurl", "https://soossy.com/");
         if (wx.getStorageSync('loadStatus') != false) {//首次进入
             wx.setStorageSync("loadStatus", true); 
@@ -15,7 +13,6 @@ App({
 
     onShow(options) {
         console.log('app', options);
-        let that = this;
         wx.getSystemInfo({
             success(res) {
                 let SDKVersion = res.SDKVersion;
@@ -47,8 +44,6 @@ App({
 
     globalData: {
         commonFun: common,
-        utilFun: util,
-        isLaunch: 0,
-        tokenUpdated: null
+        utilFun: util
     }
 });
