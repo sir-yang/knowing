@@ -112,8 +112,6 @@ Page({
             }
             if (userInfo) {
                 if (!userInfo.avatarUrl && !userInfo.nickName) {
-                    let url = '/pages/launch/launch';
-                    opt.hasOwnProperty('objId')
                     wx.redirectTo({
                         url
                     })

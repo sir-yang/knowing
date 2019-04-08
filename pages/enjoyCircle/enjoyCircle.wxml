@@ -84,7 +84,7 @@
     <!-- 数据提示判断 -->
     <block>
         <view wx:if="{{list.length > 0 && !hasNext}}" class='notmore'>没有更多数据</view>
-        <view wx:if="{{list.length === 0}}" class='noComment'>{{typeIndex == 1 ? "关注知士，可在此查看知士分享内容" : "暂无分享内容"}}</view>
+        <view wx:if="{{list.length === 0}}" class='noComment'>{{typeIndex == 1 ? "暂无分享内容" : "关注知士，可在此查看知士分享内容"}}</view>
     </block>
 </view>
 
